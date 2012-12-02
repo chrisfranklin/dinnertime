@@ -1,0 +1,41 @@
+"""
+Example settings for local development
+
+Use this file as a base for your local development settings and copy
+it to dinnertime/settings/local.py. It should not be checked into
+your code repository.
+
+"""
+from dinnertime.settings.base import *   # pylint: disable=W0614,W0401
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+INTERNAL_IPS = ('127.0.0.1',)
+
+ADMINS = (
+    ('You', 'your@email'),
+)
+MANAGERS = ADMINS
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(VAR_ROOT, 'dev.db'),
+    }
+}
+
+INSTALLED_APPS += (
+    'debug_toolbar',
+)
+
+MIDDLEWARE_CLASSES += (
+    # ...
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # ...
+)
+
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
+# ROOT_URLCONF = 'dinnertime.urls.local'
+# WSGI_APPLICATION = 'dinnertime.wsgi.local.application'

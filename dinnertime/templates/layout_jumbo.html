@@ -1,0 +1,17 @@
+{% extends 'sitebase.html' %}
+
+
+  {% load i18n %}
+
+  {% block body %}
+      <div class="jumbotron masthead">
+        <div class="container">
+          <img src="{{ STATIC_URL }}img/logo.png">
+          <h1>{% block jumbo_title %}{% endblock %}</h1>
+          <p>{% block jumbo_tagline %}{% endblock %}</p>
+          {% block extra_jumbo %} {% endblock %}
+        </div>
+      </div>
+
+
+  {% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'layout_jumbo.html' %} <!-- Change to sitebase.html if you wish -->
+
+
+  {% load i18n %}
+
+  {% block jumbo_title %}
+    Piemonster
+  {% endblock %}
+
+  {% block jumbo_tagline %}
+    This is a starter template, it uses a different layout to any other templates you may be using. If you would like to see these other templates please change this template to extend 'sitebase.html' and change the tag extra_jumbo to extra_content
+  {% endblock %}
+
+  {% block extra_jumbo %} <!-- If using sitebase.html set to content, if using layout_jumbo.html set to extra_jumbo -->
+    <p>
+      <a href="/" class="btn btn-primary btn-large" >Get Started</a>
+    </p>
+
+    </br></br>
+    <ul class="masthead-links">
+      <li>
+        <a href="http://github.com/piemonster" >Piemonster</a>
+      </li>
+      <li>
+        <a href="/admin/" >Admin</a>
+      </li>
+      <li>
+        <a href="/" >Help</a>
+      </li>
+    </ul>
+  {% endblock %}
+          
+  {% block footer %} 
+    {% trans "Edit this template file in:" %} <code style="background-color:transparent;">{% block filename %}the root templates directory!{% endblock %}</code>
+  {% endblock %}

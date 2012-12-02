@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{% block header_title %}{% endblock %}</title>
+        <meta name="description" content="{% block meta_description %} This should be a basic description of the page. {% endblock %}">
+        <meta name="keywords" content="{% block meta_keywords %} Basic, Keywords, About, The, Site, Should, Be, Here {% endblock %}">
+        <meta name="author" content="{% block meta_author%} Chris Franklin {% endblock %}">
+        <meta name="viewport" content="width=device-width">
+
+        {% load compress %}
+        {% compress css %}
+            <link rel="stylesheet" href="{{ STATIC_URL}}bootstrap/css/bootstrap.css">
+            <style>
+                body {
+                    padding-top: 60px;
+                    padding-bottom: 40px;
+                }
+            </style>
+            <link rel="stylesheet" href="{{ STATIC_URL}}bootstrap/css/bootstrap-responsive.css">
+            <link rel="stylesheet" href="{{ STATIC_URL}}css/main.css">
+            {% block extra_style %} {% endblock %}
+        {% endcompress %}
+
+        {% compress js %}
+            <script src="{{ STATIC_URL}}js/modernizr2.6.2.js"></script>
+        {% endcompress %}
+    </head>
+    <body>
+        {% block body %}
+            <!--[if lt IE 7]>
+                <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to get the most out of the modern internet.</p>
+            <![endif]-->
+
+            {% block menu_block %}
+                <div id="nav-outer" class="navbar navbar-inverse navbar-fixed-top">
+                    <div id="nav-inner" class="navbar-inner">
+                        <div id="nav-container" class="container">
+                            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </a>
+                            <a class="brand" href="#">Project name</a>
+                            <div class="nav-collapse collapse">
+                                <ul class="nav">
+                                  {% block menu %}
+                                    <li class="active"><a href="#">Home</a></li>
+                                    <li><a href="#about">About</a></li>
+                                    <li><a href="#contact">Contact</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li class="divider"></li>
+                                            <li class="nav-header">Nav header</li>
+                                            <li><a href="#">Separated link</a></li>
+                                            <li><a href="#">One more separated link</a></li>
+                                        </ul>
+                                    </li>
+                                    {% block menu_extra %}{% endblock %}
+                                  {% endblock %}
+                                </ul>
+                                <form id="nav-login"class="navbar-form pull-right">
+                                    <input class="span2" type="text" placeholder="Email">
+                                    <input class="span2" type="password" placeholder="Password">
+                                    <button type="submit" class="btn">Sign in</button>
+                                </form><!-- /nav-login -->
+                            </div><!--/.nav-collapse -->
+                        </div> <!-- /nav-container -->
+                    </div> <!-- /nav-inner -->
+                </div> <!-- /nav-outer -->
+            {% endblock %}
+
+            <div class="container">
+
+                <!-- Main Content Area -->
+
+                {% block content %}
+                
+                {% endblock %}
+
+                <!-- End Main Content  -->
+
+                <hr>
+
+                <footer>
+                    {% block footer %} {% endblock %}
+                    <p>&copy; Company 2012</p>
+                </footer>
+
+            </div> <!-- /container -->
+
+        {% endblock %}
+
+        <!-- External CDN Scripts -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <!-- End External CDN Scripts -->
+        {% compress js %}
+            <!-- Fallback to Local Javascript -->
+            <script>window.jQuery || document.write('<script src="{{ STATIC_URL}}js/jquery-1.8.2.min.js"><\/script>')</script>
+            <!-- End Fallback to Local Javascript -->
+
+            <!-- Bootstrap JS files -->
+            <script src="{{ STATIC_URL}}bootstrap/js/bootstrap.js"></script>
+            <!-- End Bootstrap JS files -->
+
+            <!-- JQuery plugins -->
+            <script src="{{ STATIC_URL}}js/plugins.js"></script>
+            <!-- End JQuery plugins -->
+
+            <!-- Site Wide Javascript -->
+            <script src="{{ STATIC_URL}}js/main.js"></script>
+            <!-- End Site Wide Javascript -->
+
+            {% block extra_js %}{% endblock %}
+        {% endcompress %}
+
+        <script> <!-- Google Analytics Code  -->
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+    </body>
+</html>

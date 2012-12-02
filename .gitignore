@@ -1,0 +1,5 @@
+*.pyc
+*.egg-info
+dinnertime/settings/local.py
+dinnertime/settings/local/*
+docs/_build
