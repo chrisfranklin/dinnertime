@@ -43,9 +43,9 @@ urlpatterns = patterns('',
     #==========================================================
     # Fiber 1 / 2
     #==========================================================
-    (r'^api/v2/', include('fiber.rest_api.urls')),
-    (r'^admin/fiber/', include('fiber.admin_urls')),
-    (r'^jsi18n/$', 'django.views.i18n.javascript_catalog', {'packages': ('fiber',),}),
+    #(r'^api/v2/', include('fiber.rest_api.urls')),
+    #(r'^admin/fiber/', include('fiber.admin_urls')),
+    #(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', {'packages': ('fiber',),}),
     #==========================================================
     # End Fiber 1 / 2
     #==========================================================
@@ -53,7 +53,7 @@ urlpatterns = patterns('',
     #==========================================================
     # Fiber 2 / 2 - Warning this block is a catch all block!!!
     #==========================================================
-    (r'', 'fiber.views.page'),
+    #(r'', 'fiber.views.page'),
     #==========================================================
 
 )

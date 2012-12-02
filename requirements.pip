@@ -6,12 +6,12 @@
 
 django==1.4.1
 south==0.7.6
-django-fiber==0.9.8.9
+#django-fiber==0.9.8.9
 git+https://github.com/Piemonster/django-generate-scaffold.git
 #git+https://github.com/Piemonster/django-staticfiles-bootstrap.git
 django-debug-toolbar
 django-userena
 djrill
-django-reversion
+django-reversion>=1.6.4
 django-celery
 python-memcached

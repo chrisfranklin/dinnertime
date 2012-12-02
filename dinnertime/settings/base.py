@@ -66,10 +66,10 @@ INSTALLED_APPS = (
     #--------------------------------------------------------------------------
     # Fiber and Fiber prerequisites
     #--------------------------------------------------------------------------
-    'djangorestframework',
+    #'djangorestframework',
     'mptt',
     'compressor',
-    'fiber',
+    #'fiber',
 
     #--------------------------------------------------------------------------
     # Reversion history for models
@@ -176,8 +176,8 @@ MIDDLEWARE_CLASSES += (
     #--------------------------------------------------------------------------
     # Fiber Content Management System
     #--------------------------------------------------------------------------
-    'fiber.middleware.ObfuscateEmailAddressMiddleware',
-    'fiber.middleware.AdminPageMiddleware',
+    #'fiber.middleware.ObfuscateEmailAddressMiddleware',
+    #'fiber.middleware.AdminPageMiddleware',
     #--------------------------------------------------------------------------
     # End Fiber
     #--------------------------------------------------------------------------
