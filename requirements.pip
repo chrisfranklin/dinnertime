@@ -15,3 +15,8 @@ djrill
 django-reversion>=1.6.4
 django-celery
 python-memcached
+
+django-jsonfield
+
+geopy
+django-easy-maps

@@ -27,6 +27,10 @@ LANGUAGES = (
     ('en', 'English'),
 )
 
+ADMINS = (
+    ('chris', 'chris@piemonster.me'),
+)
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 's^tsuf-^w*w&amp;&amp;)#-_9xh2l8r$qs4itiq8h1a2aft&amp;rjj^7#9aj'
 
@@ -43,6 +47,9 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     #'south',
+    'meal',
+
+    'easy_maps', 
 
     #==========================================================================
     # 3rd party Applications
@@ -74,7 +81,7 @@ INSTALLED_APPS = (
     #--------------------------------------------------------------------------
     # Reversion history for models
     #--------------------------------------------------------------------------
-    'reversion',
+    #'reversion',
 
     #--------------------------------------------------------------------------
     # Userena Accounts Management

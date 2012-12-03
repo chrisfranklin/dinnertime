@@ -17,6 +17,8 @@ DATABASES = {
     }
 }
 
+print DATABASES
+
 INSTALLED_APPS += (
     # 'dinnertime.apps.',
     'debug_toolbar',

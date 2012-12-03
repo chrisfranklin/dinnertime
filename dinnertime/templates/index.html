@@ -8,21 +8,31 @@
   {% endblock %}
 
   {% block jumbo_tagline %}
-    Put out the shout.
+    Put out the shout. Share the food about.
   {% endblock %}
 
   {% block extra_jumbo %} <!-- If using sitebase.html set to content, if using layout_jumbo.html set to extra_jumbo -->
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="span2 offset4">
-        <h2 class="btn btn-primary btn-warning"> I'm eating </h2>
+        <h2 class="btn btn-primary btn-large"> I'm eating </h2>
       </div>
       <div class="span2">
         <h2 class="btn btn-primary btn-large"> I'm cooking </h2>
       </div>
+    </div> -->
+
+  </hr>
+    <div class="row">
+      <div class="span3 offset3">
+        <h2><a href="#"><i class="icon-bullhorn"></i> I'm cooking </a></h2>
+      </div>
+      <div class="span3">
+        <h2><a href="#"><i class="icon-link"></i> I'm eating </a></h2>
+      </div>
     </div>
 
-    </br></br>
+    </br></br></br></br></br></br>
     <ul class="masthead-links">
       <li>
         <a href="http://github.com/piemonster" >Piemonster</a>
@@ -34,6 +44,8 @@
         <a href="/" >Help</a>
       </li>
     </ul>
+
+
   {% endblock %}
           
   {% block footer %} 
