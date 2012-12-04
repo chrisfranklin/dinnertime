@@ -49,7 +49,7 @@ INSTALLED_APPS = (
     #'south',
     'meal',
 
-    'easy_maps', 
+    'easy_maps',
 
     #==========================================================================
     # 3rd party Applications
@@ -71,12 +71,10 @@ INSTALLED_APPS = (
     'djrill',
 
     #--------------------------------------------------------------------------
-    # Fiber and Fiber prerequisites
+    # Util
     #--------------------------------------------------------------------------
-    #'djangorestframework',
     'mptt',
     'compressor',
-    #'fiber',
 
     #--------------------------------------------------------------------------
     # Reversion history for models
@@ -98,7 +96,6 @@ INSTALLED_APPS = (
     #--------------------------------------------------------------------------
     'djcelery',
 
-    
 )
 
 #==============================================================================
@@ -141,9 +138,7 @@ LOGIN_URL = '/accounts/signin/'
 LOGOUT_URL = '/accounts/signout/'
 ANONYMOUS_USER_ID = -1
 
-AUTH_PROFILE_MODULE = 'accounts.UserProfile' # THIS SHOULD BE SET TO PROFILE MODEL
-
-
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'  # THIS SHOULD BE SET TO PROFILE MODEL
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/uploads/'
@@ -180,14 +175,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
 #==============================================================================
 
 MIDDLEWARE_CLASSES += (
-    #--------------------------------------------------------------------------
-    # Fiber Content Management System
-    #--------------------------------------------------------------------------
-    #'fiber.middleware.ObfuscateEmailAddressMiddleware',
-    #'fiber.middleware.AdminPageMiddleware',
-    #--------------------------------------------------------------------------
-    # End Fiber
-    #--------------------------------------------------------------------------
+
 )
 
 #==============================================================================
@@ -213,7 +201,7 @@ CACHES = {
 }
 
 #==============================================================================
-# Logging and Data gathering 
+# Logging and Data gathering
 #==============================================================================
 
 
