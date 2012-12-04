@@ -198,6 +198,7 @@ AUTHENTICATION_BACKENDS += (
     'userena.backends.UserenaAuthenticationBackend',
     'guardian.backends.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'lazysignup.backends.LazySignupBackend',
 )
 
 #==============================================================================

@@ -1,11 +1,8 @@
 from django.conf.urls.static import static
 from django.conf.urls.defaults import patterns, url, include
-
-from django.conf import settings # Added by Fiber
-
+from django.conf import settings  # Added by Fiber
 from django.contrib import admin
 from djrill import DjrillAdminSite
-
 from django.views.generic import TemplateView
 
 # Mandrill Email Support
@@ -14,9 +11,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
    # (r'', include('dinnertime.apps.')),
-    
     #==========================================================
-    # Admin Section 
+    # Admin Section
     #==========================================================
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
@@ -33,11 +29,12 @@ urlpatterns = patterns('',
     #==========================================================
 
     #==========================================================
-    # Userena 
+    # Userena
     #==========================================================
     (r'^accounts/', include('userena.urls')),
+     (r'^convert/', include('lazysignup.urls')),
     #==========================================================
-    # End Userena 
+    # End Userena
     #==========================================================
 
     #==========================================================

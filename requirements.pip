@@ -20,3 +20,5 @@ django-jsonfield
 
 geopy
 django-easy-maps
+
+django-lazysignup
