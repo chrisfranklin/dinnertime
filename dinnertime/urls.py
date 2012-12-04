@@ -32,7 +32,7 @@ urlpatterns = patterns('',
     # Userena
     #==========================================================
     (r'^accounts/', include('userena.urls')),
-     (r'^convert/', include('lazysignup.urls')),
+    (r'^convert/', include('lazysignup.urls')),
     #==========================================================
     # End Userena
     #==========================================================
