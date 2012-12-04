@@ -49,7 +49,10 @@ class Meal(models.Model):
     #recipe
 
     def add_guest(self, plusone=0):
-        if self.max_guests > self.current_guests + plusone:
+        """
+        Increments current_guests if not greater than max_guests and returns true else returns false
+        """
+        if self.max_guests >= self.current_guests + plusone:
             # We have room at the meal for the person and their plusones
             self.current_guests += plusone + 1  # The extra one is for the actual guest
             return True
@@ -58,6 +61,9 @@ class Meal(models.Model):
             return False
 
     def share_to_facebook(self, graph=None, **kwargs):
+        """
+        Stores and tries sending a facebook open graph share of the meal.
+        """
         from django_facebook.models import OpenGraphShare
         #this is where the magic happens
         share = OpenGraphShare.objects.create(
@@ -96,6 +102,9 @@ class Invite(models.Model):
     max_plusones = models.IntegerField(default=1)
 
     def send_invite(self):
+        """
+        Sends the invite via any available communications channel
+        """
         if self.fid:
             # Send Facebook invite to user
             pass
@@ -104,6 +113,9 @@ class Invite(models.Model):
             pass
 
     def accept_invite(self, secret, user):
+        """
+        Checks a secret and allows an invitee to become a guest if it is valid and they are logged in somehow.
+        """
         if self.check_secret(secret):
             # Secret matches
             # If the user has an email or a facebook we should try and match it to a profile perhaps.
@@ -127,11 +139,17 @@ class Invite(models.Model):
         pass
 
     def create_guest(self, user):
+        """
+        Stores a guest instance from a user and the current meal
+        """
         # We should check that max_guests isn't already reached.
         guest = Guest(user=user, meal=self.meal)
         guest.save()
 
     def generate_secret(self):
+        """
+        Creates a unique identifier for the invite and saves it.
+        """
         import hashlib
         from util.misc import get_random_string
         salt = get_random_string()
@@ -139,10 +157,17 @@ class Invite(models.Model):
         return secret
 
     def check_secret(self, secret):
+        """
+        Checks if a secret is valid
+        """
         return self.secret == secret
 
     def save(self):
-        self.secret = self.generate_secret()
+        """
+        Overrides save to generate a secret if their isn't one
+        """
+        if not self.secret:
+            self.secret = self.generate_secret()
         super(Invite, self).save()  # Call the "real" save() method.
 
 
