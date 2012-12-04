@@ -1,14 +1,11 @@
-<html>
-	<head>
-	</head>
-	<body>
+{% extends 'sitebase.html' %}
+	{% block body %}
 		
 		{% block content %}
 		
 		{% endblock %}
 	
 	
-	{% include 'django_facebook/_facebook_js.html' %}
+		{% include 'django_facebook/_facebook_js.html' %}
 	
-	</body>
-</html>
+	{% endblock %}
