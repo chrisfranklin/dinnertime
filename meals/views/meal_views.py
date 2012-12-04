@@ -80,6 +80,12 @@ class MealForm(ModelForm):
 class MealCreateView(MealView, AjaxableResponseMixin, CreateView):
     form_class = MealForm
     #success_url = 'success'
+    from django.utils.decorators import method_decorator
+    from lazysignup.decorators import allow_lazy_user
+
+    @method_decorator(allow_lazy_user)
+    def dispatch(self, *args, **kwargs):
+        return super(MealCreateView, self).dispatch(*args, **kwargs)
 
     def get_form_kwargs(self, **kwargs):
         # pass "user" keyword argument with the current user to your form

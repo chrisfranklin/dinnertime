@@ -69,7 +69,7 @@
 
 {% block content %}
   <h2> Venue: {% if object.venue %}{{object.venue}}{% else %} none yet! {% endif %}</h2> <hr>
-  <h2> Guests: 0 / {{object.max_guests}}</h2><hr>
+  <h2> Guests: 0 / {{object.max_guests}}<span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Invite </a></span></h2><hr>
   <h2> I Have: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
   <h2> I Need: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
   <h2> I Want: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>

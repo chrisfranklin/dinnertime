@@ -55,6 +55,26 @@ class Meal(models.Model):
         return ('meal_meal_detail', (), {'pk': self.pk})
 
 
+class Invite(models.Model):
+    """
+    Stores an individual invite to a meal, converts invite to guest with correct secret.
+    """
+    meal = models.ForeignKey(Meal)
+    secret = models.CharField(max_length=50, blank=True, null=True)
+    name = models.CharField(max_length=50, blank=True, null=True)
+
+    def generate_secret(self):
+        import hashlib
+        import time
+        timestamp = int(time.time())
+        salt = "34890"
+        self.secret = hashlib.sha1(salt + timestamp + self.meal).hexdigest()
+
+    def save(self):
+        self.generate_secret()
+        super()
+
+
 class Guest(models.Model):
     """
     Stores an individual guest for a meal, junction tables for meal.guests
