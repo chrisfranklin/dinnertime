@@ -66,14 +66,26 @@
 {% endblock %}
 
 {% block content %}
-  <h2> Venue: {% if object.venue %}<a href="/venue/{{object.id}}">{{object.venue.address}}</a>{% else %} none yet! {% endif %}</h2> 
+  <h2> When: {% if object.when %}{{object.when}}{% else %} not set. {% endif %}</h2> 
+  <h2> Where: {% if object.venue %}<a href="/venue/{{object.id}}">{{object.venue.address}}</a>{% else %} none yet! {% endif %}</h2> 
   {% load easy_maps_tags %}
   {% if object.venue %}
     <!-- Default map with 300x400 dimensions -->
     {% easy_map object.venue.address 670 400 %}
   {% endif %}
   <hr>
-  <h2> Guests: 0 / {{object.max_guests}}<span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Invite </a></span></h2><hr>
+  <h2> 
+    Guests: 0 / {{object.max_guests}}
+    <span class="pull-right">
+      <a class="btn btn-danger"><i class="icon-minus"></i> Less </a>
+      <a class="btn btn-success"><i class="icon-plus"></i> More </a>
+    </span>
+  </h2>
+  <h2>
+    <form><input></input></form>
+    <a class="btn btn-large btn-primary"><i class="icon-plus"></i> Invite </a>
+  </h2>
+  <hr>
   <h2> I Have: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
   <h2> I Need: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
   <h2> I Want: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>

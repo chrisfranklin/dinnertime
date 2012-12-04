@@ -94,12 +94,15 @@ class Invite(models.Model):
     STATUS_CHOICES = (
         ("INVITED", 'Invited'),
         ("ACCEPTED", 'Accepted'),
+        ("CANCELLED", 'Cancelled'),
+        ("DECLINED", 'Declined'),
     )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="INVITED")
     email = models.EmailField(max_length=254, blank=True, null=True)
     fid = models.CharField(max_length=30, blank=True, null=True)
     plusones = models.IntegerField(default=0)
     max_plusones = models.IntegerField(default=1)
+    single_use = models.BooleanField(default=True)
 
     def send_invite(self):
         """
@@ -118,24 +121,38 @@ class Invite(models.Model):
         """
         if self.check_secret(secret):
             # Secret matches
-            # If the user has an email or a facebook we should try and match it to a profile perhaps.
-            if user:
-                # We have a user
-                if self.meal.add_guest(self.plusones):
-                    # We have allocated the space at the table
-                    self.create_guest(user)
-                    # Set status to accepted, we should really check if the guest was created
-                    self.status = "ACCEPTED"
-                    # We should save any other info we have about the user to the user profile for display
+            if self.status == "INVITED" or not self.single_use:
+                # If the code is not used or can be used multiple times then continue.
+                # If the user has an email or a facebook we should try and match it to a profile perhaps.
+                if user:
+                    # We have a user
+                    if self.meal.add_guest(self.plusones):
+                        # We have allocated the space at the table
+                        if self.create_guest(user):
+                            # Set status to accepted
+                            self.status = "ACCEPTED"
+                            # We should save any other info we have about the user to the user profile for display
+                    else:
+                        # There is not space at the table, we could try with less plusones in future
+                        pass
                 else:
-                    # There is not space at the table, we could try with less plusones in future
+                    # No user (not even a lazy one!)
                     pass
-            else:
-                # No user (not even a lazy one!)
-                pass
         else:
             # The secret doesn't match
             print("Bad secret")
+        pass
+
+    def decline_invite(self, secret):
+        """
+        Changes invite status to declined
+        """
+        self.status = "DECLINED"
+
+    def cancel_invite(self, secret):
+        """
+        Removes user from meal guests list
+        """
         pass
 
     def create_guest(self, user):
@@ -144,7 +161,7 @@ class Invite(models.Model):
         """
         # We should check that max_guests isn't already reached.
         guest = Guest(user=user, meal=self.meal)
-        guest.save()
+        return guest.save()
 
     def generate_secret(self):
         """
