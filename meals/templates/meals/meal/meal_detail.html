@@ -57,10 +57,8 @@
 
 
 {% block header-link %}
-  <a href='{{ object.get_absolute_url }}'>
-    <img class="mugshot" src="{{ object.host.get_profile.get_mugshot_url }}" alt="{% trans "Your mugshot" %}" />
-    {{object.host}}'s meal
-  </a>
+  <a href='/accounts/{{object.host}}/'><img class="mugshot" src="{{ object.host.get_profile.get_mugshot_url }}" alt="{% trans "Your mugshot" %}"/></a>&nbsp;
+  <a href='{{ object.get_absolute_url }}'>{{object.host}}'s meal</a>
 {% endblock %}
 
 {% block header-description %}

@@ -110,3 +110,40 @@ urlpatterns += patterns('',
 
 
 )
+
+
+from meals.views.invite_views import *
+urlpatterns += patterns('',
+
+    url(
+        regex=r'^invite/create/$',
+        view=InviteCreateView.as_view(),
+        name='meals_invite_create'
+    ),
+
+
+    url(
+        regex=r'^invite/(?P<pk>\d+?)/delete/$',
+        view=InviteDeleteView.as_view(),
+        name='meals_invite_delete'
+    ),
+    url(
+        regex=r'^invite/(?P<pk>\d+?)/$',
+        view=InviteDetailView.as_view(),
+        name='meals_invite_detail'
+    ),
+    url(
+        regex=r'^invite/$',
+        view=InviteListView.as_view(),
+        name='meals_invite_list'
+    ),
+
+
+    url(
+        regex=r'^invite/(?P<pk>\d+?)/update/$',
+        view=InviteUpdateView.as_view(),
+        name='meals_invite_update'
+    ),
+
+
+)
