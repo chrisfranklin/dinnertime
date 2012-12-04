@@ -23,3 +23,5 @@ django-easy-maps
 
 django-lazysignup
 django-facebook
+
+django-crispy-forms

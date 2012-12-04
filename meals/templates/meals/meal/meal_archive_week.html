@@ -1,0 +1,31 @@
+
+
+{% extends 'meals/meal/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/meals/templates/meals/meal/meal_archive_week.html
+{% endblock %}
+
+{% block title %}
+  {% trans "Meal Week Archive" %}
+{% endblock %}
+
+{% block header-link %}
+  {% trans "Meal Week Archive" %}
+{% endblock %}
+
+{% block header-description %}
+  {% trans "A weekly archive page showing all objects in a given week." %}
+{% endblock %}
+
+{% block content %}
+  <h2>
+    {% blocktrans %}
+      Meals created during the week beginning on {{ week }}
+    {% endblocktrans %}
+  </h2>
+  {% include 'meals/meal/object_table_list.html' %}
+  {% include 'meals/meal/pagination.html' %}
+{% endblock %}

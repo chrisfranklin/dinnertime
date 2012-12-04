@@ -19,7 +19,7 @@ SITE_ID = 1
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 TIME_ZONE = 'UTC'
-USE_TZ = True
+USE_TZ = False
 USE_I18N = True
 USE_L10N = True
 LANGUAGE_CODE = 'en'
@@ -47,12 +47,15 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     #'south',
-    'meal',
+    'meals',
+    'util',
 
     'easy_maps',
 
     'lazysignup',
     'django_facebook',
+
+    'crispy_forms',
 
     #==========================================================================
     # 3rd party Applications

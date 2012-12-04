@@ -1,0 +1,95 @@
+
+
+{% load i18n %}
+
+<p>
+  {% trans "Click on the primary key value to access the individual Meal's page." %}
+</p>
+<table class='table table-bordered table-striped'>
+  <thead>
+    <tr>
+      <th>
+        id
+      </th>
+      
+        <th>
+          host
+        </th>
+      
+        <th>
+          when
+        </th>
+      
+        <th>
+          icon
+        </th>
+      
+        <th>
+          description
+        </th>
+      
+        <th>
+          venue
+        </th>
+      
+        <th>
+          max_guests
+        </th>
+      
+        <th>
+          suitable_for
+        </th>
+      
+        <th>
+          privacy
+        </th>
+      
+        <th>
+          wants
+        </th>
+      
+        <th>
+          needs
+        </th>
+      
+        <th>
+          haves
+        </th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% for object in object_list %}
+      <tr>
+        <td>
+          <a href='{{ object.get_absolute_url }}'>
+            {{ object.id|stringformat:".3d" }}
+          </a>
+        </td>
+        
+          <td>{{ object.host }}</td>
+        
+          <td>{{ object.when }}</td>
+        
+          <td>{{ object.icon }}</td>
+        
+          <td>{{ object.description }}</td>
+        
+          <td>{{ object.venue }}</td>
+        
+          <td>{{ object.max_guests }}</td>
+        
+          <td>{{ object.suitable_for }}</td>
+        
+          <td>{{ object.privacy }}</td>
+        
+          <td>{{ object.wants }}</td>
+        
+          <td>{{ object.needs }}</td>
+        
+          <td>{{ object.haves }}</td>
+        
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

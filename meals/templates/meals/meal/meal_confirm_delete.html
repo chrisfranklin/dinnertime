@@ -1,0 +1,41 @@
+
+
+{% extends 'meals/meal/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/meals/templates/meals/meal/meal_confirm_delete.html
+{% endblock %}
+
+{% block title %}
+  {% trans "Meal Confirm Delete" %}
+{% endblock %}
+
+{% block header-link %}
+  <a href='{% url meals_meal_delete pk=object.pk %}'>
+    {% trans "Meal Confirm Delete" %}
+  </a>
+{% endblock %}
+
+{% block header-description %}
+  {% trans "A view that displays a confirmation page (on GET) and deletes an existing object (on POST)." %}
+{% endblock %}
+
+{% block content %}
+  <h2>
+    {% trans "Delete this Meal?" %}
+  </h2>
+  <br />
+  {% include 'meals/meal/object_table_detail.html' %}
+  <form action='' charset='utf-8' method='post'>
+    <fieldset>
+      {% csrf_token %}
+      <div class='form-actions'>
+        <button class='btn btn-danger' type='submit'>
+          {% trans "Delete" %}
+        </button>
+      </div>
+    </fieldset>
+  </form>
+{% endblock %}

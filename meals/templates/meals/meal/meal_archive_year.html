@@ -1,0 +1,57 @@
+
+
+{% extends 'meals/meal/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/meals/templates/meals/meal/meal_archive_year.html
+{% endblock %}
+
+{% block breadcrumbs %}
+  <ul class='breadcrumb'>
+    <li>
+      <a href='{% url meals_meal_archive_index %}'>
+        {% trans "Archive Index" %}
+      </a>
+      <span class='divider'>
+        /
+      </span>
+    </li>
+    <li>
+      <a href='{% url meals_meal_year_archive year=year %}'>
+        {% trans "Year Archive" %}
+      </a>
+    </li>
+  </ul>
+{% endblock %}
+
+{% block header-link %}
+  <a href='{% url meals_meal_year_archive year=year %}'>
+    {% trans "Meal Year Archive" %}
+  </a>
+{% endblock %}
+{% block header-description %}
+  {% trans "A yearly archive page showing all available months in a given year." %}
+{% endblock %}
+{% block content %}
+  <h2>
+    {% trans "By Month" %}
+  </h2>
+  <ul class='nav nav-tabs nav-stacked'>
+    {% for date in date_list %}
+      <li>
+        <a href='{% url meals_meal_month_archive year=date.year month=date.month %}'>
+          {{ date|date:"M Y" }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+  <h2>
+    {% blocktrans %}
+      Meals created in the year {{ year }}
+    {% endblocktrans %}
+  </h2>
+  {% include 'meals/meal/object_table_list.html' %}
+  {% include 'meals/meal/pagination.html' %}
+{% endblock %}

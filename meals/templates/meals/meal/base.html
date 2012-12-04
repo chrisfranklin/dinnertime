@@ -1,0 +1,90 @@
+{% extends 'sitebase.html' %}
+{% load i18n %}
+  {% block body %}
+    <div class='container'>
+      <div class='row'>
+        <div class='page-header site-header'>
+          <h1>
+            {% block header %}
+              <a href='{% url meals_meal_list %}'>
+                {% trans "Meals" %}
+              </a>
+            {% endblock %}
+          </h1>
+        </div>
+        <div class='content'>
+          <div class='span3'>
+            {% block sidebar %}
+                <ul class='nav nav-list'>
+                  <li class='nav-header'>
+                    {% trans "Views" %}
+                  </li>
+                  <li>
+                    <a href='{% url meals_meal_list %}'>
+                      {% trans "List View" %}
+                    </a>
+                  </li>
+                  <li>
+                    <a href='{% url meals_meal_create %}'>
+                      {% trans "Create View" %}
+                    </a>
+                  </li>
+                  {% if object %}
+                    <li>
+                      <a href='{{ object.get_absolute_url }}'>
+                        {% trans "Detail View" %}
+                      </a>
+                    </li>
+                    <li>
+                      <a href='{% url meals_meal_update pk=object.pk %}'>
+                        {% trans "Update View" %}
+                      </a>
+                    </li>
+                    <li>
+                      <a href='{% url meals_meal_delete pk=object.pk %}'>
+                        {% trans "Delete View" %}
+                      </a>
+                    </li>
+                  
+                  {% endif %}
+                  <li class='nav-header'>
+                    {% trans "Date-based Views" %}
+                  </li>
+                  <li>
+                    <a href='{% url meals_meal_archive_index %}'>
+                      {% trans "Archive Index" %}
+                    </a>
+                  </li>
+                  {% if object %}
+                    <a href='{% url meals_meal_date_detail year=object.when.year month=object.when.month day=object.when.day pk=object.pk %}'>
+                      {% trans "Date Detail View" %}
+                    </a>
+                  {% endif %}
+                  
+                </ul>
+            {% endblock %}
+          </div>
+          <div class='span7'>
+            {% block breadcrumbs %}
+            {% endblock %}
+            <div class='page-header'>
+              <h1>
+                {% block header-link %}
+                {% endblock %}
+                <br />
+                <small>
+                  {% block header-description %}
+                  {% endblock %}
+                </small>
+              </h1>
+            </div>
+            <div class='content'>
+              {% block content %}
+              {% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+  {% endblock %}

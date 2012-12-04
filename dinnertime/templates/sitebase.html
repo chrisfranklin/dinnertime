@@ -23,6 +23,9 @@
             </style>
             <link rel="stylesheet" href="{{ STATIC_URL}}bootstrap/css/bootstrap-responsive.css">
             <link rel="stylesheet" href="{{ STATIC_URL}}css/main.css">
+        {% endcompress %}
+
+        {% compress css %}
             {% block extra_style %} {% endblock %}
         {% endcompress %}
 
@@ -119,6 +122,9 @@
             <script src="{{ STATIC_URL}}js/main.js"></script>
             <!-- End Site Wide Javascript -->
 
+        {% endcompress %}
+
+        {% compress js %}
             {% block extra_js %}{% endblock %}
         {% endcompress %}
 

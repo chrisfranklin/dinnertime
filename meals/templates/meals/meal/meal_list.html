@@ -1,0 +1,27 @@
+
+
+{% extends 'meals/meal/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/meals/templates/meals/meal/meal_list.html
+{% endblock %}
+
+{% block header-link %}
+  <a href='{% url meals_meal_list %}'>
+    {% trans "Meal List" %}
+  </a>
+{% endblock %}
+
+{% block header-description %}
+  {% trans "A page representing a list of objects." %}
+{% endblock %}
+
+{% block content %}
+  <h2>
+    {% trans "Meals" %}
+  </h2>
+  {% include 'meals/meal/object_table_list.html' %}
+  {% include 'meals/meal/pagination.html' %}
+{% endblock %}

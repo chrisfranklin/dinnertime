@@ -1,0 +1,62 @@
+
+
+{% extends 'meals/meal/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/meals/templates/meals/meal/meal_archive_day.html
+{% endblock %}
+{% block title %}
+  {% trans "Meal Day Archive" %}
+{% endblock %}
+{% block breadcrumbs %}
+  <ul class='breadcrumb'>
+    <li>
+      <a href='{% url meals_meal_archive_index %}'>
+        {% trans "Archive Index" %}
+      </a>
+      <span class='divider'>
+        /
+      </span>
+    </li>
+    <li>
+      <a href='{% url meals_meal_year_archive year=day.year %}'>
+        {% trans "Year Archive" %}
+      </a>
+      <span class='divider'>
+        /
+      </span>
+    </li>
+    <li>
+      <a href='{% url meals_meal_month_archive year=day.year month=day.month %}'>
+        {% trans "Month Archive" %}
+      </a>
+      <span class='divider'>
+        /
+      </span>
+    </li>
+    <li>
+      <a href='{% url meals_meal_day_archive year=day.year month=day.month day=day.day %}'>
+        {% trans "Day Archive" %}
+      </a>
+    </li>
+  </ul>
+{% endblock %}
+{% block header-link %}
+  <a href='{% url meals_meal_day_archive year=day.year month=day.month day=day.day %}'>
+    {% trans "Meal Day Archive" %}
+  </a>
+{% endblock %}
+{% block header-description %}
+  {% trans "A day archive page showing all objects in a given day." {%
+{% endblock %}
+{% block content %}
+  <h2>
+    {% blocktrans %}
+      Meals created on {{ day }}
+    {% endblocktrans %}
+  </h2>
+  {% include 'meals/meal/object_table_list.html' %}
+  {% include 'meals/meal/pagination.html' %}
+{% endblock %}

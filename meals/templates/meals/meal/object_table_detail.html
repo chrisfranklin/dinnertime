@@ -1,0 +1,106 @@
+
+
+{% load i18n %}
+
+<table class='table table-bordered table-striped'>
+  <thead>
+    <tr>
+      <th>
+        {% trans "Field" %}
+      </th>
+      <th>
+        {% trans "Value" %}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        id
+      </td>
+      <td>
+        <a href='{{ object.get_absolute_url }}'>
+          {{ object.id|stringformat:".3d" }}
+        </a>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        host
+      </td>
+      <td>{{ object.host }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        when
+      </td>
+      <td>{{ object.when }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        icon
+      </td>
+      <td>{{ object.icon }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        description
+      </td>
+      <td>{{ object.description }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        venue
+      </td>
+      <td>{{ object.venue }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        max_guests
+      </td>
+      <td>{{ object.max_guests }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        suitable_for
+      </td>
+      <td>{{ object.suitable_for }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        privacy
+      </td>
+      <td>{{ object.privacy }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        wants
+      </td>
+      <td>{{ object.wants }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        needs
+      </td>
+      <td>{{ object.needs }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        haves
+      </td>
+      <td>{{ object.haves }}</td>
+    </tr>
+    
+  </tbody>
+</table>

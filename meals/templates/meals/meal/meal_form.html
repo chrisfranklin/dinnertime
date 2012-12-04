@@ -1,0 +1,73 @@
+
+
+{% extends 'meals/meal/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/meals/templates/meals/meal/meal_form.html
+{% endblock %}
+
+{% block title %}
+  {% if object %}
+    {% trans "Update Meal" %}
+  {% else %}
+    {% trans "Create a New Meal" %}
+  {% endif %}
+{% endblock %}
+
+{% block header-link %}
+  {% if object %}
+    <a href='{% url meals_meal_update pk=object.pk %}'>
+      {% trans "Meal Update" %}
+    </a>
+  {% else %}
+    <a href='{% url meals_meal_create %}'>
+      {% trans "Meal Create" %}
+    </a>
+  {% endif %}
+{% endblock %}
+
+{% block header-description %}
+  {% if object %}
+    {% trans "A view that displays a form for editing an existing object." %}
+  {% else %}
+    {% trans "A view that displays a form for creating an object." %}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+  <form action='{% if object %}{% url meals_meal_update pk=object.pk %}{% else %}{% url meals_meal_create %}{% endif %}' method='post' encoding='utf-8'>
+    <fieldset>
+      {% csrf_token %}
+      {{ form|crispy }}
+      <div class='form-actions'>
+        <button class='btn btn-large btn-success' type='submit'>
+          {% if object %}
+            {% trans "Update" %}
+          {% else %}
+            {% trans "Create" %}
+          {% endif %}
+        </button>
+      </div>
+    </fieldset>
+  </form>
+{% endblock %}
+
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{{ STATIC_URL}}css/datepicker.css">
+  <link rel="stylesheet" href="{{ STATIC_URL}}css/timepicker.css">
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{{ STATIC_URL}}js/bootstrap-datepicker.js"></script>
+  <script src="{{ STATIC_URL}}js/bootstrap-timepicker.js"></script>
+  <script>
+    $('.timepicker-default').timepicker();
+    $('.datepicker-default').datepicker({
+      format:'yyyy-mm-dd'
+    });
+  </script>
+{% endblock %}
