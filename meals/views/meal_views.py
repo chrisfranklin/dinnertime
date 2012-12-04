@@ -41,6 +41,9 @@ class AjaxableResponseMixin(object):
 
 
 class MealView(object):
+    """
+    Attaches object to class, used as base for other CBVs
+    """
     model = Meal
 
     def get_template_names(self):
@@ -53,11 +56,17 @@ class MealView(object):
 
 
 class MealDateView(MealView):
+    """
+    Sets up base date view format, used as base for data based CBV's
+    """
     date_field = 'when'
     month_format = '%m'
 
 
 class MealBaseListView(MealView):
+    """
+    Provides pagination
+    """
     paginate_by = 10
 
 
@@ -67,7 +76,9 @@ class MealArchiveIndexView(
 
 
 class MealForm(ModelForm):
-
+    """
+    Provides form for creation and modification, need to explicitly set this.
+    """
     class Meta:
         model = Meal
         exclude = ('host', 'guests', 'wants', 'needs', 'haves', 'icon', 'description', 'venue')
@@ -78,6 +89,9 @@ class MealForm(ModelForm):
 
 
 class MealCreateView(MealView, AjaxableResponseMixin, CreateView):
+    """
+    Provides create support
+    """
     form_class = MealForm
     #success_url = 'success'
     from django.utils.decorators import method_decorator
@@ -104,6 +118,9 @@ class MealDayArchiveView(
 
 
 class MealDeleteView(MealView, DeleteView):
+    """
+    Provides delete support
+    """
 
     def get_success_url(self):
         from django.core.urlresolvers import reverse
@@ -129,6 +146,9 @@ class MealTodayArchiveView(
 
 
 class MealUpdateView(MealView, UpdateView):
+    """
+    Provides update support
+    """
     form_class = MealForm
 
 
