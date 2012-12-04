@@ -29,6 +29,7 @@ class Meal(models.Model):
     description = models.TextField(blank=True, null=True)
     venue = models.ForeignKey(Venue, blank=True, null=True)
     max_guests = models.IntegerField(default=4)
+    current_guests = models.IntegerField(default=0)
     guests = models.ManyToManyField(User, related_name="attended", through='Guest', blank=True, null=True)
     SUITABLE_FOR_CHOICES = (
         ("MEAT", 'Meat Eaters'),
@@ -47,6 +48,15 @@ class Meal(models.Model):
     #cut off for rsvp needs adding
     #recipe
 
+    def add_guest(self, plusone=0):
+        if self.max_guests > self.current_guests + plusone:
+            # We have room at the meal for the person and their plusones
+            self.current_guests += plusone + 1  # The extra one is for the actual guest
+            return True
+        else:
+            # We do not have room for the person and their plusones
+            return False
+
     def __unicode__(self):
         return "%s meal" % (self.host)
 
@@ -62,14 +72,61 @@ class Invite(models.Model):
     meal = models.ForeignKey(Meal)
     secret = models.CharField(max_length=50, blank=True, null=True)
     name = models.CharField(max_length=50, blank=True, null=True)
+    STATUS_CHOICES = (
+        ("INVITED", 'Invited'),
+        ("ACCEPTED", 'Accepted'),
+    )
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="INVITED")
+    email = models.EmailField(max_length=254, blank=True, null=True)
+    fid = models.CharField(max_length=30, blank=True, null=True)
+    plusones = models.IntegerField(default=0)
+    max_plusones = models.IntegerField(default=1)
+
+    def send_invite(self):
+        if self.fid:
+            # Send Facebook invite to user
+            pass
+        if self.email:
+            # Send Email invite to user
+            pass
+
+    def accept_invite(self, secret, user):
+        if self.check_secret(secret):
+            # Secret matches
+            # If the user has an email or a facebook we should try and match it to a profile perhaps.
+            if user:
+                # We have a user
+                if self.meal.add_guest(self.plusones):
+                    # We have allocated the space at the table
+                    self.create_guest(user)
+                    # Set status to accepted, we should really check if the guest was created
+                    self.status = "ACCEPTED"
+                    # We should save any other info we have about the user to the user profile for display
+                else:
+                    # There is not space at the table, we could try with less plusones in future
+                    pass
+            else:
+                # No user (not even a lazy one!)
+                pass
+        else:
+            # The secret doesn't match
+            print("Bad secret")
+        pass
+
+    def create_guest(self, user):
+        # We should check that max_guests isn't already reached.
+        guest = Guest(user=user, meal=self.meal)
+        guest.save()
 
     def generate_secret(self):
         import hashlib
         from util.misc import get_random_string
         salt = get_random_string()
         secret = hashlib.sha1(salt + str(self.meal)).hexdigest()
-        print secret
         return secret
+
+    def check_secret(self, secret):
+        return self.secret == secret
 
     def save(self):
         self.secret = self.generate_secret()
