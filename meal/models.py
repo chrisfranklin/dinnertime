@@ -21,7 +21,7 @@ class Venue(models.Model):
 
 class Meal(models.Model):
     """
-	Stores an instance of a meal
+    Stores an instance of a meal
     """
     description = models.TextField()
     icon = models.ImageField(upload_to="meal/icon/", blank=True, null=True)
@@ -29,8 +29,14 @@ class Meal(models.Model):
     needs = JSONField()
     haves = JSONField()
     host = models.ForeignKey(User, related_name="hosted")
-    guests = models.ManyToManyField(
-        User, related_name="attended", through='Guest')
+    guests = models.ManyToManyField(User, related_name="attended", through='Guest')
+    SUITABLE_FOR_CHOICES = (
+        ("MEAT", 'Meat Eaters'),
+        ("VEGETARIAN", 'Vegetarians'),
+        ("VEGAN", 'Vegans'),
+    )
+    suitable_for = models.CharField(max_length=10, choices=SUITABLE_FOR_CHOICES, default="MEAT")
+    max_guests = models.IntegerField()
     # seats and cut off for rsvp need adding
     #recipe
     venue = models.ForeignKey(Venue)
