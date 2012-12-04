@@ -28,7 +28,7 @@ class Meal(models.Model):
     icon = models.ImageField(upload_to="meal/icon/", blank=True, null=True)
     description = models.TextField()
     venue = models.ForeignKey(Venue)
-    max_guests = models.IntegerField()
+    max_guests = models.IntegerField(default=4)
     guests = models.ManyToManyField(User, related_name="attended", through='Guest')
     SUITABLE_FOR_CHOICES = (
         ("MEAT", 'Meat Eaters'),
@@ -36,12 +36,16 @@ class Meal(models.Model):
         ("VEGAN", 'Vegans'),
     )
     suitable_for = models.CharField(max_length=10, choices=SUITABLE_FOR_CHOICES, default="MEAT")
+    PRIVACY_CHOICES = (
+        ("PRIVATE", 'Private'),
+        ("PUBLIC", 'Public'),
+    )
+    privacy = models.CharField(max_length=10, choices=PRIVACY_CHOICES, default="PRIVATE")
     wants = JSONField()
     needs = JSONField()
-    haves = JSONField()  
-    # seats and cut off for rsvp need adding
+    haves = JSONField()
+    #cut off for rsvp needs adding
     #recipe
-    
 
     def __unicode__(self):
         return "%s meal" % (self.host)
