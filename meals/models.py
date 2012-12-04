@@ -16,7 +16,7 @@ class Venue(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('meal_venue_detail', (), {'pk': self.pk})
+        return ('meals_venue_detail', (), {'pk': self.pk})
 
 
 class Meal(models.Model):
@@ -56,6 +56,19 @@ class Meal(models.Model):
         else:
             # We do not have room for the person and their plusones
             return False
+
+    def share_to_facebook(self, graph=None, **kwargs):
+        from django_facebook.models import OpenGraphShare
+        #this is where the magic happens
+        share = OpenGraphShare.objects.create(
+            user_id=self.user_id,
+            action_domain='fashiolista:love',
+            #content_type=content_type,
+            object_id=self.id,
+        )
+        share.set_share_dict(kwargs)
+        share.save()
+        return share.send()
 
     def __unicode__(self):
         return "%s meal" % (self.host)

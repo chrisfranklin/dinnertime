@@ -73,3 +73,40 @@ urlpatterns = patterns('',
         name='meals_meal_year_archive'
     ),
 )
+
+
+from meals.views.venue_views import *
+urlpatterns += patterns('',
+
+    url(
+        regex=r'^venue/create/$',
+        view=VenueCreateView.as_view(),
+        name='meals_venue_create'
+    ),
+
+
+    url(
+        regex=r'^venue/(?P<pk>\d+?)/delete/$',
+        view=VenueDeleteView.as_view(),
+        name='meals_venue_delete'
+    ),
+    url(
+        regex=r'^venue/(?P<pk>\d+?)/$',
+        view=VenueDetailView.as_view(),
+        name='meals_venue_detail'
+    ),
+    url(
+        regex=r'^venue/$',
+        view=VenueListView.as_view(),
+        name='meals_venue_list'
+    ),
+
+
+    url(
+        regex=r'^venue/(?P<pk>\d+?)/update/$',
+        view=VenueUpdateView.as_view(),
+        name='meals_venue_update'
+    ),
+
+
+)

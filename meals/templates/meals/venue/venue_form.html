@@ -1,0 +1,55 @@
+
+
+{% extends 'meals/venue/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/meals/templates/meals/venue/venue_form.html
+{% endblock %}
+
+{% block title %}
+  {% if object %}
+    {% trans "Update Venue" %}
+  {% else %}
+    {% trans "Create a New Venue" %}
+  {% endif %}
+{% endblock %}
+
+{% block header-link %}
+  {% if object %}
+    <a href='{% url meals_venue_update pk=object.pk %}'>
+      {% trans "Venue Update" %}
+    </a>
+  {% else %}
+    <a href='{% url meals_venue_create %}'>
+      {% trans "Venue Create" %}
+    </a>
+  {% endif %}
+{% endblock %}
+
+{% block header-description %}
+  {% if object %}
+    {% trans "A view that displays a form for editing an existing object." %}
+  {% else %}
+    {% trans "A view that displays a form for creating an object." %}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <form action='{% if object %}{% url meals_venue_update pk=object.pk %}{% else %}{% url meals_venue_create %}{% endif %}' method='post' encoding='utf-8'>
+    <fieldset>
+      {% csrf_token %}
+      {{ form }}
+      <div class='form-actions'>
+        <button class='btn btn-large btn-success' type='submit'>
+          {% if object %}
+            {% trans "Update" %}
+          {% else %}
+            {% trans "Create" %}
+          {% endif %}
+        </button>
+      </div>
+    </fieldset>
+  </form>
+{% endblock %}

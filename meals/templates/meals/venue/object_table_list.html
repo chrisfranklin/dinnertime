@@ -1,0 +1,47 @@
+
+
+{% load i18n %}
+
+<p>
+  {% trans "Click on the primary key value to access the individual Venue's page." %}
+</p>
+<table class='table table-bordered table-striped'>
+  <thead>
+    <tr>
+      <th>
+        id
+      </th>
+      
+        <th>
+          name
+        </th>
+      
+        <th>
+          address
+        </th>
+      
+        <th>
+          user
+        </th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% for object in object_list %}
+      <tr>
+        <td>
+          <a href='{{ object.get_absolute_url }}'>
+            {{ object.id|stringformat:".3d" }}
+          </a>
+        </td>
+        
+          <td>{{ object.name }}</td>
+        
+          <td>{{ object.address }}</td>
+        
+          <td>{{ object.user }}</td>
+        
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

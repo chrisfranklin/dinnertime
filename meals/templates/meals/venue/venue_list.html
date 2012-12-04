@@ -1,0 +1,27 @@
+
+
+{% extends 'meals/venue/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/meals/templates/meals/venue/venue_list.html
+{% endblock %}
+
+{% block header-link %}
+  <a href='{% url meals_venue_list %}'>
+    {% trans "Venue List" %}
+  </a>
+{% endblock %}
+
+{% block header-description %}
+  {% trans "A page representing a list of objects." %}
+{% endblock %}
+
+{% block content %}
+  <h2>
+    {% trans "Venues" %}
+  </h2>
+  {% include 'meals/venue/object_table_list.html' %}
+  {% include 'meals/venue/pagination.html' %}
+{% endblock %}

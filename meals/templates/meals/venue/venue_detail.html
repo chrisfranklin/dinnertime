@@ -1,0 +1,46 @@
+
+
+{% extends 'meals/venue/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/meals/templates/meals/venue/venue_detail.html
+{% endblock %}
+
+{% block title %}
+  {% trans "Venue Detail" %}
+{% endblock %}
+
+
+
+{% block header-link %}
+  <a href='{{ object.get_absolute_url }}'>
+    {% trans "Venue Detail" %}
+  </a>
+{% endblock %}
+
+{% block header-description %}
+  {% trans "A page representing an individual object." %}
+{% endblock %}
+
+{% block content %}
+{% load easy_maps_tags %}
+
+  <!-- Default map with 300x400 dimensions -->
+  {% easy_map object.address 670 400 %}
+  {% include 'meals/venue/object_table_detail.html' %}
+  <form action='{% url meals_venue_delete pk=object.pk %}' charset='utf-8' method='post'>
+    <fieldset>
+      {% csrf_token %}
+      <div class='form-actions'>
+        <a class='btn btn-success' href='{% url meals_venue_update pk=object.pk %}'>
+          {% trans "Update" %}
+        </a>
+        <button class='btn btn-danger' type='submit'>
+          {% trans "Delete" %}
+        </button>
+      </div>
+    </fieldset>
+  </form>
+{% endblock %}
