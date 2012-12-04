@@ -65,14 +65,15 @@ class Invite(models.Model):
 
     def generate_secret(self):
         import hashlib
-        import time
-        timestamp = int(time.time())
-        salt = "34890"
-        self.secret = hashlib.sha1(salt + timestamp + self.meal).hexdigest()
+        from util.misc import get_random_string
+        salt = get_random_string()
+        secret = hashlib.sha1(salt + str(self.meal)).hexdigest()
+        print secret
+        return secret
 
     def save(self):
-        self.generate_secret()
-        super()
+        self.secret = self.generate_secret()
+        super(Invite, self).save()  # Call the "real" save() method.
 
 
 class Guest(models.Model):
