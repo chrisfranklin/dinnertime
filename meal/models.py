@@ -23,24 +23,25 @@ class Meal(models.Model):
     """
     Stores an instance of a meal
     """
-    description = models.TextField()
-    icon = models.ImageField(upload_to="meal/icon/", blank=True, null=True)
-    wants = JSONField()
-    needs = JSONField()
-    haves = JSONField()
     host = models.ForeignKey(User, related_name="hosted")
-    guests = models.ManyToManyField(User, related_name="attended", through='Guest')
     when = models.DateTimeField()
+    icon = models.ImageField(upload_to="meal/icon/", blank=True, null=True)
+    description = models.TextField()
+    venue = models.ForeignKey(Venue)
+    max_guests = models.IntegerField()
+    guests = models.ManyToManyField(User, related_name="attended", through='Guest')
     SUITABLE_FOR_CHOICES = (
         ("MEAT", 'Meat Eaters'),
         ("VEGETARIAN", 'Vegetarians'),
         ("VEGAN", 'Vegans'),
     )
     suitable_for = models.CharField(max_length=10, choices=SUITABLE_FOR_CHOICES, default="MEAT")
-    max_guests = models.IntegerField()
+    wants = JSONField()
+    needs = JSONField()
+    haves = JSONField()  
     # seats and cut off for rsvp need adding
     #recipe
-    venue = models.ForeignKey(Venue)
+    
 
     def __unicode__(self):
         return "%s meal" % (self.host)
