@@ -2,8 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from userena.models import UserenaBaseProfile
+from django_facebook.models import FacebookProfileModel
 
-class UserProfile(UserenaBaseProfile):
+class UserProfile(UserenaBaseProfile, FacebookProfileModel):
     user = models.OneToOneField(User,
                                 unique=True,
                                 verbose_name=_('user'),

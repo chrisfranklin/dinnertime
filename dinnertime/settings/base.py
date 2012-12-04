@@ -51,6 +51,9 @@ INSTALLED_APPS = (
 
     'easy_maps',
 
+    'lazysignup',
+    'django_facebook',
+
     #==========================================================================
     # 3rd party Applications
     #==========================================================================
@@ -168,6 +171,7 @@ TEMPLATE_DIRS = (
 
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
+    'django_facebook.context_processors.facebook',
 )
 
 #==============================================================================
@@ -183,11 +187,14 @@ MIDDLEWARE_CLASSES += (
 #==============================================================================
 
 AUTHENTICATION_BACKENDS += (
+    'django_facebook.auth_backends.FacebookBackend',
     'userena.backends.UserenaAuthenticationBackend',
     'guardian.backends.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
     'lazysignup.backends.LazySignupBackend',
 )
+
+FACEBOOK_REGISTRATION_BACKEND = 'django_facebook.registration_backends.UserenaBackend'
 
 #==============================================================================
 # Cache Framework - set to memcache
@@ -212,6 +219,12 @@ CACHES = {
 EMAIL_BACKEND = 'djrill.mail.backends.djrill.DjrillBackend'
 MANDRILL_API_KEY = 'set-your-own-key-here'
 MANDRILL_API_URL = 'http://mandrillapp.com/api/1.0'
+
+#==============================================================================
+# Facebook Settings - Production
+#==============================================================================
+FACEBOOK_APP_ID = "559089214107050"
+FACEBOOK_APP_SECRET = "a6976d28267f98ef3474f5398ebc6e42"
 
 #==============================================================================
 # Miscellaneous project settings

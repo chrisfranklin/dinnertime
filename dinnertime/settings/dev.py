@@ -44,3 +44,9 @@ MIDDLEWARE_CLASSES += (
 )
 
 # WSGI_APPLICATION = 'dinnertime.wsgi.dev.application'
+
+#==============================================================================
+# Facebook Settings - Development
+#==============================================================================
+FACEBOOK_APP_ID = "114345905396999"
+FACEBOOK_APP_SECRET = "31de98e45c859806cf8fc286129d91fe"
