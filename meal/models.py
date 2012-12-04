@@ -30,6 +30,7 @@ class Meal(models.Model):
     haves = JSONField()
     host = models.ForeignKey(User, related_name="hosted")
     guests = models.ManyToManyField(User, related_name="attended", through='Guest')
+    when = models.DateTimeField()
     SUITABLE_FOR_CHOICES = (
         ("MEAT", 'Meat Eaters'),
         ("VEGETARIAN", 'Vegetarians'),
