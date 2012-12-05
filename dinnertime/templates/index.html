@@ -22,29 +22,71 @@
       </div>
     </div> -->
 
-  </hr>
-    <div class="row">
-      <div class="span3 offset3">
-        <h2><a href="/meal/create/"><i class="icon-bullhorn"></i> I'm cooking </a></h2>
-      </div>
-      <div class="span3">
-        <h2><a href="/meal/"><i class="icon-link"></i> I'm hungry </a></h2>
-      </div>
+    </hr>
+    <h3> We are currently cooking things up, please register your interest below </h3>
+    <div>
+      <form method="post" action="/interest/">{% csrf_token %}
+        <h3><input type="email" placeholder="you@example.com" name="email" id="id_email" /></h3>
+        <h3 class="hidden2 success">Success!</h3>
+        <h3 class="hidden2 failure">Failure!</h3>
+        <button  type="submit">Notify me!</button>
+      </form>
     </div>
+    </br></br>
+    {% if request.user.is_staff %}
+      </hr>
+      <div class="row">
+        <div class="span3 offset3">
+          <h2><a href="/meal/create/"><i class="icon-bullhorn"></i> I'm cooking </a></h2>
+        </div>
+        <div class="span3">
+          <h2><a href="/meal/"><i class="icon-link"></i> I'm hungry </a></h2>
+        </div>
+      </div>
 
-    </br></br></br></br></br></br>
-    <ul class="masthead-links">
-      <li>
-        <a href="http://github.com/piemonster" >Piemonster</a>
-      </li>
-      <li>
-        <a href="/admin/" >Admin</a>
-      </li>
-      <li>
-        <a href="/" >Help</a>
-      </li>
-    </ul>
+      </hr>
+      
+      </br></br></br></br></br></br>
+      <ul class="masthead-links">
+        <li>
+          <a href="http://github.com/piemonster" >Piemonster</a>
+        </li>
+        <li>
+          <a href="/admin/" >Admin</a>
+        </li>
+        <li>
+          <a href="/" >Help</a>
+        </li>
+      </ul>
+    {% endif %}
 
+  {% endblock %}
+
+  {% block extra_js %}
+
+    <script>
+        $('form').submit(function (event) {
+            if ($('#use-js:checked').length === 0) {
+                //return false
+            }
+            event.preventDefault();
+            $.post(this.action, {
+                email: $('#id_email').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            },
+            function (data) {
+                console.log(data);
+                if (data.success) {
+                    $('.success').show();
+                    $('.failure').hide();
+                    //$('.once').hide();
+                } else {
+                    $('.success').hide();
+                    $('.failure').show();
+                }
+            });
+        });
+    </script>
 
   {% endblock %}
           

@@ -34,3 +34,9 @@ git+https://github.com/eldarion/django-oauth-access.git#egg=django-oauth-access
 gdata
 git+https://github.com/pythonforfacebook/facebook-sdk.git#egg=facebook-sdk
 python-twitter
+
+django-compressor
+django-mptt
+pillow
+git+https://github.com/lincolnloop/django-jsonit.git#egg=jsonit
+git+https://github.com/lincolnloop/django-launchpad.git#egg=launchpad

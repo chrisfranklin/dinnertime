@@ -61,6 +61,7 @@ INSTALLED_APPS = (
     'friends',
     'friends.contrib.suggestions',
     'notification',
+    'launchpad',
 
     #==========================================================================
     # 3rd party Applications

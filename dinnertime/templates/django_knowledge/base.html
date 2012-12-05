@@ -1,0 +1,16 @@
+{% extends 'sitebase.html' %}
+{% load i18n %}
+{% block header %}
+
+  <i class="icon-umbrella"></i> {% trans "Help" %}
+  <small>
+    Need some assistance?
+  <small>
+{% endblock %}
+{% block content %}
+<div id="knowledge_base" class="well">
+	{% block knowledge_inner %}
+	{% endblock knowledge_inner %}
+</div>
+{% endblock %}
+
