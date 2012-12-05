@@ -6,7 +6,8 @@ dinnertime
 What is dinner time?
 --------------------
 
-G
+We connect people who want to eat together and help them share food.
+
 
 Quickstart
 ----------
