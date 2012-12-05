@@ -40,3 +40,6 @@ django-mptt
 pillow
 git+https://github.com/lincolnloop/django-jsonit.git#egg=jsonit
 git+https://github.com/lincolnloop/django-launchpad.git#egg=launchpad
+django-jenkins
+coverage 
+pylint
