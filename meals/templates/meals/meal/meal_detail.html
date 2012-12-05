@@ -59,6 +59,9 @@
 {% block header-link %}
   <a href='/accounts/{{object.host}}/'><img class="mugshot" src="{{ object.host.get_profile.get_mugshot_url }}" alt="{% trans "Your mugshot" %}"/></a>&nbsp;
   <a href='{{ object.get_absolute_url }}'>{{object.host}}'s meal</a>
+  <span class="pull-right">
+    {% if object.when %}{{object.when}}{% else %} not set. {% endif %}
+  </span>
 {% endblock %}
 
 {% block header-description %}
@@ -66,25 +69,30 @@
 {% endblock %}
 
 {% block content %}
-  <h2> When: {% if object.when %}{{object.when}}{% else %} not set. {% endif %}</h2> 
-  <h2> Where: {% if object.venue %}<a href="/venue/{{object.id}}">{{object.venue.address}}</a>{% else %} none yet! {% endif %}</h2> 
-  {% load easy_maps_tags %}
-  {% if object.venue %}
-    <!-- Default map with 300x400 dimensions -->
-    {% easy_map object.venue.address 670 400 %}
-  {% endif %}
-  <hr>
-  <h2> 
-    Guests: 0 / {{object.max_guests}}
-    <span class="pull-right">
-      <a class="btn btn-danger"><i class="icon-minus"></i> Less </a>
-      <a class="btn btn-success"><i class="icon-plus"></i> More </a>
-    </span>
-  </h2>
-  <h2>
-    <form><input></input></form>
-    <a class="btn btn-large btn-primary"><i class="icon-plus"></i> Invite </a>
-  </h2>
+  <div class="row-fluid">
+    <div class="span6">
+      <h2> 
+        Guests: 0 / {{object.max_guests}}
+        <span class="pull-right">
+          <a class="btn btn-danger"><i class="icon-minus"></i> Less </a>
+          <a class="btn btn-success"><i class="icon-plus"></i> More </a>
+        </span>
+      </h2>
+      <h2>
+        <form><input></input></form>
+        <a class="btn btn-large btn-primary"><i class="icon-plus"></i> Invite </a>
+      </h2>
+    </div>
+    <div class="span6">
+      <h2> Where: {% if object.venue %}<a href="/venue/{{object.id}}">{{object.venue.address}}</a>{% else %} none yet! {% endif %}</h2> 
+      {% load easy_maps_tags %}
+      {% if object.venue %}
+        <!-- Default map with 300x400 dimensions -->
+        {% easy_map object.venue.address 500 400 %}
+      {% endif %}
+    </div>
+  </div>
+  
   <hr>
   <h2> I Have: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
   <h2> I Need: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>

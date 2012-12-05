@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from jsonfield import JSONField
 
+from accounts.models import UserContact
+
 
 class Venue(models.Model):
     """
@@ -90,7 +92,7 @@ class Invite(models.Model):
     """
     meal = models.ForeignKey(Meal)
     secret = models.CharField(max_length=50, blank=True, null=True)
-    name = models.CharField(max_length=50, blank=True, null=True)
+    contact = models.ForeignKey(UserContact)
     STATUS_CHOICES = (
         ("INVITED", 'Invited'),
         ("ACCEPTED", 'Accepted'),
@@ -98,8 +100,6 @@ class Invite(models.Model):
         ("DECLINED", 'Declined'),
     )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="INVITED")
-    email = models.EmailField(max_length=254, blank=True, null=True)
-    fid = models.CharField(max_length=30, blank=True, null=True)
     plusones = models.IntegerField(default=0)
     max_plusones = models.IntegerField(default=1)
     single_use = models.BooleanField(default=True)

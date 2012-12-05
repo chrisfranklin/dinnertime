@@ -2,7 +2,7 @@
 {% load i18n %}
   {% block body %}
     <div class='container'>
-      <div class='row'>
+      <div class='row-fluid'>
         <div class='page-header site-header'>
           <h1>
             {% block header %}
@@ -15,7 +15,7 @@
         <div class='content'>
 
 
-          <div class='span3'>
+          <div class='span2'>
             {% block sidebar %}
                 <ul class='nav nav-list'>
                   <li class='nav-header'>
@@ -66,7 +66,7 @@
                 </ul>
             {% endblock %}
           </div>
-          <div class='span7'>
+          <div class='span10'>
             {% block breadcrumbs %}
             {% endblock %}
             <div class='page-header'>
