@@ -66,6 +66,7 @@ INSTALLED_APPS = (
     #==========================================================================
     # 3rd party Applications
     #==========================================================================
+    'django_jenkins',
     #--------------------------------------------------------------------------
     # User Profiles
     #--------------------------------------------------------------------------
@@ -238,16 +239,16 @@ FACEBOOK_APP_SECRET = "a6976d28267f98ef3474f5398ebc6e42"
 # Miscellaneous project settings
 #==============================================================================
 
-if os.getenv('JENKINS_URL', False):
-    INSTALLED_APPS += ('django_jenkins', )
-    PROJECT_APPS = ('polls', )
-    DATABASES['default'].update(dict(
-        ENGINE=os.getenv('DBA_SQL_DJANGO_ENGINE'),
-        USER=os.getenv('DBA_SQL_ADMIN'),
-        PASSWORD=os.getenv('DBA_SQL_ADMIN_PASSWORD'),
-        HOST=os.getenv('DBA_SQL_HOST'),
-        PORT=os.getenv('DBA_SQL_PORT'),
-    ))
+# if os.getenv('JENKINS_URL', False):
+#     INSTALLED_APPS += ('django_jenkins', )
+#     PROJECT_APPS = ('meals', )
+#     DATABASES['default'].update(dict(
+#         ENGINE=os.getenv('DBA_SQL_DJANGO_ENGINE'),
+#         USER=os.getenv('DBA_SQL_ADMIN'),
+#         PASSWORD=os.getenv('DBA_SQL_ADMIN_PASSWORD'),
+#         HOST=os.getenv('DBA_SQL_HOST'),
+#         PORT=os.getenv('DBA_SQL_PORT'),
+#     ))
 
 
 #==============================================================================
