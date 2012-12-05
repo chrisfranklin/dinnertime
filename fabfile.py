@@ -4,7 +4,7 @@ import posixpath
 import re
 
 env.project_name = 'dinnertime'
-env.repository = 'git@git.pagehub.co.uk:dinnertime.git'
+env.repository = 'https://github.com/chrisfranklin/dinnertime.git'
 env.local_branch = 'master'
 env.remote_ref = 'origin/master'
 env.requirements_file = 'requirements.pip'
@@ -21,7 +21,7 @@ def live():
     """
     Use the live deployment environment.
     """
-    server = 'pagehub.io'
+    server = 'dt2:12584'
     env.roledefs = {
         'web': [server],
         'db': [server],
@@ -37,13 +37,13 @@ def dev():
     """
     Use the development deployment environment.
     """
-    server = 'dev.pagehub.co.uk'
+    server = 'dinnertime@dt1:12484'
     env.roledefs = {
         'web': [server],
         'db': [server],
     }
-    env.system_users = {server: 'pha'}
-    env.virtualenv_dir = '/home/pha/{project_name}'.format(**env)
+    env.system_users = {server: 'dinnertime'}
+    env.virtualenv_dir = '/home/dinnertime/{project_name}'.format(**env)
     env.project_dir = '{virtualenv_dir}/src/{project_name}'.format(**env)
     env.project_conf = '{project_name}.conf.local'.format(**env)
 

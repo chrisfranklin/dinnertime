@@ -59,9 +59,6 @@
 {% block header-link %}
   <a href='/accounts/{{object.host}}/'><img class="mugshot" src="{{ object.host.get_profile.get_mugshot_url }}" alt="{% trans "Your mugshot" %}"/></a>&nbsp;
   <a href='{{ object.get_absolute_url }}'>{{object.host}}'s meal</a>
-  <span class="pull-right">
-    {% if object.when %}{{object.when}}{% else %} not set. {% endif %}
-  </span>
 {% endblock %}
 
 {% block header-description %}
@@ -71,6 +68,7 @@
 {% block content %}
   <div class="row-fluid">
     <div class="span6">
+      <h2>{% if object.when %}{{object.when}}{% else %} not set. {% endif %}</h2>
       <h2> 
         Guests: 0 / {{object.max_guests}}
         <span class="pull-right">

@@ -1,0 +1,36 @@
+# This file collects all required third-party applications that are needed
+# to run this project. Later you can install all these apps in a row
+# using pip. Example::
+#
+#     pip install -r requirements.pip
+
+django==1.4.2
+south==0.7.6
+#django-fiber==0.9.8.9
+git+https://github.com/Piemonster/django-generate-scaffold.git
+#git+https://github.com/Piemonster/django-staticfiles-bootstrap.git
+django-debug-toolbar
+django-userena
+djrill
+django-reversion>=1.6.4
+django-celery
+python-memcached
+
+django-jsonfield
+
+geopy
+django-easy-maps
+
+django-lazysignup
+django-facebook
+
+django-crispy-forms
+
+git+https://github.com/Thinktiv/django-easy-friends.git
+git+https://github.com/yourcelf/django-notification#egg=django-notification
+httplib2
+git://github.com/simplegeo/python-oauth2.git#egg=python-oauth2
+git://github.com/eldarion/django-oauth-access.git#egg=django-oauth-access
+gdata
+git://github.com/pythonforfacebook/facebook-sdk.git#egg=facebook-sdk
+python-twitter

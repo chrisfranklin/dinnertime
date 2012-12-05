@@ -3,6 +3,9 @@
 {% load i18n %}
 
 <table class='table table-bordered table-striped'>
+  
+  
+  {% if request.user == object.user or request.user.is_staff %}
   <thead>
     <tr>
       <th>
@@ -16,22 +19,20 @@
   <tbody>
     <tr>
       <td>
-        id
-      </td>
-      <td>
-        <a href='{{ object.get_absolute_url }}'>
-          {{ object.id|stringformat:".3d" }}
-        </a>
-      </td>
-    </tr>
-    
-    <tr>
-      <td>
         name
       </td>
-      <td>{{ object.name }}</td>
+      <td><a href='{{ object.get_absolute_url }}'>{{ object.name }}</a></td>
     </tr>
-    
+
+    <tr>
+      <td>
+        user
+      </td>
+      <td>{{ object.user }}</td>
+    </tr>
+  {% else %}  
+  <tbody>
+  {% endif %}
     <tr>
       <td>
         address
@@ -39,12 +40,6 @@
       <td>{{ object.address }}</td>
     </tr>
     
-    <tr>
-      <td>
-        user
-      </td>
-      <td>{{ object.user }}</td>
-    </tr>
     
   </tbody>
 </table>
