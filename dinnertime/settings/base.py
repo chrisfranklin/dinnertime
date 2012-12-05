@@ -54,7 +54,6 @@ INSTALLED_APPS = (
     'easy_maps',
 
     'lazysignup',
-    'mock',
     'django_facebook',
 
     'crispy_forms',

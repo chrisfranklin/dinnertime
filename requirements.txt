@@ -22,6 +22,7 @@ geopy
 django-easy-maps
 
 django-lazysignup
+mock
 django-facebook
 
 django-crispy-forms

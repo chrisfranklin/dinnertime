@@ -14,8 +14,9 @@ TEMPLATE_DEBUG = DEBUG
 INTERNAL_IPS = ('127.0.0.1',)
 
 ADMINS = (
-    ('You', 'your@email'),
+    ('chris', 'chris@piemonster.me'),
 )
+
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -25,8 +26,12 @@ DATABASES = {
     }
 }
 
+print DATABASES
+
 INSTALLED_APPS += (
     'debug_toolbar',
+    'generate_scaffold',
+    'django_extensions',
 )
 
 MIDDLEWARE_CLASSES += (
@@ -39,3 +44,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
 # ROOT_URLCONF = 'dinnertime.urls.local'
 # WSGI_APPLICATION = 'dinnertime.wsgi.local.application'
+
+#==============================================================================
+# Facebook Settings - Local
+#==============================================================================
+FACEBOOK_APP_ID = "122386504587538"
+FACEBOOK_APP_SECRET = "2a5b65f780f16335ca624267b91c2f91"
