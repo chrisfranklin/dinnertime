@@ -24,7 +24,7 @@ env.cookbook_repo = 'git://github.com/bkonkle/chef-cookbooks.git'
 env.disable_known_hosts = True
 
 env.project_name = 'dinnertime'
-env.repository = 'https://github.com/chrisfranklin/dinnertime.git'
+env.repository = 'git@github.com:chrisfranklin/dinnertime.git'
 env.local_branch = 'master'
 env.remote_ref = 'origin/master'
 env.requirements_file = 'requirements.pip'
