@@ -6,7 +6,11 @@ dinnertime
 What is dinner time?
 --------------------
 
-We connect people who want to eat together and help them share food.
+We connect people who want to eat together and help them share food. 
+
+Copyright
+=========
+All rights reserved Piemonster Technology Inc
 
 
 Quickstart
