@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.syndication',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
@@ -56,6 +57,10 @@ INSTALLED_APPS = (
     'django_facebook',
 
     'crispy_forms',
+
+    'friends',
+    'friends.contrib.suggestions',
+    'notification',
 
     #==========================================================================
     # 3rd party Applications

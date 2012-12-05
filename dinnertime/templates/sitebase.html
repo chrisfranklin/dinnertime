@@ -34,6 +34,17 @@
         {% endcompress %}
     </head>
     <body>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {% if message.subject %}<strong>{{ message.subject }}</strong><br />{% endif %}
+                {{ message.message }}<br />
+                {% if message.is_persistent %}<a href="{% url message_mark_read message.pk %}">close</a>{% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         {% block body %}
             <!--[if lt IE 7]>
                 <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to get the most out of the modern internet.</p>

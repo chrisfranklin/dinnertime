@@ -25,3 +25,12 @@ django-lazysignup
 django-facebook
 
 django-crispy-forms
+
+git+https://github.com/Thinktiv/django-easy-friends.git
+git+https://github.com/yourcelf/django-notification#egg=django-notification
+httplib2
+git://github.com/simplegeo/python-oauth2.git#egg=python-oauth2
+git://github.com/eldarion/django-oauth-access.git#egg=django-oauth-access
+gdata
+git://github.com/pythonforfacebook/facebook-sdk.git#egg=facebook-sdk
+python-twitter

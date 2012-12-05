@@ -3,20 +3,14 @@
   {% block body %}
     <div class='container'>
       <div class='row-fluid'>
-        <div class='page-header site-header'>
-          <h1>
-            {% block header %}
-              <a href='{% url meals_meal_list %}'>
-                {% trans "Meals" %}
-              </a>
-            {% endblock %}
-          </h1>
-        </div>
+
         <div class='content'>
 
 
           <div class='span2'>
             {% block sidebar %}
+            <img class="center" src="{{STATIC_URL}}img/logo.png">
+            <h3 class="center"> Dinner Time </h3>
                 <ul class='nav nav-list'>
                   <li class='nav-header'>
                     {% trans "Views" %}

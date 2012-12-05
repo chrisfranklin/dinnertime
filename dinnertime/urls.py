@@ -24,6 +24,9 @@ urlpatterns = patterns('',
     # Home Page - Not managed by cms but provided by index.html
     #==========================================================
     url(r'^/?$', TemplateView.as_view(template_name='index.html'), name='home'),
+    url(r'^notifications/', include('notification.urls')),
+    url(r'^friends/', include('friends.urls')),
+    url(r'^friends/suggestions/', include('friends.contrib.suggestions.urls')),
     #==========================================================
     # End Home Page
     #==========================================================
@@ -46,6 +49,33 @@ urlpatterns = patterns('',
     #==========================================================
 
 )
+
+OAUTH_ACCESS_SETTINGS = {
+    'twitter': {
+        'keys': {
+            'KEY': 'YOURAPPKEY',
+            'SECRET': 'yourappsecretcode',
+        },
+        'endpoints': {
+            'request_token': 'https://api.twitter.com/oauth/request_token',
+            'authorize': 'http://twitter.com/oauth/authorize',
+            'access_token': 'https://twitter.com/oauth/request_token',
+            'callback': 'friends.contrib.suggestions.views.import_twitter_contacts',
+        },
+    },
+    'yahoo': {
+        'keys': {
+            'KEY': 'dj0yJmk9TFRkU0pzQmZxV3VQJmQ9WVdrOWQwSTFNVEl6TkRJbWNHbzlPRFkzTnpjNE9UWXkmcz1jb25zdW1lcnNlY3JldCZ4PTVh',
+            'SECRET': '65f01ba9732452c323af561ebee4094b42a9674f',
+        },
+        'endpoints': {
+            'request_token': 'https://api.login.yahoo.com/oauth/v2/get_request_token',
+            'authorize': 'https://api.login.yahoo.com/oauth/v2/request_auth',
+            'access_token': 'https://api.login.yahoo.com/oauth/v2/get_token',
+            'callback': 'friends.contrib.suggestions.views.import_yahoo_contacts',
+        },
+    },
+}
 
 if settings.DEBUG and settings.MEDIA_ROOT:
     urlpatterns += static(settings.MEDIA_URL,
