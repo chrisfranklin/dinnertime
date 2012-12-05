@@ -31,7 +31,7 @@ print DATABASES
 INSTALLED_APPS += (
     'debug_toolbar',
     'generate_scaffold',
-    'django_extensions',
+    #'django_extensions',
 )
 
 MIDDLEWARE_CLASSES += (
