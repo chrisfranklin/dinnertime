@@ -10,8 +10,7 @@ We connect people who want to eat together and help them share food.
 
 Copyright
 =========
-All rights reserved Piemonster Technology Inc
-
+All rights reserved Piemonster Technology Ltd
 
 Quickstart
 ----------
