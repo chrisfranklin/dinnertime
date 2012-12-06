@@ -19,7 +19,7 @@ SITE_ID = 1
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 TIME_ZONE = 'UTC'
-USE_TZ = False
+USE_TZ = True
 USE_I18N = True
 USE_L10N = True
 LANGUAGE_CODE = 'en'
