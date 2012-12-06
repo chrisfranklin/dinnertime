@@ -110,6 +110,8 @@ INSTALLED_APPS = (
 
 )
 
+print (INSTALLED_APPS)
+
 #==============================================================================
 # Calculation of directories relative to the project module location
 #==============================================================================
@@ -241,14 +243,14 @@ FACEBOOK_APP_SECRET = "a6976d28267f98ef3474f5398ebc6e42"
 
 if os.getenv('JENKINS_URL', False):
     INSTALLED_APPS += ('django_jenkins', )
-    PROJECT_APPS = ('meals', )
-    DATABASES['default'].update(dict(
-        ENGINE=os.getenv('DBA_SQL_DJANGO_ENGINE'),
-        USER=os.getenv('DBA_SQL_ADMIN'),
-        PASSWORD=os.getenv('DBA_SQL_ADMIN_PASSWORD'),
-        HOST=os.getenv('DBA_SQL_HOST'),
-        PORT=os.getenv('DBA_SQL_PORT'),
-    ))
+    PROJECT_APPS = ( 'meals', 'util', 'easy_maps', 'lazysignup', 'django_facebook', 'crispy_forms', 'friends', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'userena', 'guardian', 'djcelery')
+    # DATABASES['default'].update(dict(
+    #     ENGINE=os.getenv('DBA_SQL_DJANGO_ENGINE'),
+    #     USER=os.getenv('DBA_SQL_ADMIN'),
+    #     PASSWORD=os.getenv('DBA_SQL_ADMIN_PASSWORD'),
+    #     HOST=os.getenv('DBA_SQL_HOST'),
+    #     PORT=os.getenv('DBA_SQL_PORT'),
+    # ))
 
 
 #==============================================================================
