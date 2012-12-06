@@ -256,7 +256,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap'
 
 if os.getenv('JENKINS_URL', False):
     INSTALLED_APPS += ('django_jenkins', )
-    PROJECT_APPS = ( 'meals', 'util', 'easy_maps', 'lazysignup', 'django_facebook', 'crispy_forms', 'friends', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'allauth', 'guardian', 'djcelery')
+    PROJECT_APPS = ( 'meals', 'util', 'easy_maps', 'django_facebook', 'crispy_forms', 'friends', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'allauth', 'djcelery')
     # DATABASES['default'].update(dict(
     #     ENGINE=os.getenv('DBA_SQL_DJANGO_ENGINE'),
     #     USER=os.getenv('DBA_SQL_ADMIN'),

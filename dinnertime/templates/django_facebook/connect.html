@@ -1,4 +1,4 @@
-
+{% extends 'sitebase.html' %}
 
 {% block title %}
 	Connect with Facebook
@@ -68,7 +68,7 @@
             <div id="header_bar">
             
             {% if request.user.is_authenticated %}
-                <h1>Welcome {{ request.user }}</h1><a href="{% url userena_signout %}?next={{ request.path|urlencode }}">signout</a><br />
+                <h1>Welcome {{ request.user }}</h1><br />
                 
                 <p>
                 Thank you for logging in with Facebook.
@@ -106,9 +106,11 @@
                     <tr>
                         <td>Website Url:</td><td>{{ request.user.get_profile.website_url }}</td>
                     </tr>
-                    <tr>
-                        <td>Local Image:</td><td><img src="{{ request.user.get_profile.image.url }}" title="local copy" /></td>
-                    </tr>
+                    {% if request.user.get_profile.image %}
+                        <tr>
+                            <td>Local Image:</td><td><img src="{{ request.user.get_profile.image.url }}" title="local copy" /></td>
+                        </tr>
+                    {% endif %}
                     <tr>
                         <td>Hotlinked Image:</td><td><img src="http://graph.facebook.com/{{ request.user.get_profile.facebook_id }}/picture?type=large" title="facebook stored image" /><br /></td>
                     </tr>
