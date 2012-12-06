@@ -140,7 +140,7 @@ if os.path.exists(os.path.join(PYTHON_BIN, 'activate_this.py')):
     # We're running with a virtualenv python executable.
     VAR_ROOT = os.path.join(os.path.dirname(PYTHON_BIN), 'var')
 elif ve_path and os.path.exists(os.path.join(ve_path, 'bin',
-        'activate_this.py')):
+                                             'activate_this.py')):
     # We're running in [virtualenv_root]/src/[project_name].
     VAR_ROOT = os.path.join(ve_path, 'var')
 else:
@@ -252,11 +252,11 @@ FACEBOOK_APP_SECRET = "a6976d28267f98ef3474f5398ebc6e42"
 # Miscellaneous project settings
 #==============================================================================
 
-CRISPY_TEMPLATE_PACK = 'bootstrap' 
+CRISPY_TEMPLATE_PACK = 'bootstrap'
 
 if os.getenv('JENKINS_URL', False):
     INSTALLED_APPS += ('django_jenkins', )
-    PROJECT_APPS = ( 'meals', 'util', 'easy_maps', 'django_facebook', 'crispy_forms', 'friends', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'allauth', 'djcelery')
+    PROJECT_APPS = ('django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'meals', 'util', 'easy_maps', 'django_facebook', 'crispy_forms', 'friends', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'allauth', 'djcelery')
     # DATABASES['default'].update(dict(
     #     ENGINE=os.getenv('DBA_SQL_DJANGO_ENGINE'),
     #     USER=os.getenv('DBA_SQL_ADMIN'),
