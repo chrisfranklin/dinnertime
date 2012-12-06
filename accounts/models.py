@@ -29,9 +29,15 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
 
+
+def find_friends_suggestions(sender, instance, **kwargs):
+    from friends.contrib.suggestions.models import FriendshipSuggestion
+    FriendshipSuggestion.objects.create_suggestions_for_user_using_imported_contacts(instance)
+
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 post_save.connect(create_user_profile, sender=User)
+post_save.connect(find_friends_suggestions, sender=User)
 
 
 class UserContact(models.Model):
@@ -46,9 +52,3 @@ class UserContact(models.Model):
         ('F', 'female'), ('M', 'male')), blank=True, null=True, max_length=1)
 
 
-def find_friends_suggestions(sender, user, **kwargs):
-    from friends.contrib.suggestions.models import FriendshipSuggestion
-    FriendshipSuggestion.objects.create_suggestions_for_user_using_imported_contacts(user)
-
-from userena.signals import activation_complete
-activation_complete.connect(find_friends_suggestions, dispatch_uid="find_friends_suggestions_on_activation_complete")
