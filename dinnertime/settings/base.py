@@ -95,10 +95,19 @@ INSTALLED_APPS = (
     #'reversion',
 
     #--------------------------------------------------------------------------
-    # Userena Accounts Management
+    # Allauth Accounts Management
     #--------------------------------------------------------------------------
-    'guardian',
-    'userena', 
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.github',
+    # 'allauth.socialaccount.providers.linkedin',
+    # 'allauth.socialaccount.providers.openid',
+    # 'allauth.socialaccount.providers.persona',
+    # 'allauth.socialaccount.providers.soundcloud',
+    # 'allauth.socialaccount.providers.twitter',
 
     #--------------------------------------------------------------------------
     # Facebook Support
@@ -184,6 +193,8 @@ TEMPLATE_DIRS = (
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
     'django_facebook.context_processors.facebook',
+    'allauth.account.context_processors.account',
+    'allauth.socialaccount.context_processors.socialaccount',
 )
 
 #==============================================================================
@@ -199,14 +210,13 @@ MIDDLEWARE_CLASSES += (
 #==============================================================================
 
 AUTHENTICATION_BACKENDS += (
-    'userena.backends.UserenaAuthenticationBackend',
-    'guardian.backends.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
+    "allauth.account.auth_backends.AuthenticationBackend",
     'django_facebook.auth_backends.FacebookBackend',
     'lazysignup.backends.LazySignupBackend',
 )
 
-FACEBOOK_REGISTRATION_BACKEND = 'django_facebook.registration_backends.UserenaBackend'
+#FACEBOOK_REGISTRATION_BACKEND = 'django_facebook.registration_backends.UserenaBackend'
 
 #==============================================================================
 # Cache Framework - set to memcache

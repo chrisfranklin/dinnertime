@@ -33,9 +33,9 @@ urlpatterns = patterns('',
     (r'^', include('meals.urls')),
     (r'^interest/', include('launchpad.urls')),
     #==========================================================
-    # Userena
+    # Allauth
     #==========================================================
-    (r'^accounts/', include('userena.urls')),
+    (r'^accounts/', include('allauth.urls')),
     (r'^convert/', include('lazysignup.urls')),
     #==========================================================
     # End Userena
