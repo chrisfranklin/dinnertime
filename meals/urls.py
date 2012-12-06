@@ -1,7 +1,4 @@
 from django.conf.urls import patterns, url
-
-
-
 from meals.views.meal_views import *
 urlpatterns = patterns('',
     url(
@@ -16,16 +13,16 @@ urlpatterns = patterns('',
     ),
     url(
         regex=r'^meal/(?P<year>\d{4})/'
-               '(?P<month>\d{1,2})/'
-               '(?P<day>\d{1,2})/'
-               '(?P<pk>\d+?)/$',
+               r'(?P<month>\d{1,2})/'
+               r'(?P<day>\d{1,2})/'
+               r'(?P<pk>\d+?)/$',
         view=MealDateDetailView.as_view(),
         name='meals_meal_date_detail'
     ),
     url(
         regex=r'^meal/archive/(?P<year>\d{4})/'
-               '(?P<month>\d{1,2})/'
-               '(?P<day>\d{1,2})/$',
+               r'(?P<month>\d{1,2})/'
+               r'(?P<day>\d{1,2})/$',
         view=MealDayArchiveView.as_view(),
         name='meals_meal_day_archive'
     ),
@@ -46,7 +43,7 @@ urlpatterns = patterns('',
     ),
     url(
         regex=r'^meal/archive/(?P<year>\d{4})/'
-               '(?P<month>\d{1,2})/$',
+               r'(?P<month>\d{1,2})/$',
         view=MealMonthArchiveView.as_view(),
         name='meals_meal_month_archive'
     ),
