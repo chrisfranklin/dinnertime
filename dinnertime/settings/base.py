@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'crispy_forms',
 
     'friends',
+    'oauth_access',
     'friends.contrib.suggestions',
     'notification',
     'launchpad',
@@ -198,10 +199,10 @@ MIDDLEWARE_CLASSES += (
 #==============================================================================
 
 AUTHENTICATION_BACKENDS += (
-    'django_facebook.auth_backends.FacebookBackend',
     'userena.backends.UserenaAuthenticationBackend',
     'guardian.backends.ObjectPermissionBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'django_facebook.auth_backends.FacebookBackend',
     'lazysignup.backends.LazySignupBackend',
 )
 
@@ -241,9 +242,11 @@ FACEBOOK_APP_SECRET = "a6976d28267f98ef3474f5398ebc6e42"
 # Miscellaneous project settings
 #==============================================================================
 
+CRISPY_TEMPLATE_PACK = 'bootstrap' 
+
 if os.getenv('JENKINS_URL', False):
     INSTALLED_APPS += ('django_jenkins', )
-    PROJECT_APPS = ( 'meals', 'util', 'easy_maps', 'lazysignup', 'django_facebook', 'crispy_forms', 'friends', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'userena', 'guardian', 'djcelery')
+    #PROJECT_APPS = ( 'meals', 'util', 'easy_maps', 'lazysignup', 'django_facebook', 'crispy_forms', 'friends', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'userena', 'guardian', 'djcelery')
     # DATABASES['default'].update(dict(
     #     ENGINE=os.getenv('DBA_SQL_DJANGO_ENGINE'),
     #     USER=os.getenv('DBA_SQL_ADMIN'),

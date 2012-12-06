@@ -1,0 +1,300 @@
+('django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'meals', 'util', 'easy_maps', 'lazysignup', 'django_facebook', 'crispy_forms', 'friends', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'userena', 'guardian', 'djcelery')
+{'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '/home/chris/.virtualenvs/dinnertime/var/dev.db'}}
+Creating test database for alias 'default'...
+Destroying test database for alias 'default'...
+('django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'meals', 'util', 'easy_maps', 'lazysignup', 'django_facebook', 'crispy_forms', 'friends', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'userena', 'guardian', 'djcelery')
+{'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '/home/chris/.virtualenvs/dinnertime/var/dev.db'}}
+Creating test database for alias 'default'...
+Added permission: Can change profile
+Added permission: Can delete profile
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+........................................
+Checking permission management command. Ignore output..
+
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+Added permission: Can view profile
+Added permission: Can change profile
+Added permission: Can delete profile
+Added permission: Can change user
+Added permission: Can delete user
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+WARNING: No profile found for alice
+
+Finished testing permissions command.. continuing..
+Destroying test database for alias 'default'...
+('django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'meals', 'util', 'easy_maps', 'lazysignup', 'django_facebook', 'crispy_forms', 'friends', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'userena', 'guardian', 'djcelery')
+{'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '/home/chris/.virtualenvs/dinnertime/var/dev.db'}}
+Creating test database for alias 'default'...
+Added permission: Can change profile
+Added permission: Can delete profile
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+........................................
+Checking permission management command. Ignore output..
+
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+Added permission: Can view profile
+Added permission: Can change profile
+Added permission: Can delete profile
+Added permission: Can change user
+Added permission: Can delete user
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+WARNING: No profile found for alice
+
+Finished testing permissions command.. continuing..
+Destroying test database for alias 'default'...
+('django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'meals', 'util', 'easy_maps', 'lazysignup', 'django_facebook', 'crispy_forms', 'friends', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'userena', 'guardian', 'djcelery')
+{'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '/home/chris/.virtualenvs/dinnertime/var/dev.db'}}
+Creating test database for alias 'default'...
+Added permission: Can change profile
+Added permission: Can delete profile
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+........................................
+Checking permission management command. Ignore output..
+
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+Added permission: Can view profile
+Added permission: Can change profile
+Added permission: Can delete profile
+Added permission: Can change user
+Added permission: Can delete user
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+WARNING: No profile found for alice
+
+Finished testing permissions command.. continuing..
+Destroying test database for alias 'default'...
+('django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'meals', 'util', 'easy_maps', 'lazysignup', 'django_facebook', 'crispy_forms', 'friends', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'userena', 'guardian', 'djcelery')
+{'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '/home/chris/.virtualenvs/dinnertime/var/dev.db'}}
+Creating test database for alias 'default'...
+Added permission: Can change profile
+Added permission: Can delete profile
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+........................................
+Checking permission management command. Ignore output..
+
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+Added permission: Can view profile
+Added permission: Can change profile
+Added permission: Can delete profile
+Added permission: Can change user
+Added permission: Can delete user
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+WARNING: No profile found for alice
+
+Finished testing permissions command.. continuing..
+Destroying test database for alias 'default'...
+('django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'meals', 'util', 'easy_maps', 'lazysignup', 'django_facebook', 'crispy_forms', 'friends', 'oauth_access', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'userena', 'guardian', 'djcelery')
+{'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '/home/chris/.virtualenvs/dinnertime/var/dev.db'}}
+Creating test database for alias 'default'...
+Added permission: Can change profile
+Added permission: Can delete profile
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+........................................
+Checking permission management command. Ignore output..
+
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+Added permission: Can view profile
+Added permission: Can change profile
+Added permission: Can delete profile
+Added permission: Can change user
+Added permission: Can delete user
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+WARNING: No profile found for alice
+
+Finished testing permissions command.. continuing..
+Destroying test database for alias 'default'...
+('django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'meals', 'util', 'easy_maps', 'lazysignup', 'django_facebook', 'crispy_forms', 'friends', 'oauth_access', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'userena', 'guardian', 'djcelery')
+{'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '/home/chris/.virtualenvs/dinnertime/var/dev.db'}}
+Creating test database for alias 'default'...
+Added permission: Can change profile
+Added permission: Can delete profile
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+........................................
+Checking permission management command. Ignore output..
+
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+Added permission: Can view profile
+Added permission: Can change profile
+Added permission: Can delete profile
+Added permission: Can change user
+Added permission: Can delete user
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+WARNING: No profile found for alice
+
+Finished testing permissions command.. continuing..
+Destroying test database for alias 'default'...
+('django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'meals', 'util', 'easy_maps', 'lazysignup', 'django_facebook', 'crispy_forms', 'friends', 'oauth_access', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'userena', 'guardian', 'djcelery')
+{'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '/home/chris/.virtualenvs/dinnertime/var/dev.db'}}
+Creating test database for alias 'default'...
+Added permission: Can change profile
+Added permission: Can delete profile
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+........................................
+Checking permission management command. Ignore output..
+
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+Added permission: Can view profile
+Added permission: Can change profile
+Added permission: Can delete profile
+Added permission: Can change user
+Added permission: Can delete user
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+WARNING: No profile found for alice
+
+Finished testing permissions command.. continuing..
+Destroying test database for alias 'default'...
+('django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'meals', 'util', 'easy_maps', 'lazysignup', 'django_facebook', 'crispy_forms', 'friends', 'oauth_access', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'userena', 'guardian', 'djcelery')
+{'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': '/home/chris/.virtualenvs/dinnertime/var/dev.db'}}
+Creating test database for alias 'default'...
+Added permission: Can change profile
+Added permission: Can delete profile
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+........................................
+Checking permission management command. Ignore output..
+
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+Changed permissions for user: alice
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+Added permission: Can view profile
+Added permission: Can change profile
+Added permission: Can delete profile
+Added permission: Can change user
+Added permission: Can delete user
+
+Finished testing permissions command.. continuing..
+........................................
+Checking permission management command. Ignore output..
+
+WARNING: No profile found for alice
+
+Finished testing permissions command.. continuing..
+Destroying test database for alias 'default'...
