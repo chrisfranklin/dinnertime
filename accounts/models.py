@@ -1,11 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
-from userena.models import UserenaBaseProfile
 from django_facebook.models import FacebookProfileModel
 
 
-class UserProfile(UserenaBaseProfile, FacebookProfileModel):
+class UserProfile(FacebookProfileModel):
     """
     Stores fields for a single user, used in AUTH_PROFILE_MODULE
     """

@@ -57,17 +57,13 @@
 
 
 {% block extra_css %}
-  <link rel="stylesheet" href="{{ STATIC_URL}}css/datepicker.css">
-  <link rel="stylesheet" href="{{ STATIC_URL}}css/timepicker.css">
+  <link rel="stylesheet" media="all" type="text/css" href="{{ STATIC_URL}}css/jquery-ui-timepicker-addon.css" />
 {% endblock %}
 
 {% block extra_js %}
-  <script src="{{ STATIC_URL}}js/bootstrap-datepicker.js"></script>
-  <script src="{{ STATIC_URL}}js/bootstrap-timepicker.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL}}js/jquery-ui-timepicker-addon.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL}}js/jquery-ui-sliderAccess.js"></script>
   <script>
-    $('.timepicker-default').timepicker();
-    $('.datepicker-default').datepicker({
-      format:'yyyy-mm-dd'
-    });
+    $('#id_when').datetimepicker();
   </script>
 {% endblock %}

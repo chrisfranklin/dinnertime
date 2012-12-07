@@ -81,11 +81,11 @@ class MealForm(ModelForm):
     """
     class Meta:
         model = Meal
-        exclude = ('host', 'guests', 'wants', 'needs', 'haves', 'icon', 'description', 'venue')
-        widgets = {
-            'when': BootstrapSplitDateTimeWidget(attrs={'date_class': 'datepicker-default', 'time_class': 'timepicker-default input-timepicker'}),
-            #'description': Textarea(attrs={'cols': 40, 'rows': 20})
-        }
+        exclude = ('host', 'guests', 'wants', 'needs', 'haves', 'icon', 'description', 'venue', 'current_guests', 'suitable_for')
+        # widgets = {
+        #     'when': BootstrapSplitDateTimeWidget(attrs={'date_class': 'datepicker-default', 'time_class': 'timepicker-default input-timepicker'}),
+        #     #'description': Textarea(attrs={'cols': 40, 'rows': 20})
+        # }
 
 
 class MealCreateView(MealView, AjaxableResponseMixin, CreateView):
@@ -97,12 +97,20 @@ class MealCreateView(MealView, AjaxableResponseMixin, CreateView):
     from django.utils.decorators import method_decorator
     from lazysignup.decorators import allow_lazy_user
 
+    def form_valid(self, form):
+        # Set the host to request.user on form success
+        obj = form.save(commit=False)
+        obj.host = self.request.user
+        obj.save()
+        from django.http import HttpResponseRedirect
+        return HttpResponseRedirect('/meal/%s/' % obj.id)
+
     @method_decorator(allow_lazy_user)
     def dispatch(self, *args, **kwargs):
         return super(MealCreateView, self).dispatch(*args, **kwargs)
 
     def get_form_kwargs(self, **kwargs):
-        # pass "user" keyword argument with the current user to your form
+        # Set host to correct value for form, do not trust the data though.
         kwargs = super(MealCreateView, self).get_form_kwargs(**kwargs)
         kwargs['initial']['host'] = self.request.user
         return kwargs

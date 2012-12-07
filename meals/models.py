@@ -40,7 +40,7 @@ class Meal(models.Model):
     )
     suitable_for = models.CharField(max_length=10, choices=SUITABLE_FOR_CHOICES, default="MEAT")
     PRIVACY_CHOICES = (
-        ("PRIVATE", 'Private'),
+        ("PRIVATE", 'Invite Only'),
         ("PUBLIC", 'Public'),
     )
     privacy = models.CharField(max_length=10, choices=PRIVACY_CHOICES, default="PRIVATE")
@@ -83,7 +83,7 @@ class Meal(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('meal_meal_detail', (), {'pk': self.pk})
+        return ('meals_meal_detail', (), {'pk': self.pk})
 
 
 class Invite(models.Model):
@@ -103,6 +103,10 @@ class Invite(models.Model):
     plusones = models.IntegerField(default=0)
     max_plusones = models.IntegerField(default=1)
     single_use = models.BooleanField(default=True)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('meals_invite_detail', (), {'pk': self.pk})
 
     def send_invite(self):
         """
