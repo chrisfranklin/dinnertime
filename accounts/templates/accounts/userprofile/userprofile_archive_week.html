@@ -1,0 +1,31 @@
+
+
+{% extends 'accounts/userprofile/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/accounts/templates/accounts/userprofile/userprofile_archive_week.html
+{% endblock %}
+
+{% block title %}
+  {% trans "UserProfile Week Archive" %}
+{% endblock %}
+
+{% block header-link %}
+  {% trans "UserProfile Week Archive" %}
+{% endblock %}
+
+{% block header-description %}
+  {% trans "A weekly archive page showing all objects in a given week." %}
+{% endblock %}
+
+{% block content %}
+  <h2>
+    {% blocktrans %}
+      UserProfiles created during the week beginning on {{ week }}
+    {% endblocktrans %}
+  </h2>
+  {% include 'accounts/userprofile/object_table_list.html' %}
+  {% include 'accounts/userprofile/pagination.html' %}
+{% endblock %}

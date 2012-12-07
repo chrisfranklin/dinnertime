@@ -1,7 +1,7 @@
 import json
 
 from django.forms import ModelForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.views.generic import ListView, DetailView, CreateView, \
                                  DeleteView, UpdateView, \
                                  ArchiveIndexView, DateDetailView, \
@@ -10,8 +10,28 @@ from django.views.generic import ListView, DetailView, CreateView, \
                                  YearArchiveView
 #from django.views.generic.edit import FormView
 #from django.views.generic.detail import SingleObjectTemplateResponseMixin
-from util.widgets import BootstrapSplitDateTimeWidget
+#from util.widgets import BootstrapSplitDateTimeWidget
 from meals.models import Meal
+
+
+def set_max_guests(request, meal, direction):
+    # ...
+    if meal:
+        meal_object = Meal.objects.filter(id=meal)
+        if direction == "up":
+            meal_object.max_guests += 1
+            return HttpResponseNotFound('<h1>Incremented</h1>')
+        if direction == "down":
+            if (meal_object.max_guests >= meal_object.current_guests) and meal_object.max_guests > 0:
+                meal_object.max_guests -= 1
+                return HttpResponseNotFound('<h1>Decremented</h1>')
+            else:
+                return HttpResponseNotFound('<h1>Fail</h1>')
+        else:
+            return HttpResponse('<h1>Please enter a direction</h1>')
+        return HttpResponseNotFound('<h1>Meal not found</h1>')
+    else:
+        return HttpResponse('<h1>Please enter a meal</h1>')
 
 
 class AjaxableResponseMixin(object):

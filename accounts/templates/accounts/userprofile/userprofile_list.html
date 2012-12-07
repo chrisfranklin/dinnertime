@@ -1,0 +1,27 @@
+
+
+{% extends 'accounts/userprofile/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/accounts/templates/accounts/userprofile/userprofile_list.html
+{% endblock %}
+
+{% block header-link %}
+  <a href='{% url accounts_userprofile_list %}'>
+    {% trans "UserProfile List" %}
+  </a>
+{% endblock %}
+
+{% block header-description %}
+  {% trans "A page representing a list of objects." %}
+{% endblock %}
+
+{% block content %}
+  <h2>
+    {% trans "UserProfiles" %}
+  </h2>
+  {% include 'accounts/userprofile/object_table_list.html' %}
+  {% include 'accounts/userprofile/pagination.html' %}
+{% endblock %}

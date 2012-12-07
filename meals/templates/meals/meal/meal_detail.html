@@ -57,7 +57,10 @@
 
 
 {% block header-link %}
-  <a href='/accounts/{{object.host}}/'><img class="mugshot" src="{{ object.host.get_profile.get_mugshot_url }}" alt="{% trans "Your mugshot" %}"/></a>&nbsp;
+  <a href='/accounts/{{object.host}}/'>
+    {% load gravatar %}
+    <img src="{% gravatar_url request.user.email 100 %}">
+  </a>&nbsp;
   <a href='{{ object.get_absolute_url }}'>{{object.host}}'s meal</a>
 {% endblock %}
 
@@ -78,6 +81,28 @@
       </h2>
       <h2>
         <form><input></input></form>
+        <h2> Confirmed Guests </h2>
+        {% for guest in meal.guest_set.all %}
+          {% if guest.user.email %}
+            <img src="{% gravatar_url guest.user.email 50 %}">
+          {% endif %}
+          {{guest.user}}
+        {% endfor %}
+        {% if request.user == object.host %}
+          <h2> You are hosting this event </h2>
+          <h2> Contacts </h2>
+          {% for contact in user.contacts.all %}
+            {% if contact.email %}
+              <img src="{% gravatar_url contact.email 50 %}">
+            {% endif %}
+            {{contact}}
+          {% endfor %}
+          <h2> Friends </h2>
+          {% for friend in user.friends.all %}
+            <img src="{% gravatar_url friend.from_user.email 50 %}">
+            {{friend.from_user}}
+          {% endfor %}
+        {% endif %}
         <a class="btn btn-large btn-primary"><i class="icon-plus"></i> Invite </a>
       </h2>
     </div>

@@ -1,0 +1,41 @@
+
+
+{% extends 'accounts/usercontact/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/accounts/templates/accounts/usercontact/usercontact_confirm_delete.html
+{% endblock %}
+
+{% block title %}
+  {% trans "UserContact Confirm Delete" %}
+{% endblock %}
+
+{% block header-link %}
+  <a href='{% url accounts_usercontact_delete pk=object.pk %}'>
+    {% trans "UserContact Confirm Delete" %}
+  </a>
+{% endblock %}
+
+{% block header-description %}
+  {% trans "A view that displays a confirmation page (on GET) and deletes an existing object (on POST)." %}
+{% endblock %}
+
+{% block content %}
+  <h2>
+    {% trans "Delete this UserContact?" %}
+  </h2>
+  <br />
+  {% include 'accounts/usercontact/object_table_detail.html' %}
+  <form action='' charset='utf-8' method='post'>
+    <fieldset>
+      {% csrf_token %}
+      <div class='form-actions'>
+        <button class='btn btn-danger' type='submit'>
+          {% trans "Delete" %}
+        </button>
+      </div>
+    </fieldset>
+  </form>
+{% endblock %}

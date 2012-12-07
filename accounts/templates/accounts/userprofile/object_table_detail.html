@@ -1,0 +1,120 @@
+
+
+{% load i18n %}
+
+<table class='table table-bordered table-striped'>
+  <thead>
+    <tr>
+      <th>
+        {% trans "Field" %}
+      </th>
+      <th>
+        {% trans "Value" %}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        id
+      </td>
+      <td>
+        <a href='{{ object.get_absolute_url }}'>
+          {{ object.id|stringformat:".3d" }}
+        </a>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        about_me
+      </td>
+      <td>{{ object.about_me }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        facebook_id
+      </td>
+      <td>{{ object.facebook_id }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        access_token
+      </td>
+      <td>{{ object.access_token }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        facebook_name
+      </td>
+      <td>{{ object.facebook_name }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        facebook_profile_url
+      </td>
+      <td>{{ object.facebook_profile_url }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        website_url
+      </td>
+      <td>{{ object.website_url }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        blog_url
+      </td>
+      <td>{{ object.blog_url }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        date_of_birth
+      </td>
+      <td>{{ object.date_of_birth }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        gender
+      </td>
+      <td>{{ object.gender }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        raw_data
+      </td>
+      <td>{{ object.raw_data }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        facebook_open_graph
+      </td>
+      <td>{{ object.facebook_open_graph }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        image
+      </td>
+      <td>{{ object.image }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        user
+      </td>
+      <td>{{ object.user }}</td>
+    </tr>
+    
+  </tbody>
+</table>

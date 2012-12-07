@@ -1,0 +1,27 @@
+
+
+{% extends 'meals/invite/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/meals/templates/meals/invite/invite_list.html
+{% endblock %}
+
+{% block header-link %}
+  <a href='{% url meals_invite_list %}'>
+    {% trans "Invite List" %}
+  </a>
+{% endblock %}
+
+{% block header-description %}
+  {% trans "A page representing a list of objects." %}
+{% endblock %}
+
+{% block content %}
+  <h2>
+    {% trans "Invites" %}
+  </h2>
+  {% include 'meals/invite/object_table_list.html' %}
+  {% include 'meals/invite/pagination.html' %}
+{% endblock %}

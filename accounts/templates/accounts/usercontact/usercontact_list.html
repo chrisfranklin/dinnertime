@@ -1,0 +1,27 @@
+
+
+{% extends 'accounts/usercontact/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/accounts/templates/accounts/usercontact/usercontact_list.html
+{% endblock %}
+
+{% block header-link %}
+  <a href='{% url accounts_usercontact_list %}'>
+    {% trans "Contact List" %}
+  </a>
+{% endblock %}
+
+{% block header-description %}
+  {% trans "A page representing a list of objects." %}
+{% endblock %}
+
+{% block content %}
+  <h2>
+    {% trans "Contacts" %}
+  </h2>
+  {% include 'accounts/usercontact/object_table_list.html' %}
+  {% include 'accounts/usercontact/pagination.html' %}
+{% endblock %}

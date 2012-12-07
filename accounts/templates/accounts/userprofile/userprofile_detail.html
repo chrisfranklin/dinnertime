@@ -1,0 +1,50 @@
+
+
+{% extends 'accounts/userprofile/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/accounts/templates/accounts/userprofile/userprofile_detail.html
+{% endblock %}
+
+{% block title %}
+  {% trans "UserProfile Detail" %}
+{% endblock %}
+
+
+{% block breadcrumbs %}
+  <ul class='breadcrumb'>
+    <li>
+      User Profile
+    </li>
+  </ul>
+{% endblock %}
+
+
+{% block header-link %}
+  <a href='{{ object.get_absolute_url }}'>
+    {% trans "UserProfile Detail" %}
+  </a>
+{% endblock %}
+
+{% block header-description %}
+  {% trans "A page representing an individual object." %}
+{% endblock %}
+
+{% block content %}
+  {% include 'accounts/userprofile/object_table_detail.html' %}
+  <form action='{% url accounts_userprofile_delete pk=object.pk %}' charset='utf-8' method='post'>
+    <fieldset>
+      {% csrf_token %}
+      <div class='form-actions'>
+        <a class='btn btn-success' href='{% url accounts_userprofile_update pk=object.pk %}'>
+          {% trans "Update" %}
+        </a>
+        <button class='btn btn-danger' type='submit'>
+          {% trans "Delete" %}
+        </button>
+      </div>
+    </fieldset>
+  </form>
+{% endblock %}

@@ -1,0 +1,55 @@
+
+
+{% extends 'accounts/usercontact/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/accounts/templates/accounts/usercontact/usercontact_form.html
+{% endblock %}
+
+{% block title %}
+  {% if object %}
+    {% trans "Update UserContact" %}
+  {% else %}
+    {% trans "Create a New UserContact" %}
+  {% endif %}
+{% endblock %}
+
+{% block header-link %}
+  {% if object %}
+    <a href='{% url accounts_usercontact_update pk=object.pk %}'>
+      {% trans "UserContact Update" %}
+    </a>
+  {% else %}
+    <a href='{% url accounts_usercontact_create %}'>
+      {% trans "UserContact Create" %}
+    </a>
+  {% endif %}
+{% endblock %}
+
+{% block header-description %}
+  {% if object %}
+    {% trans "A view that displays a form for editing an existing object." %}
+  {% else %}
+    {% trans "A view that displays a form for creating an object." %}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <form action='{% if object %}{% url accounts_usercontact_update pk=object.pk %}{% else %}{% url accounts_usercontact_create %}{% endif %}' method='post' encoding='utf-8'>
+    <fieldset>
+      {% csrf_token %}
+      {{ form }}
+      <div class='form-actions'>
+        <button class='btn btn-large btn-success' type='submit'>
+          {% if object %}
+            {% trans "Update" %}
+          {% else %}
+            {% trans "Create" %}
+          {% endif %}
+        </button>
+      </div>
+    </fieldset>
+  </form>
+{% endblock %}

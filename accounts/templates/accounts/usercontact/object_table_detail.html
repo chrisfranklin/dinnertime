@@ -1,0 +1,71 @@
+
+
+{% load i18n %}
+
+<table class='table table-bordered table-striped'>
+  <thead>
+    <tr>
+      <th>
+        {% trans "Field" %}
+      </th>
+      <th>
+        {% trans "Value" %}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        id
+      </td>
+      <td>
+        <a href='{{ object.get_absolute_url }}'>
+          {{ object.id|stringformat:".3d" }}
+        </a>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        owner
+      </td>
+      <td>{{ object.owner }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        name
+      </td>
+      <td>{{ object.name }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        user
+      </td>
+      <td>{{ object.user }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        email
+      </td>
+      <td>{{ object.email }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        fid
+      </td>
+      <td>{{ object.fid }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        gender
+      </td>
+      <td>{{ object.gender }}</td>
+    </tr>
+    
+  </tbody>
+</table>

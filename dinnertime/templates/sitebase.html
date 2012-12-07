@@ -59,10 +59,59 @@
 
 
                   <div class='span2'>
-                    <img class="center" src="{{STATIC_URL}}img/logo.png">
+                    <a href="/">
+                      <img class="center" src="{{STATIC_URL}}img/logo.png">
+                    </a>
                     <h2 class="center"> Dinner Time </h2>
                     {% block main_sidebar %}
+                      <ul class='nav nav-list'>
+                          <li class='nav-header'>
+                            {% trans "Meals" %}
+                          </li>
+                          <li>
+                            <a href='{% url meals_meal_list %}'>
+                              {% trans "My meals" %}
+                            </a>
+                          </li>
+                          <li>
+                            <a href='{% url meals_meal_list %}'>
+                              {% trans "All meals" %}
+                            </a>
+                          </li>
+                      </ul>
+                      <ul class='nav nav-list'>
+                          <li class='nav-header'>
+                            {% trans "Venues" %}
+                          </li>
+                          <li>
+                            <a href='{% url meals_venue_list %}'>
+                              {% trans "My Venues" %}
+                            </a>
+                          </li>
+                          <li>
+                            <a href='{% url meals_venue_create %}'>
+                              {% trans "Add Venue" %}
+                            </a>
+                          </li>
+                      </ul>
+                      <ul class='nav nav-list'>
+                          <li class='nav-header'>
+                            {% trans "Contacts" %}
+                          </li>
+                          <li>
+                            <a href='{% url accounts_usercontact_list %}'>
+                              {% trans "My Friends" %}
+                            </a>
+                          </li>
+                          <li>
+                            <a href='{% url accounts_usercontact_create %}'>
+                              {% trans "My Contacts" %}
+                            </a>
+                          </li>
+                      </ul>
+                    </br>
                     {% endblock %}
+
                     {% block sidebar %}
                         <ul class='nav nav-list'>
                           <li class='nav-header'>
@@ -121,7 +170,12 @@
                         {% block header-link %}
                         {% endblock %}
                         <span class="pull-right">
-                            {{request.user}} <a href='/accounts/{{request.user}}/'><img class="mugshot" src="{{ request.user.get_profile.get_mugshot_url }}" alt="{% trans "Your mugshot" %}"/></a> 
+                          {{request.user}} 
+                          <a href='/accounts/{{request.user}}/'>
+                            {% load gravatar %}
+
+                            <img src="{% gravatar_url request.user.email 100 %}">
+                          </a> 
                         </span>
                         <br />
                         <small>

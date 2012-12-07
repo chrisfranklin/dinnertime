@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from jsonfield import JSONField
 
-from accounts.models import UserContact
-
 
 class Venue(models.Model):
     """
@@ -85,6 +83,8 @@ class Meal(models.Model):
     def get_absolute_url(self):
         return ('meals_meal_detail', (), {'pk': self.pk})
 
+from accounts.models import UserContact
+
 
 class Invite(models.Model):
     """
@@ -92,7 +92,8 @@ class Invite(models.Model):
     """
     meal = models.ForeignKey(Meal)
     secret = models.CharField(max_length=50, blank=True, null=True)
-    contact = models.ForeignKey(UserContact)
+    user = models.ForeignKey(User, blank=True, null=True)
+    contact = models.ForeignKey(UserContact, blank=True, null=True)
     STATUS_CHOICES = (
         ("INVITED", 'Invited'),
         ("ACCEPTED", 'Accepted'),
@@ -112,12 +113,15 @@ class Invite(models.Model):
         """
         Sends the invite via any available communications channel
         """
-        if self.fid:
-            # Send Facebook invite to user
+        if self.user:
+            # Send Meal invite to user
             pass
-        if self.email:
-            # Send Email invite to user
+        if self.contact:
+            # Send Meal invite to non user.
             pass
+        else:
+            # We should never get here
+            print "No user or contact for invite #%s" % self.id
 
     def accept_invite(self, secret, user):
         """

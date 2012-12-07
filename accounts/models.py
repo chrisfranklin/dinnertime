@@ -20,6 +20,10 @@ class UserProfile(FacebookProfileModel):
     def __unicode__(self):
         return "Profile for " % (self.user)
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('accounts_userprofile_detail', (), {'pk': self.pk})
+
 
 def create_user_profile(sender, instance, created, **kwargs):
     """
@@ -43,6 +47,8 @@ class UserContact(models.Model):
     """
     Stores an individual contact for the users friend list
     """
+    # user who imported this contact
+    owner = models.ForeignKey(User, verbose_name=_("owner"), related_name="contacts")
     name = models.TextField(blank=True, null=True)
     user = models.ForeignKey(User, unique=True, blank=True, null=True)
     email = models.EmailField(max_length=254, blank=True, null=True)
@@ -50,4 +56,6 @@ class UserContact(models.Model):
     gender = models.CharField(choices=(
         ('F', 'female'), ('M', 'male')), blank=True, null=True, max_length=1)
 
-
+    @models.permalink
+    def get_absolute_url(self):
+        return ('accounts_usercontact_detail', (), {'pk': self.pk})

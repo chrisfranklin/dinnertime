@@ -55,7 +55,7 @@ INSTALLED_APPS = (
 
     'lazysignup',
     'django_facebook',
-
+    'django_gravatar',
     'crispy_forms',
 
     'friends',

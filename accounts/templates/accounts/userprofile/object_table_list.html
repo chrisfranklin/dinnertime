@@ -1,0 +1,107 @@
+
+
+{% load i18n %}
+
+<p>
+  {% trans "Click on the primary key value to access the individual UserProfile's page." %}
+</p>
+<table class='table table-bordered table-striped'>
+  <thead>
+    <tr>
+      <th>
+        id
+      </th>
+      
+        <th>
+          about_me
+        </th>
+      
+        <th>
+          facebook_id
+        </th>
+      
+        <th>
+          access_token
+        </th>
+      
+        <th>
+          facebook_name
+        </th>
+      
+        <th>
+          facebook_profile_url
+        </th>
+      
+        <th>
+          website_url
+        </th>
+      
+        <th>
+          blog_url
+        </th>
+      
+        <th>
+          date_of_birth
+        </th>
+      
+        <th>
+          gender
+        </th>
+      
+        <th>
+          raw_data
+        </th>
+      
+        <th>
+          facebook_open_graph
+        </th>
+      
+        <th>
+          image
+        </th>
+      
+        <th>
+          user
+        </th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% for object in object_list %}
+      <tr>
+        <td>
+          <a href='{{ object.get_absolute_url }}'>
+            {{ object.id|stringformat:".3d" }}
+          </a>
+        </td>
+        
+          <td>{{ object.about_me }}</td>
+        
+          <td>{{ object.facebook_id }}</td>
+        
+          <td>{{ object.access_token }}</td>
+        
+          <td>{{ object.facebook_name }}</td>
+        
+          <td>{{ object.facebook_profile_url }}</td>
+        
+          <td>{{ object.website_url }}</td>
+        
+          <td>{{ object.blog_url }}</td>
+        
+          <td>{{ object.date_of_birth }}</td>
+        
+          <td>{{ object.gender }}</td>
+        
+          <td>{{ object.raw_data }}</td>
+        
+          <td>{{ object.facebook_open_graph }}</td>
+        
+          <td>{{ object.image }}</td>
+        
+          <td>{{ object.user }}</td>
+        
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

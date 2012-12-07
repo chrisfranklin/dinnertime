@@ -44,3 +44,4 @@ git+https://github.com/lincolnloop/django-launchpad.git#egg=launchpad
 django-jenkins
 coverage 
 pylint
+git+https://github.com/twaddington/django-gravatar.git

@@ -36,6 +36,7 @@ urlpatterns = patterns('',
     # Allauth
     #==========================================================
     (r'^accounts/', include('allauth.urls')),
+    (r'^accounts/', include('accounts.urls')),
     (r'^convert/', include('lazysignup.urls')),
     #==========================================================
     # End Userena

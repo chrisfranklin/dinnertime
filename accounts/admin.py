@@ -26,4 +26,3 @@ from .models import UserProfile, UserContact
 #admin.site.register(Venue, VenueAdmin)
 admin.site.register(UserProfile)
 admin.site.register(UserContact)
-

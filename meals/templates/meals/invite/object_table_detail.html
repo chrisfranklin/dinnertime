@@ -1,0 +1,85 @@
+
+
+{% load i18n %}
+
+<table class='table table-bordered table-striped'>
+  <thead>
+    <tr>
+      <th>
+        {% trans "Field" %}
+      </th>
+      <th>
+        {% trans "Value" %}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        id
+      </td>
+      <td>
+        <a href='{{ object.get_absolute_url }}'>
+          {{ object.id|stringformat:".3d" }}
+        </a>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        meal
+      </td>
+      <td>{{ object.meal }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        secret
+      </td>
+      <td>{{ object.secret }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        user
+      </td>
+      <td>{{ object.user }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        contact
+      </td>
+      <td>{{ object.contact }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        status
+      </td>
+      <td>{{ object.status }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        plusones
+      </td>
+      <td>{{ object.plusones }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        max_plusones
+      </td>
+      <td>{{ object.max_plusones }}</td>
+    </tr>
+    
+    <tr>
+      <td>
+        single_use
+      </td>
+      <td>{{ object.single_use }}</td>
+    </tr>
+    
+  </tbody>
+</table>
