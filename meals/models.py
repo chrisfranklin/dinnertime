@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from jsonfield import JSONField
+#from jsonfield import JSONField
 
 
 class Venue(models.Model):
@@ -17,6 +17,17 @@ class Venue(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('meals_venue_detail', (), {'pk': self.pk})
+
+
+class Part(models.Model):
+    STATUS_CHOICES = (
+        ("WANT", 'I want'),
+        ("NEED", 'I need'),
+        ("HAVE", 'I have'),
+    )
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    fulfilled_by = models.ForeignKey(User, blank=True, null=True)
+    name = models.CharField(max_length=100)
 
 
 class Meal(models.Model):
@@ -42,9 +53,7 @@ class Meal(models.Model):
         ("PUBLIC", 'Public'),
     )
     privacy = models.CharField(max_length=10, choices=PRIVACY_CHOICES, default="PRIVATE")
-    wants = JSONField(blank=True, null=True)
-    needs = JSONField(blank=True, null=True)
-    haves = JSONField(blank=True, null=True)
+    parts = models.ForeignKey(Part)
     #cut off for rsvp needs adding
     #recipe
 
@@ -202,3 +211,5 @@ class Guest(models.Model):
     """
     user = models.ForeignKey(User)
     meal = models.ForeignKey(Meal)
+    parts = models.ForeignKey(Part)
+    # TODO: Add something for allergies and *isms
