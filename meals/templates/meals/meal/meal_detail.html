@@ -88,6 +88,13 @@
           {% endif %}
           {{guest.user}}
         {% endfor %}
+        <h2> Invited Guests </h2>
+        {% for guest in meal.invite_set.all %}
+          {% if guest.user.email %}
+            <img src="{% gravatar_url guest.user.email 50 %}">
+          {% endif %}
+          {{guest.user}}
+        {% endfor %}
         {% if request.user == object.host %}
           <h2> You are hosting this event </h2>
           <h2> Contacts </h2>
