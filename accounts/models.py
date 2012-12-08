@@ -59,3 +59,5 @@ class UserContact(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('accounts_usercontact_detail', (), {'pk': self.pk})
+
+    # We need to create a user contact every time a friend request is sent or a friend accept is done.

@@ -29,6 +29,13 @@ class Part(models.Model):
     fulfilled_by = models.ForeignKey(User, blank=True, null=True)
     name = models.CharField(max_length=100)
 
+    def __unicode__(self):
+        return self.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('meals_part_detail', (), {'pk': self.pk})
+
 
 class Meal(models.Model):
     """
@@ -57,16 +64,40 @@ class Meal(models.Model):
     #cut off for rsvp needs adding
     #recipe
 
-    def add_guest(self, plusone=0):
+    def add_guest(self, guest, plusone=0):
         """
         Increments current_guests if not greater than max_guests and returns true else returns false
         """
         if self.max_guests >= self.current_guests + plusone:
             # We have room at the meal for the person and their plusones
             self.current_guests += plusone + 1  # The extra one is for the actual guest
+            guest_model = Guest(user=guest, meal=self)
+            print guest_model
             return True
         else:
             # We do not have room for the person and their plusones
+            return False
+
+    def remove_guest(self, guest):
+        pass
+
+    def increase_max_guest(self):
+        """
+        Increments max_guests and returns true else returns false
+        """
+        self.current_guests += 1
+        return True
+
+    def decrease_max_guest(self):
+        """
+        Decrements max_guests if the meal is not already full and returns true else returns false
+        """
+        if self.max_guests > self.current_guests and self.max_guests > 0:
+            # We have room at the meal even after decrementing max guests so lets do it.
+            self.current_guests -= 1
+            return True
+        else:
+            # The meal is full, remove some guests before decreasing the size.
             return False
 
     def share_to_facebook(self, graph=None, **kwargs):
@@ -101,7 +132,6 @@ class Invite(models.Model):
     """
     meal = models.ForeignKey(Meal)
     secret = models.CharField(max_length=50, blank=True, null=True)
-    user = models.ForeignKey(User, blank=True, null=True)
     contact = models.ForeignKey(UserContact, blank=True, null=True)
     STATUS_CHOICES = (
         ("INVITED", 'Invited'),

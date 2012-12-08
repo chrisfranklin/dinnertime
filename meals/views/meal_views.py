@@ -19,14 +19,11 @@ def set_max_guests(request, meal, direction):
     if meal:
         meal_object = Meal.objects.filter(id=meal)
         if direction == "up":
-            meal_object.max_guests += 1
-            return HttpResponseNotFound('<h1>Incremented</h1>')
+            meal_object.increase_max_guests()
+            return HttpResponse('<h1>Incremented</h1>')
         if direction == "down":
-            if (meal_object.max_guests >= meal_object.current_guests) and meal_object.max_guests > 0:
-                meal_object.max_guests -= 1
-                return HttpResponseNotFound('<h1>Decremented</h1>')
-            else:
-                return HttpResponseNotFound('<h1>Fail</h1>')
+            meal_object.decrease_max_guests()
+            return HttpResponse('<h1>Decremented</h1>')
         else:
             return HttpResponse('<h1>Please enter a direction</h1>')
         return HttpResponseNotFound('<h1>Meal not found</h1>')
