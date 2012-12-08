@@ -98,7 +98,7 @@ class MealForm(ModelForm):
     """
     class Meta:
         model = Meal
-        exclude = ('host', 'guests', 'wants', 'needs', 'haves', 'icon', 'description', 'venue', 'current_guests', 'suitable_for')
+        exclude = ('host', 'guests', 'wants', 'needs', 'haves', 'icon', 'description', 'venue', 'current_guests', 'suitable_for', 'parts')
         # widgets = {
         #     'when': BootstrapSplitDateTimeWidget(attrs={'date_class': 'datepicker-default', 'time_class': 'timepicker-default input-timepicker'}),
         #     #'description': Textarea(attrs={'cols': 40, 'rows': 20})

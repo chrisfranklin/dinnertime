@@ -60,7 +60,7 @@ class Meal(models.Model):
         ("PUBLIC", 'Public'),
     )
     privacy = models.CharField(max_length=10, choices=PRIVACY_CHOICES, default="PRIVATE")
-    parts = models.ForeignKey(Part)
+    parts = models.ForeignKey(Part, blank=True, null=True)
     #cut off for rsvp needs adding
     #recipe
 
@@ -152,15 +152,12 @@ class Invite(models.Model):
         """
         Sends the invite via any available communications channel
         """
-        if self.user:
-            # Send Meal invite to user
-            pass
         if self.contact:
-            # Send Meal invite to non user.
-            pass
+            # Send Meal invite to the contact
+            self.contact.send_invite(self.meal)
         else:
             # We should never get here
-            print "No user or contact for invite #%s" % self.id
+            print "No contact for invite #%s" % self.id
 
     def accept_invite(self, secret, user):
         """
@@ -194,7 +191,8 @@ class Invite(models.Model):
         """
         Changes invite status to declined
         """
-        self.status = "DECLINED"
+        if self.single_use:
+            self.status = "DECLINED"
 
     def cancel_invite(self, secret):
         """
@@ -241,5 +239,5 @@ class Guest(models.Model):
     """
     user = models.ForeignKey(User)
     meal = models.ForeignKey(Meal)
-    parts = models.ForeignKey(Part)
+    parts = models.ForeignKey(Part, blank=True, null=True)
     # TODO: Add something for allergies and *isms

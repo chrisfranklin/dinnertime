@@ -100,8 +100,8 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.facebook',
-    # 'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.github',
     # 'allauth.socialaccount.providers.linkedin',
     # 'allauth.socialaccount.providers.openid',
@@ -192,6 +192,7 @@ TEMPLATE_DIRS = (
 
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
     'django_facebook.context_processors.facebook',
     'allauth.account.context_processors.account',
     'allauth.socialaccount.context_processors.socialaccount',

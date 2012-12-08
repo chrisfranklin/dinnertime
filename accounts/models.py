@@ -56,8 +56,30 @@ class UserContact(models.Model):
     gender = models.CharField(choices=(
         ('F', 'female'), ('M', 'male')), blank=True, null=True, max_length=1)
 
+    def __unicode__(self):
+        if self.user:
+            return self.user
+        else:
+            return self.name
+
     @models.permalink
     def get_absolute_url(self):
         return ('accounts_usercontact_detail', (), {'pk': self.pk})
 
     # We need to create a user contact every time a friend request is sent or a friend accept is done.
+
+
+def create_user_contact(self, instance, **kwargs):
+    """
+    Create the contacts for either one side or both sides of a friendship.
+    """
+    print instance.from_user
+    print instance.from_user
+    print instance
+    #print request
+
+from friends.signals import inviting_friend, accepting_friend
+inviting_friend.connect(create_user_contact)
+accepting_friend.connect(create_user_contact)
+
+#accepting_friend.send(FriendshipInvitation, request=request, invite=invitation)
