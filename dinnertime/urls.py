@@ -4,7 +4,9 @@ from django.conf import settings  # Added by Fiber
 from django.contrib import admin
 from djrill import DjrillAdminSite
 from django.views.generic import TemplateView
+import autocomplete_light
 
+autocomplete_light.autodiscover()
 # Mandrill Email Support
 admin.site = DjrillAdminSite()
 admin.autodiscover()
@@ -49,6 +51,8 @@ urlpatterns = patterns('',
     #==========================================================
     # End Facebook
     #==========================================================
+    url(r'autocomplete/', include('autocomplete_light.urls')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
 )
 

@@ -45,3 +45,9 @@ django-jenkins
 coverage 
 pylint
 git+https://github.com/twaddington/django-gravatar.git
+
+djangorestframework
+markdown  # Markdown support for the browseable API.
+django-filter  # Filtering support
+
+django-autocomplete-light

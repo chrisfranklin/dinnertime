@@ -1,0 +1,255 @@
+[
+    {
+        "pk": 1,
+        "model": "auth.user",
+        "fields": {
+            "username": "user1",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "last_login": "2012-07-20T17:05:23.922Z",
+            "groups": [],
+            "user_permissions": [],
+            "password": "",
+            "email": "",
+            "date_joined": "2012-07-20T17:05:23.922Z"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "auth.user",
+        "fields": {
+            "username": "user2",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "last_login": "2012-07-20T17:05:24.105Z",
+            "groups": [],
+            "user_permissions": [],
+            "password": "",
+            "email": "",
+            "date_joined": "2012-07-20T17:05:24.105Z"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "auth.user",
+        "fields": {
+            "username": "user3",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "last_login": "2012-07-20T17:05:24.110Z",
+            "groups": [],
+            "user_permissions": [],
+            "password": "",
+            "email": "",
+            "date_joined": "2012-07-20T17:05:24.110Z"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "auth.user",
+        "fields": {
+            "username": "user4",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "last_login": "2012-07-20T17:05:24.114Z",
+            "groups": [],
+            "user_permissions": [],
+            "password": "",
+            "email": "",
+            "date_joined": "2012-07-20T17:05:24.114Z"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "auth.user",
+        "fields": {
+            "username": "user5",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "last_login": "2012-07-20T17:05:24.118Z",
+            "groups": [],
+            "user_permissions": [],
+            "password": "",
+            "email": "",
+            "date_joined": "2012-07-20T17:05:24.118Z"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "auth.user",
+        "fields": {
+            "username": "user6",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "last_login": "2012-07-20T17:05:24.123Z",
+            "groups": [],
+            "user_permissions": [],
+            "password": "",
+            "email": "",
+            "date_joined": "2012-07-20T17:05:24.123Z"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "auth.user",
+        "fields": {
+            "username": "user7",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "last_login": "2012-07-20T17:05:24.127Z",
+            "groups": [],
+            "user_permissions": [],
+            "password": "",
+            "email": "",
+            "date_joined": "2012-07-20T17:05:24.127Z"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "auth.user",
+        "fields": {
+            "username": "user8",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "last_login": "2012-07-20T17:05:24.132Z",
+            "groups": [],
+            "user_permissions": [],
+            "password": "",
+            "email": "",
+            "date_joined": "2012-07-20T17:05:24.132Z"
+        }
+    },
+    {
+        "pk": 9,
+        "model": "auth.user",
+        "fields": {
+            "username": "user9",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "last_login": "2012-07-20T17:05:24.136Z",
+            "groups": [],
+            "user_permissions": [],
+            "password": "",
+            "email": "",
+            "date_joined": "2012-07-20T17:05:24.136Z"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "auth.user",
+        "fields": {
+            "username": "user10",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": false,
+            "is_staff": false,
+            "last_login": "2012-07-20T17:05:24.141Z",
+            "groups": [],
+            "user_permissions": [],
+            "password": "",
+            "email": "",
+            "date_joined": "2012-07-20T17:05:24.141Z"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "friends.friendship",
+        "fields": {
+            "to_user": 2,
+            "added": "2012-07-20T17:06:57.460Z",
+            "from_user": 1
+        }
+    },
+    {
+        "pk": 3,
+        "model": "friends.friendship",
+        "fields": {
+            "to_user": 3,
+            "added": "2012-07-20T17:06:57.464Z",
+            "from_user": 1
+        }
+    },
+    {
+        "pk": 4,
+        "model": "friends.friendship",
+        "fields": {
+            "to_user": 4,
+            "added": "2012-07-20T17:06:57.468Z",
+            "from_user": 1
+        }
+    },
+    {
+        "pk": 5,
+        "model": "friends.friendship",
+        "fields": {
+            "to_user": 1,
+            "added": "2012-07-20T17:07:35.604Z",
+            "from_user": 5
+        }
+    },
+    {
+        "pk": 6,
+        "model": "friends.friendship",
+        "fields": {
+            "to_user": 1,
+            "added": "2012-07-20T17:07:35.609Z",
+            "from_user": 6
+        }
+    },
+    {
+        "pk": 7,
+        "model": "friends.friendship",
+        "fields": {
+            "to_user": 1,
+            "added": "2012-07-20T17:07:35.614Z",
+            "from_user": 7
+        }
+    },
+    {
+        "pk": 1,
+        "model": "friends.blocking",
+        "fields": {
+            "to_user": 1,
+            "added": "2012-07-20T17:09:04.754Z",
+            "from_user": 10
+        }
+    },
+    {
+        "pk": 1,
+        "model": "friends.friendlist",
+        "fields": {
+            "owner": 1,
+            "created": "2012-07-20T17:08:08.871Z",
+            "friends": [],
+            "title": "test-list"
+        }
+    }
+]

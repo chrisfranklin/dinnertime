@@ -99,12 +99,12 @@
                             {% trans "Contacts" %}
                           </li>
                           <li>
-                            <a href='{% url accounts_usercontact_list %}'>
+                            <a href='/friends/'>
                               {% trans "My Friends" %}
                             </a>
                           </li>
                           <li>
-                            <a href='{% url accounts_usercontact_create %}'>
+                            <a href='{% url accounts_usercontact_list %}'>
                               {% trans "My Contacts" %}
                             </a>
                           </li>
@@ -113,53 +113,7 @@
                     {% endblock %}
 
                     {% block sidebar %}
-                        <ul class='nav nav-list'>
-                          <li class='nav-header'>
-                            {% trans "Views" %}
-                          </li>
-                          <li>
-                            <a href='{% url meals_meal_list %}'>
-                              {% trans "List View" %}
-                            </a>
-                          </li>
-                          <li>
-                            <a href='{% url meals_meal_create %}'>
-                              {% trans "Create View" %}
-                            </a>
-                          </li>
-                          {% if object %}
-                            <li>
-                              <a href='{{ object.get_absolute_url }}'>
-                                {% trans "Detail View" %}
-                              </a>
-                            </li>
-                            <li>
-                              <a href='{% url meals_meal_update pk=object.pk %}'>
-                                {% trans "Update View" %}
-                              </a>
-                            </li>
-                            <li>
-                              <a href='{% url meals_meal_delete pk=object.pk %}'>
-                                {% trans "Delete View" %}
-                              </a>
-                            </li>
-                          
-                          {% endif %}
-                          <li class='nav-header'>
-                            {% trans "Date-based Views" %}
-                          </li>
-                          <li>
-                            <a href='{% url meals_meal_archive_index %}'>
-                              {% trans "Archive Index" %}
-                            </a>
-                          </li>
-                          {% if object %}
-                            <a href='{% url meals_meal_date_detail year=object.when.year month=object.when.month day=object.when.day pk=object.pk %}'>
-                              {% trans "Date Detail View" %}
-                            </a>
-                          {% endif %}
-                          
-                        </ul>
+                        
                     {% endblock %}
                   </div>
                   <div class='span10'>
@@ -169,14 +123,16 @@
                       <h1>
                         {% block header-link %}
                         {% endblock %}
-                        <span class="pull-right">
-                          {{request.user}} 
-                          <a href='/accounts/{{request.user}}/'>
-                            {% load gravatar %}
+                        {% if request.user.is_authenticated %}
+                          <span class="pull-right">
+                            {{request.user}} 
+                            <a href='/accounts/{{request.user}}/'>
+                              {% load gravatar %}
 
-                            <img src="{% gravatar_url request.user.email 100 %}">
-                          </a> 
-                        </span>
+                              <img src="{% gravatar_url request.user.email 100 %}">
+                            </a> 
+                          </span>
+                        {% endif %}
                         <br />
                         <small>
                           {% block header-description %}
@@ -214,7 +170,7 @@
             <script>window.jQuery || document.write('<script src="{{ STATIC_URL}}js/jquery-1.8.2.min.js"><\/script>')</script>
             <script>window.jQuery || document.write('<script src="{{ STATIC_URL}}js/jquery-ui.min.js"><\/script>')</script>
             <!-- End Fallback to Local Javascript -->
-
+            {% include 'autocomplete_light/static.html' %}
             <!-- Bootstrap JS files -->
             <script src="{{ STATIC_URL}}bootstrap/js/bootstrap.js"></script>
             <!-- End Bootstrap JS files -->

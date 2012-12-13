@@ -1,7 +1,7 @@
 import json
 
 from django.forms import ModelForm
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView, \
                                  DeleteView, UpdateView, \
                                  ArchiveIndexView, DateDetailView, \
@@ -12,20 +12,23 @@ from django.views.generic import ListView, DetailView, CreateView, \
 #from django.views.generic.detail import SingleObjectTemplateResponseMixin
 #from util.widgets import BootstrapSplitDateTimeWidget
 from meals.models import Meal
+from django.shortcuts import get_object_or_404
 
 
-def set_max_guests(request, meal, direction):
-    # ...
-    if meal:
-        meal_object = Meal.objects.filter(id=meal)
-        if direction == "up":
-            meal_object.increase_max_guests()
-            return HttpResponse('<h1>Incremented</h1>')
-        if direction == "down":
-            meal_object.decrease_max_guests()
-            return HttpResponse('<h1>Decremented</h1>')
+def set_max_guests(request, meal_id, direction):
+    if meal_id:
+        meal_object = get_object_or_404(Meal, pk=meal_id)
+        if request.user == meal_object.host or request.user.is_staff():
+            if int(direction) == 1:
+                meal_object.increase_max_guests()
+                return HttpResponseRedirect("/meal/" + meal_id + "/")
+            elif int(direction) == 0:
+                meal_object.decrease_max_guests()
+                return HttpResponseRedirect("/meal/" + meal_id + "/")
+            else:
+                return HttpResponse('<h1>Please enter a direction, 1 is up, 0 is down.</h1>')
         else:
-            return HttpResponse('<h1>Please enter a direction</h1>')
+            return HttpResponse("You are not the host of this meal")
         return HttpResponseNotFound('<h1>Meal not found</h1>')
     else:
         return HttpResponse('<h1>Please enter a meal</h1>')

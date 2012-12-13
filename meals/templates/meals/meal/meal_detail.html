@@ -73,14 +73,14 @@
     <div class="span6">
       <h2>{% if object.when %}{{object.when}}{% else %} not set. {% endif %}</h2>
       <h2> 
-        Guests: 0 / {{object.max_guests}}
+        Guests: {{object.current_guests}} / {{object.max_guests}}
         <span class="pull-right">
-          <a class="btn btn-danger"><i class="icon-minus"></i> Less </a>
-          <a class="btn btn-success"><i class="icon-plus"></i> More </a>
+          <a href= "/meal/{{object.id}}/max_guests/0/" class="btn btn-danger"><i class="icon-minus"></i> Less </a>
+          <a href= "/meal/{{object.id}}/max_guests/1/" class="btn btn-success"><i class="icon-plus"></i> More </a>
         </span>
       </h2>
       <h2>
-        <form><input></input></form>
+        
         <h2> Confirmed Guests </h2>
         {% for guest in meal.guest_set.all %}
           {% if guest.user.email %}
@@ -89,14 +89,14 @@
           {{guest.user}}
         {% endfor %}
         <h2> Invited Guests </h2>
-        {% for guest in meal.invite_set.all %}
-          {% if guest.user.email %}
-            <img src="{% gravatar_url guest.user.email 50 %}">
+        {% for invite in meal.invite_set.all %}
+          {% if invite.contact.user.email %}
+            <img src="{% gravatar_url invite.contact.email 50 %}">
           {% endif %}
-          {{guest.user}}
+          {{invite.contact}}
         {% endfor %}
         {% if request.user == object.host %}
-          <h2> You are hosting this event </h2>
+          <hr>
           <h2> Contacts </h2>
           {% for contact in user.contacts.all %}
             {% if contact.email %}

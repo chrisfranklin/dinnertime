@@ -57,14 +57,22 @@ class UserContact(models.Model):
         ('F', 'female'), ('M', 'male')), blank=True, null=True, max_length=1)
 
     def __unicode__(self):
-        if self.user:
-            return self.user
-        else:
-            return self.name
+        return self.name
 
     @models.permalink
     def get_absolute_url(self):
         return ('accounts_usercontact_detail', (), {'pk': self.pk})
+
+    def save(self, *args, **kwargs):
+        # Do stuff
+        if not self.email:
+            # We don't have an email, lets check emails and allauth
+            if self.user:
+                # We have a user
+                if self.user.email:
+                    # It has an email
+                    self.email = self.user.email
+        super(UserContact, self).save(*args, **kwargs)  # Call the "real" save() method.
 
     # We need to create a user contact every time a friend request is sent or a friend accept is done.
 

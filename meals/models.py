@@ -60,7 +60,7 @@ class Meal(models.Model):
         ("PUBLIC", 'Public'),
     )
     privacy = models.CharField(max_length=10, choices=PRIVACY_CHOICES, default="PRIVATE")
-    parts = models.ForeignKey(Part, blank=True, null=True)
+    parts = models.ManyToManyField(Part, blank=True, null=True)
     #cut off for rsvp needs adding
     #recipe
 
@@ -81,20 +81,22 @@ class Meal(models.Model):
     def remove_guest(self, guest):
         pass
 
-    def increase_max_guest(self):
+    def increase_max_guests(self):
         """
         Increments max_guests and returns true else returns false
         """
-        self.current_guests += 1
+        self.max_guests += 1
+        self.save()
         return True
 
-    def decrease_max_guest(self):
+    def decrease_max_guests(self):
         """
         Decrements max_guests if the meal is not already full and returns true else returns false
         """
         if self.max_guests > self.current_guests and self.max_guests > 0:
             # We have room at the meal even after decrementing max guests so lets do it.
-            self.current_guests -= 1
+            self.max_guests -= 1
+            self.save()
             return True
         else:
             # The meal is full, remove some guests before decreasing the size.
@@ -212,11 +214,14 @@ class Invite(models.Model):
         """
         Creates a unique identifier for the invite and saves it.
         """
-        import hashlib
-        from util.misc import get_random_string
-        salt = get_random_string()
-        secret = hashlib.sha1(salt + str(self.meal)).hexdigest()
-        return secret
+        if hasattr(self, 'meal'):
+            import hashlib
+            from util.misc import get_random_string
+            salt = get_random_string()
+            secret = hashlib.sha1(salt + str(self.meal)).hexdigest()
+            return secret
+        else:
+            return None
 
     def check_secret(self, secret):
         """
@@ -224,13 +229,24 @@ class Invite(models.Model):
         """
         return self.secret == secret
 
-    def save(self):
+    def send_email(self):
+        """
+        Sends an email if we have one available
+        """
+        print "wanknut"
+        if self.contact.email:
+            # Nice and easy we have an email on the contact, also check for allauth and for one on the user
+            from django.core.mail import send_mail
+            send_mail('You have been invited to a meal', 'Test message', 'dt@piemonster.me', [self.contact.email], fail_silently=False)
+
+    def save(self, *args, **kwargs):
         """
         Overrides save to generate a secret if their isn't one
         """
         if not self.secret:
             self.secret = self.generate_secret()
-        super(Invite, self).save()  # Call the "real" save() method.
+        self.send_email()
+        super(Invite, self).save(*args, **kwargs)  # Call the "real" save() method.
 
 
 class Guest(models.Model):
@@ -239,5 +255,5 @@ class Guest(models.Model):
     """
     user = models.ForeignKey(User)
     meal = models.ForeignKey(Meal)
-    parts = models.ForeignKey(Part, blank=True, null=True)
+    parts = models.ManyToManyField(Part, blank=True, null=True)
     # TODO: Add something for allergies and *isms

@@ -110,3 +110,19 @@ urlpatterns += patterns('',
 
 
 )
+
+from rest_framework.urlpatterns import format_suffix_patterns
+from accounts.views.api import UserProfileList, UserContactList, UserProfileDetail, UserContactDetail
+
+urlpatterns2 = patterns('accounts.views.api',
+    url(r'^api/$', 'api_root'),
+    url(r'^users/$', UserProfileList.as_view(), name='UserProfile-list'),
+    url(r'^users/(?P<pk>\d+)/$', UserProfileDetail.as_view(), name='UserProfile-detail'),
+    url(r'^contacts/$', UserProfileList.as_view(), name='UserContact-list'),
+    url(r'^contacts/(?P<pk>\d+)/$', UserProfileDetail.as_view(), name='UserContact-detail'),
+    # url(r'^groups/$', GroupList.as_view(), name='group-list'),
+    # url(r'^groups/(?P<pk>\d+)/$', GroupDetail.as_view(), name='group-detail'),
+)
+
+# Format suffixes
+urlpatterns += format_suffix_patterns(urlpatterns2, allowed=['json', 'api'])

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import UserProfile, UserContact
-
+import autocomplete_light
 # class MealInline(admin.StackedInline):
 #     """
 #     Shows meals that have been at a venue
@@ -9,20 +9,8 @@ from .models import UserProfile, UserContact
 #     extra = 0
 
 
-# class VenueAdmin(admin.ModelAdmin):
-#     """
-#     Shows a venue with a maps widget for the address
-#     """
-#     inlines = [MealInline]
+class UserContactAdmin(admin.ModelAdmin):
+    form = autocomplete_light.modelform_factory(UserContact)
 
-#     class form(forms.ModelForm):
-
-#         class Meta:
-#             widgets = {
-#                 'address': AddressWithMapWidget({'class': 'vTextField'})
-#             }
-
-
-#admin.site.register(Venue, VenueAdmin)
 admin.site.register(UserProfile)
-admin.site.register(UserContact)
+admin.site.register(UserContact, UserContactAdmin)

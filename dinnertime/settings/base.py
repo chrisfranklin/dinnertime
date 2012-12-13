@@ -53,6 +53,10 @@ INSTALLED_APPS = (
 
     'easy_maps',
 
+    'rest_framework',
+
+    'autocomplete_light',
+
     'lazysignup',
     'django_facebook',
     'django_gravatar',
@@ -240,7 +244,8 @@ CACHES = {
 #==============================================================================
 
 EMAIL_BACKEND = 'djrill.mail.backends.djrill.DjrillBackend'
-MANDRILL_API_KEY = 'set-your-own-key-here'
+#EMAIL_BACKEND = 'django.core.mail.backends.console'
+MANDRILL_API_KEY = '60fd0151-320e-433c-8f97-d21d5f9ad96d'
 MANDRILL_API_URL = 'http://mandrillapp.com/api/1.0'
 
 #==============================================================================
