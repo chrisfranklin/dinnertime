@@ -54,6 +54,8 @@ urlpatterns = patterns('',
     url(r'autocomplete/', include('autocomplete_light.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
+    (r'^comments/', include('django.contrib.comments.urls')),
+
 )
 
 OAUTH_ACCESS_SETTINGS = {

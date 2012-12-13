@@ -53,26 +53,58 @@ class InviteForm(forms.ModelForm):
 
     class Meta:
         model = Invite
-        exclude = ('secret', 'plusones', 'status', 'single_use', 'meal')
+        exclude = ('secret', 'plusones', 'status', 'single_use', 'meal', 'invited_by')
 
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
+from django.template.loader import render_to_string
+#from django.views.decorators.http import require_POST
+
+
+def _invite_data(request, invite):
+    data = {
+        "html": render_to_string(
+            "_invite.html",
+            RequestContext(request, {
+                "invite": invite
+            })
+        )
+    }
+    return data
+
+#from django.http import HttpResponse
+#import json
+
 
 def add_invite(request, meal_id):
     if request.method == "POST":
         form = InviteForm(request.POST, request.FILES)
-        print form
         if form.is_valid():
             meal = Meal.objects.get(pk=meal_id)
             contact = form.cleaned_data['contact']
             max_plusones = form.cleaned_data['max_plusones']
             invite = Invite.objects.get_or_create(contact=contact, max_plusones=max_plusones, meal=meal)[0]
-            return HttpResponseRedirect(invite.meal.get_absolute_url())
+            #data = _invite_data(request, invite)
+            #return HttpResponseRedirect(invite.meal.get_absolute_url())
+            return HttpResponseRedirect(meal.get_absolute_url())
     else:
         form = InviteForm()
     return render_to_response("meals/meal/invite/invite_form.html", {'form': form}, context_instance=RequestContext(request))
+
+
+def ack_invite(request, meal_id, invite_id, action, secret=None):
+    #meal = Meal.objects.get(pk=meal_id)
+    invite = Invite.objects.get(pk=invite_id, meal=meal_id)  # Add error checking to shrug off invalid invites
+    if action == "y":
+        print "gotcha"
+        invite.accept_invite(secret, request.user)
+        return HttpResponseRedirect(invite.meal.get_absolute_url())
+    elif action == "n":
+        invite.decline_invite(None, None)
+        return HttpResponseRedirect("/sorry/")
+    #return render_to_response("meals/meal/invite/invite_form.html", {'form': form}, context_instance=RequestContext(request))
 
 
 class InviteCreateView(InviteView, CreateView):

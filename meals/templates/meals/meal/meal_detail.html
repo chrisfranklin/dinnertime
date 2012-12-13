@@ -71,12 +71,12 @@
 {% block content %}
   <div class="row-fluid">
     <div class="span6">
-      <h2>{% if object.when %}{{object.when}}{% else %} not set. {% endif %}</h2>
+      <h1>{% if object.when %}{{object.when}}{% else %} not set. {% endif %}</h1>
       <h2> 
-        Guests: {{object.current_guests}} / {{object.max_guests}}
+        {{object.current_guests}} / {{object.max_guests}} guests.
         <span class="pull-right">
-          <a href= "/meal/{{object.id}}/max_guests/0/" class="btn btn-danger"><i class="icon-minus"></i> Less </a>
-          <a href= "/meal/{{object.id}}/max_guests/1/" class="btn btn-success"><i class="icon-plus"></i> More </a>
+          <a href= "/meal/{{object.id}}/max_guests/0/" class="btn btn-danger"><i class="icon-minus"></i></a>
+          <a href= "/meal/{{object.id}}/max_guests/1/" class="btn btn-success"><i class="icon-plus"></i></a>
         </span>
       </h2>
       <h2>
@@ -85,32 +85,47 @@
         {% for guest in meal.guest_set.all %}
           {% if guest.user.email %}
             <img src="{% gravatar_url guest.user.email 50 %}">
+          {% else %}
+            <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
           {% endif %}
-          {{guest.user}}
+          {{guest.user}} + {{invite.plusones}} guest(s)<br>
         {% endfor %}
         <h2> Invited Guests </h2>
         {% for invite in meal.invite_set.all %}
-          {% if invite.contact.user.email %}
+          {% if invite.contact.email %}
             <img src="{% gravatar_url invite.contact.email 50 %}">
+          {% else %}
+            <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
           {% endif %}
-          {{invite.contact}}
+          {{invite.contact}} + up to {{invite.max_plusones}} guest(s)<br>
         {% endfor %}
         {% if request.user == object.host %}
           <hr>
-          <h2> Contacts </h2>
+          <form class="form-inline" method="post" action="/meal/{{object.id}}/invite/create/" data-append="#invites">
+                {% csrf_token %}
+                {{form.contact}}
+                <div class="hidden2">{{form.max_plusones}}</div>
+                <button class='btn btn-primary' type='submit'>
+          
+                  Invite
+          
+                </button>
+            </form>
+          <hr>
+          <!--<h2> Contacts </h2>
           {% for contact in user.contacts.all %}
             {% if contact.email %}
               <img src="{% gravatar_url contact.email 50 %}">
             {% endif %}
             {{contact}}
-          {% endfor %}
+          {% endfor %} 
           <h2> Friends </h2>
           {% for friend in user.friends.all %}
             <img src="{% gravatar_url friend.from_user.email 50 %}">
             {{friend.from_user}}
           {% endfor %}
         {% endif %}
-        <a class="btn btn-large btn-primary"><i class="icon-plus"></i> Invite </a>
+        <a class="btn btn-large btn-primary"><i class="icon-plus"></i> Invite </a>-->
       </h2>
     </div>
     <div class="span6">
@@ -127,6 +142,13 @@
   <h2> I Have: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
   <h2> I Need: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
   <h2> I Want: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
+  <h2> Activity </h2><hr>
+  {% load comments %}
+  {% get_comment_count for object as comment_count %}
+  <h2> {{comment_count}} Comment(s) </h2>
+  {% render_comment_list for object %}
+  {% render_comment_form for object %}
+  <hr>
   {% include 'meals/meal/object_table_detail.html' %}
   <form action='{% url meals_meal_delete pk=object.pk %}' charset='utf-8' method='post'>
     <fieldset>

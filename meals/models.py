@@ -143,8 +143,10 @@ class Invite(models.Model):
     )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="INVITED")
     plusones = models.IntegerField(default=0)
-    max_plusones = models.IntegerField(default=1)
+    max_plusones = models.IntegerField(default=1, blank=True, null=True)
     single_use = models.BooleanField(default=True)
+
+    invited_by = models.ForeignKey(User, blank=True, null=True)
 
     @models.permalink
     def get_absolute_url(self):
@@ -187,6 +189,7 @@ class Invite(models.Model):
         else:
             # The secret doesn't match
             print("Bad secret")
+            print secret
         pass
 
     def decline_invite(self, secret):

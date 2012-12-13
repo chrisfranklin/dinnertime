@@ -1,4 +1,10 @@
 {% extends 'sitebase.html' %}
+
+{% block extra_js %}
+  <script src="{{STATIC_URL}}js/spin.min.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap-ajax.js"></script>
+{% endblock %}
+
 {% load i18n %}
     <div class='container'>
       <div class='row-fluid'>

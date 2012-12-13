@@ -13,6 +13,9 @@ from django.views.generic import ListView, DetailView, CreateView, \
 #from util.widgets import BootstrapSplitDateTimeWidget
 from meals.models import Meal
 from django.shortcuts import get_object_or_404
+from django.template import RequestContext
+from django.template.loader import render_to_string
+from django.views.decorators.http import require_POST
 
 
 def set_max_guests(request, meal_id, direction):
@@ -32,6 +35,40 @@ def set_max_guests(request, meal_id, direction):
         return HttpResponseNotFound('<h1>Meal not found</h1>')
     else:
         return HttpResponse('<h1>Please enter a meal</h1>')
+
+
+def _meal_data(request, meal):
+    data = {
+        "html": render_to_string(
+            "_meal.html",
+            RequestContext(request, {
+                "meal": meal
+            })
+        )
+    }
+    return data
+
+
+@require_POST
+def set_max_guests_new(request, pk, direction):
+    if pk:
+        meal_object = get_object_or_404(Meal, pk=pk)
+        if request.user == meal_object.host or request.user.is_staff():
+            if int(direction) == 1:
+                meal_object.increase_max_guests()
+                #return HttpResponseRedirect("/meal/" + meal_id + "/")
+            elif int(direction) == 0:
+                meal_object.decrease_max_guests()
+                #return HttpResponseRedirect("/meal/" + meal_id + "/")
+            else:
+                return HttpResponse('<h1>Please enter a direction, 1 is up, 0 is down.</h1>')
+        else:
+            return HttpResponse("You are not the host of this meal")
+        return HttpResponseNotFound('<h1>Meal not found</h1>')
+    else:
+        return HttpResponse('<h1>Please enter a meal</h1>')
+    data = _meal_data(request, meal_object)
+    return HttpResponse(json.dumps(data), mimetype="application/json")
 
 
 class AjaxableResponseMixin(object):
@@ -154,9 +191,21 @@ class MealDeleteView(MealView, DeleteView):
         from django.core.urlresolvers import reverse
         return reverse('meals_meal_list')
 
+from django.views.generic.edit import FormMixin
+from meals.views.invite_views import InviteForm
 
-class MealDetailView(MealView, DetailView):
-    pass
+
+class MealDetailView(MealView, DetailView, FormMixin):
+    form_class = InviteForm
+
+    def get_context_data(self, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        context = {
+            'form': form
+        }
+        context.update(kwargs)
+        return super(MealDetailView, self).get_context_data(**context)
 
 
 class MealListView(MealBaseListView, ListView):
