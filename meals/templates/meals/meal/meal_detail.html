@@ -77,38 +77,44 @@
       <hr>
       <h2>
         
-        {% for guest in meal.guest_set.all %}
-          {% if guest.user.email %}
-            <img src="{% gravatar_url guest.user.email 50 %}">
-          {% else %}
-            <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
-          {% endif %}
-          {{guest.user}}
-          {% if guest.user == request.user %}
-            (you)
-          {% endif %}
-           + {{invite.plusones}} guest(s)</br></br>
-        {% endfor %}
         {{object.current_guests}} / {{object.max_guests}} guests.
         <span class="pull-right">
           <a href= "/meal/{{object.id}}/max_guests/0/" class="btn btn-danger"><i class="icon-minus"></i></a>
           <a href= "/meal/{{object.id}}/max_guests/1/" class="btn btn-success"><i class="icon-plus"></i></a>
-        </span>
+        </span></br>
+        {% for guest in meal.guest_set.all %}
+          </br>
+          {% if guest.invite.contact.email %}
+            <img src="{% gravatar_url guest.invite.contact.email 50 %}">
+          {% else %}
+            <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
+          {% endif %}
+          {{guest.invite.contact}}
+          + 
+          {% inplace_edit "guest.invite.plusones" auto_height=1, auto_width=1, edit_empty_value="add extra" %}
+           guest(s) 
+        {% endfor %}
         <hr>
         {% for invite in meal.invite_set.all %}
-          {% if invite.contact.email == request.user.email %}
+          {% if invite.contact.email == request.user.email or invite.contact.user == request.user %}
             {% inplace_edit "invite.status" %}
             {% inplace_edit "invite.plusones" %}
           {% endif %}
         {% endfor %}
         <h2> Invited Guests </h2>
         {% for invite in meal.invite_set.all %}
-          {% if invite.contact.email %}
-            <img src="{% gravatar_url invite.contact.email 50 %}">
-          {% else %}
-            <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
+          {% if invite.status == "INVITED" %}
+            {% if invite.contact.email %}
+              <img src="{% gravatar_url invite.contact.email 50 %}">
+            {% else %}
+              <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
+            {% endif %}
+            {{invite.contact}} 
+            {% if invite.max_plusones %}
+              + {% inplace_edit "invite.max_plusones" %} guest(s)
+            {% endif %}
+            </br></br>
           {% endif %}
-          {{invite.contact}} + up to {{invite.max_plusones}} guest(s)</br></br>
         {% endfor %}
         {% if request.user == object.host %}
           <form class="form-inline" method="post" action="/meal/{{object.id}}/invite/create/" data-append="#invites">
@@ -138,7 +144,7 @@
       </h2>
     </div>
     <div class="span6">
-      <h2>{% if object.venue %}<a href="/venue/{{object.id}}">{{object.venue.address}}</a>{% else %} Please set a location. {% endif %}</h2> 
+      <h2>{% if object.venue %}<a href="/venue/{{object.id}}">{% inplace_edit "object.venue.address" auto_height=1, auto_width=1 %}</a>{% else %} Please set a location. {% endif %}</h2> 
       {% load easy_maps_tags %}
       {% if object.venue %}
         <!-- Default map with 300x400 dimensions -->

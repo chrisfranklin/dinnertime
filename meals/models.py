@@ -66,14 +66,15 @@ class Meal(models.Model):
     #cut off for rsvp needs adding
     #recipe
 
-    def add_guest(self, guest, plusone=0):
+    def add_guest(self, guest, invite, plusone=0):
         """
         Increments current_guests if not greater than max_guests and returns true else returns false
         """
         if self.max_guests >= self.current_guests + plusone:
             # We have room at the meal for the person and their plusones
             self.current_guests += plusone + 1  # The extra one is for the actual guest
-            guest_model = Guest(user=guest, meal=self)
+            self.save()
+            guest_model = Guest(user=guest, meal=self, invite=invite)
             guest_model.save()
             print guest_model
             return True
@@ -178,11 +179,12 @@ class Invite(models.Model):
                 if user:
                     # We have a user
                     print user
-                    if self.meal.add_guest(user, self.plusones):
+                    if self.meal.add_guest(user, self, self.plusones):
                         # We have allocated the space at the table
                         # Set status to accepted
                         self.status = "ACCEPTED"
-                        action.send(self.contact, verb='accepted', action_object=self, target=self.meal)
+                        self.save()
+                        action.send(self.contact, verb='accepted invite to', target=self)
                         # We should save any other info we have about the user to the user profile for display
                     else:
                         # There is not space at the table, we could try with less plusones in future
@@ -203,7 +205,7 @@ class Invite(models.Model):
         """
         if self.single_use:
             self.status = "DECLINED"
-            action.send(self.contact, verb='declined', action_object=self, target=self.meal)
+            action.send(self.contact, verb='declined invite to', target=self)
 
     def cancel_invite(self, secret):
         """
