@@ -266,5 +266,6 @@ class Guest(models.Model):
     """
     user = models.ForeignKey(User)
     meal = models.ForeignKey(Meal)
+    invite = models.ForeignKey(Invite)
     parts = models.ManyToManyField(Part, blank=True, null=True)
     # TODO: Add something for allergies and *isms

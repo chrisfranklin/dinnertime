@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
+from util.fields import MultiSelectField
 
 
 class UserProfile(models.Model):
@@ -13,6 +14,23 @@ class UserProfile(models.Model):
                                 related_name='user_profile')
     first_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50, blank=True, null=True)
+    DIET_CHOICES = (
+        ("MEAT", 'Meat Eater'),
+        ("VEGETARIAN", 'Vegetarian'),
+        ("VEGAN", 'Vegan'),
+    )
+    diet = models.CharField(max_length=10, choices=DIET_CHOICES, default="MEAT")
+    ALLERGY_CHOICES = (
+        ("MILK", 'Milk'),
+        ("EGGS", 'Eggs'),
+        ("FISH", 'Fish'),
+        ("SHELLFISH", 'Crustacean Shellfish'),
+        ("TREENUTS", 'Tree Nuts'),
+        ("PEANUTS", 'Peanuts'),
+        ("WHEAT", 'Wheat'),
+        ("SOYBEANS", 'Soybeans'),
+    )
+    allergies = MultiSelectField(max_length=20, blank=True, choices=ALLERGY_CHOICES)
 
     def save(self, *args, **kwargs):
         # Do stuff

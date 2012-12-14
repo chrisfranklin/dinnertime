@@ -56,7 +56,7 @@ class UserProfileDeleteView(UserProfileView, DeleteView):
 
 
 class UserProfileDetailView(UserProfileView, DetailView):
-    slug_field = 'userd'
+    slug_field = 'user'
 
 
 class UserProfileListView(UserProfileBaseListView, ListView):

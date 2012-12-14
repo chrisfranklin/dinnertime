@@ -15,7 +15,7 @@
 
 
 {% block breadcrumbs %}
-  <ul class='breadcrumb'>
+<!--  <ul class='breadcrumb'>
     <li>
       <a href='{% url meals_meal_archive_index %}'>
         {% trans "Archive Index" %}
@@ -54,6 +54,7 @@
       </a>
     </li>
   </ul>
+-->
 {% endblock %}
 
 
@@ -82,7 +83,11 @@
           {% else %}
             <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
           {% endif %}
-          {{guest.user}} + {{invite.plusones}} guest(s)<br>
+          {{guest.user}}
+          {% if guest.user == request.user %}
+            (you)
+          {% endif %}
+           + {{invite.plusones}} guest(s)</br></br>
         {% endfor %}
         {{object.current_guests}} / {{object.max_guests}} guests.
         <span class="pull-right">
@@ -90,6 +95,12 @@
           <a href= "/meal/{{object.id}}/max_guests/1/" class="btn btn-success"><i class="icon-plus"></i></a>
         </span>
         <hr>
+        {% for invite in meal.invite_set.all %}
+          {% if invite.contact.email == request.user.email %}
+            {% inplace_edit "invite.status" %}
+            {% inplace_edit "invite.plusones" %}
+          {% endif %}
+        {% endfor %}
         <h2> Invited Guests </h2>
         {% for invite in meal.invite_set.all %}
           {% if invite.contact.email %}
@@ -97,7 +108,7 @@
           {% else %}
             <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
           {% endif %}
-          {{invite.contact}} + up to {{invite.max_plusones}} guest(s)<br>
+          {{invite.contact}} + up to {{invite.max_plusones}} guest(s)</br></br>
         {% endfor %}
         {% if request.user == object.host %}
           <form class="form-inline" method="post" action="/meal/{{object.id}}/invite/create/" data-append="#invites">

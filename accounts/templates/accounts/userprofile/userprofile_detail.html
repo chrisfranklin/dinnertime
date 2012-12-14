@@ -23,16 +23,27 @@
 
 
 {% block header-link %}
+  {% load gravatar %}
+  {% if object.user.email %}
+    <img src="{% gravatar_url object.user.email 100 %}">
+  {% else %}
+    <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 100 %}">
+  {% endif %}
   <a href='{{ object.get_absolute_url }}'>
-    {% trans "UserProfile Detail" %}
+    {{object.user}}'s profile
   </a>
 {% endblock %}
 
 {% block header-description %}
-  {% trans "A page representing an individual object." %}
+  {% if request.user == object.user %}
+    This is your profile
+  {% else %}
+    This is not your profile
+  {% endif %}
 {% endblock %}
 
 {% block content %}
+  
   {% include 'accounts/userprofile/object_table_detail.html' %}
   <form action='{% url accounts_userprofile_delete pk=object.pk %}' charset='utf-8' method='post'>
     <fieldset>
