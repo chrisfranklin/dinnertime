@@ -66,6 +66,13 @@ class Meal(models.Model):
     #cut off for rsvp needs adding
     #recipe
 
+    def save(self, *args, **kwargs):
+        """
+        Overrides save to provide notification on meal changes
+        """
+        
+        super(Meal, self).save(*args, **kwargs)  # Call the "real" save() method.
+
     def add_guest(self, guest, invite, plusone=0):
         """
         Increments current_guests if not greater than max_guests and returns true else returns false
@@ -184,7 +191,7 @@ class Invite(models.Model):
                         # Set status to accepted
                         self.status = "ACCEPTED"
                         self.save()
-                        action.send(self.contact, verb='accepted invite to', target=self)
+                        action.send(self.contact, verb='accepted invite to', action_object=self.meal)
                         # We should save any other info we have about the user to the user profile for display
                     else:
                         # There is not space at the table, we could try with less plusones in future
@@ -205,7 +212,7 @@ class Invite(models.Model):
         """
         if self.single_use:
             self.status = "DECLINED"
-            action.send(self.contact, verb='declined invite to', target=self)
+            action.send(self.contact, verb='declined invite to', action_object=self.meal)
 
     def cancel_invite(self, secret):
         """

@@ -54,9 +54,21 @@ class UserProfileDeleteView(UserProfileView, DeleteView):
         from django.core.urlresolvers import reverse
         return reverse('accounts_userprofile_list')
 
+from actstream.models import actor_stream
+
 
 class UserProfileDetailView(UserProfileView, DetailView):
     slug_field = 'user'
+
+    def get_context_data(self, **kwargs):
+        print self.object
+        actionstream = actor_stream(self.object.user)
+        print actionstream
+        context = {
+            'actstream': actionstream
+        }
+        context.update(kwargs)
+        return super(UserProfileDetailView, self).get_context_data(**context)
 
 
 class UserProfileListView(UserProfileBaseListView, ListView):

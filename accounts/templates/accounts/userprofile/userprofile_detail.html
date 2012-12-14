@@ -3,6 +3,7 @@
 {% extends 'accounts/userprofile/base.html' %}
 
 {% load i18n %}
+{% load inplace_edit %}
 
 {% block filename %}
   /home/chris/Code/Piemonster/dinnertime/accounts/templates/accounts/userprofile/userprofile_detail.html
@@ -43,6 +44,38 @@
 {% endblock %}
 
 {% block content %}
+  <h2> Info </h2>
+  <b> Diet: </b>{% inplace_edit "object.diet" %}<br>
+  <b> Allergies: </b>{{object.allergies }}
+  <hr>
+
+  <h2> Activity </h2>
+  {% for entry in actstream %}
+    <p>{{entry}}</p>
+  {% endfor %}
+  <hr>
+
+  {% load comments %}
+  {% get_comment_count for object as comment_count %}
+  <h2> {{comment_count}} Comment(s) </h2>
+  {% render_comment_list for object %}
+  {% if user.is_authenticated %}
+      {% get_comment_form for object as form %}
+      <form action="{% comment_form_target %}" method="POST">
+      {% csrf_token %}
+      {{ form.comment }}
+      <div class="hidden2">{{ form.honeypot }}</div>
+      {{ form.content_type }}
+      {{ form.object_pk }}
+      {{ form.timestamp }}
+      {{ form.security_hash }}
+      <input type="hidden" name="next" value="{{object.get_absolute_url}}" />
+      <input type="submit" value="Add comment" id="id_submit" />
+      </form>
+  {% else %}
+      <p>Please <a href="{% url 'auth_login' %}">log in</a> to leave a comment.</p>
+  {% endif %}
+  <hr>
   
   {% include 'accounts/userprofile/object_table_detail.html' %}
   <form action='{% url accounts_userprofile_delete pk=object.pk %}' charset='utf-8' method='post'>

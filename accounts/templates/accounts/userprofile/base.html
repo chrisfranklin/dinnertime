@@ -1,4 +1,9 @@
 {% extends 'sitebase.html' %}
+{% block extra_js %}
+  {% load inplace_edit %}
+  {% inplace_static %}
+{% endblock %}
+
 {% load i18n %}
     <div class='container'>
       <div class='row'>

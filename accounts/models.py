@@ -31,6 +31,8 @@ class UserProfile(models.Model):
         ("SOYBEANS", 'Soybeans'),
     )
     allergies = MultiSelectField(max_length=20, blank=True, choices=ALLERGY_CHOICES)
+    # likes
+    # dislikes
 
     def save(self, *args, **kwargs):
         # Do stuff

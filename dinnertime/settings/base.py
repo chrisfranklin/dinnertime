@@ -125,8 +125,17 @@ INSTALLED_APPS = (
 
     'inplaceeditform',
     'actstream',
+    'phileo',
 
 )
+
+
+PHILEO_LIKABLE_MODELS = {
+
+    "meals.Meal": {}  # can override default config settings for each model here
+
+}
+
 
 print (INSTALLED_APPS)
 
@@ -221,6 +230,7 @@ AUTHENTICATION_BACKENDS += (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
     'lazysignup.backends.LazySignupBackend',
+    'phileo.auth_backends.CanLikeBackend',
 )
 
 #FACEBOOK_REGISTRATION_BACKEND = 'django_facebook.registration_backends.UserenaBackend'

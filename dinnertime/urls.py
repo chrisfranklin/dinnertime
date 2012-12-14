@@ -62,6 +62,7 @@ urlpatterns = patterns('',
     (r'^inplaceeditform/', include('inplaceeditform.urls')),
     (r'^jsi18n$', 'django.views.i18n.javascript_catalog', js_info_dict),
     (r'^activity/', include('actstream.urls')),
+    url(r"^likes/", include("phileo.urls")),
 
 )
 
