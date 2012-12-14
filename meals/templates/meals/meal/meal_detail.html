@@ -140,7 +140,11 @@
   <h2> I Have: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
   <h2> I Need: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
   <h2> I Want: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
-  <h2> Activity </h2><hr>
+  <h2> Activity </h2>
+  {% for entry in actstream %}
+    <p>{{entry}}</p>
+  {% endfor %}
+  <hr>
   {% load comments %}
   {% get_comment_count for object as comment_count %}
   <h2> {{comment_count}} Comment(s) </h2>

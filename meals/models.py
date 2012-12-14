@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 #from jsonfield import JSONField
+from actstream import action
 
 
 class Venue(models.Model):
@@ -181,6 +182,7 @@ class Invite(models.Model):
                         # We have allocated the space at the table
                         # Set status to accepted
                         self.status = "ACCEPTED"
+                        action.send(self.contact, verb='accepted', action_object=self, target=self.meal)
                         # We should save any other info we have about the user to the user profile for display
                     else:
                         # There is not space at the table, we could try with less plusones in future
@@ -201,6 +203,7 @@ class Invite(models.Model):
         """
         if self.single_use:
             self.status = "DECLINED"
+            action.send(self.contact, verb='declined', action_object=self, target=self.meal)
 
     def cancel_invite(self, secret):
         """
@@ -243,7 +246,7 @@ class Invite(models.Model):
         if self.contact.email:
             # Nice and easy we have an email on the contact, also check for allauth and for one on the user
             from django.core.mail import send_mail
-            send_mail('You have been invited to a meal', 'Test message http://localhost:8000/meal/%s/invite/%s/%s/' % (self.meal.id, self.pk, self.secret), 'dt@piemonster.me', [self.contact.email], fail_silently=False)
+            send_mail('You have been invited to a meal', 'Test message http://localhost:8000/meal/%s/invite/%s/y/%s/' % (self.meal.id, self.pk, self.secret), 'dt@piemonster.me', [self.contact.email], fail_silently=False)
 
     def save(self, *args, **kwargs):
         """
@@ -251,7 +254,9 @@ class Invite(models.Model):
         """
         if not self.secret:
             self.secret = self.generate_secret()
-        self.send_email()
+        if self.id is None:
+            self.send_email()
+            action.send(self.contact, verb='was invited to', action_object=self.meal)
         super(Invite, self).save(*args, **kwargs)  # Call the "real" save() method.
 
 

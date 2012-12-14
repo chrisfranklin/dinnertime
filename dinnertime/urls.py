@@ -61,8 +61,12 @@ urlpatterns = patterns('',
     (r'^comments/', include('django.contrib.comments.urls')),
     (r'^inplaceeditform/', include('inplaceeditform.urls')),
     (r'^jsi18n$', 'django.views.i18n.javascript_catalog', js_info_dict),
+    (r'^activity/', include('actstream.urls')),
 
 )
+
+
+
 
 OAUTH_ACCESS_SETTINGS = {
     'twitter': {

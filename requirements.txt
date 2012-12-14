@@ -53,3 +53,4 @@ django-filter  # Filtering support
 django-autocomplete-light
 
 django-inplaceedit
+django-activity-stream==0.4.4

@@ -193,16 +193,21 @@ class MealDeleteView(MealView, DeleteView):
 
 from django.views.generic.edit import FormMixin
 from meals.views.invite_views import InviteForm
+from actstream.models import action_object_stream
 
 
 class MealDetailView(MealView, DetailView, FormMixin):
     form_class = InviteForm
 
     def get_context_data(self, **kwargs):
+        print self.object
+        actionstream = action_object_stream(self.object)
         form_class = self.get_form_class()
         form = self.get_form(form_class)
+        print actionstream
         context = {
-            'form': form
+            'form': form,
+            'actstream': actionstream
         }
         context.update(kwargs)
         return super(MealDetailView, self).get_context_data(**context)

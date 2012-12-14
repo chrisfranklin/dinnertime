@@ -59,7 +59,7 @@ INSTALLED_APPS = (
     'autocomplete_light',
 
     'lazysignup',
-    'django_facebook',
+    #'django_facebook',  DEPRECATED, remove soon
     'django_gravatar',
     'crispy_forms',
 
@@ -124,6 +124,7 @@ INSTALLED_APPS = (
     'djcelery',
 
     'inplaceeditform',
+    'actstream',
 
 )
 
@@ -200,7 +201,6 @@ TEMPLATE_DIRS = (
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
-    'django_facebook.context_processors.facebook',
     'allauth.account.context_processors.account',
     'allauth.socialaccount.context_processors.socialaccount',
 )
@@ -219,8 +219,7 @@ MIDDLEWARE_CLASSES += (
 
 AUTHENTICATION_BACKENDS += (
     'django.contrib.auth.backends.ModelBackend',
-    "allauth.account.auth_backends.AuthenticationBackend",
-    'django_facebook.auth_backends.FacebookBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
     'lazysignup.backends.LazySignupBackend',
 )
 
@@ -257,8 +256,8 @@ MANDRILL_API_URL = 'http://mandrillapp.com/api/1.0'
 #==============================================================================
 # Facebook Settings - Production
 #==============================================================================
-FACEBOOK_APP_ID = "559089214107050"
-FACEBOOK_APP_SECRET = "a6976d28267f98ef3474f5398ebc6e42"
+#FACEBOOK_APP_ID = "559089214107050"
+#FACEBOOK_APP_SECRET = "a6976d28267f98ef3474f5398ebc6e42"
 
 #==============================================================================
 # Miscellaneous project settings
@@ -277,7 +276,16 @@ if os.getenv('JENKINS_URL', False):
     #     PORT=os.getenv('DBA_SQL_PORT'),
     # ))
 
+ACTSTREAM_SETTINGS = {
+    'MODELS': ('auth.user', 'auth.group', 'comments.comment', 'accounts.usercontact', 'accounts.userprofile', 'meals.meal', 'meals.invite', 'meals.guest'),
+    #'MANAGER': 'myapp.streams.MyActionManager',
+    'FETCH_RELATIONS': True,
+    'USE_PREFETCH': True,
+    #'USE_JSONFIELD': True,
+}
+
 
 #==============================================================================
 # Third party app settings
 #==============================================================================
+

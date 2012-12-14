@@ -1,10 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
-from django_facebook.models import FacebookProfileModel
 
 
-class UserProfile(FacebookProfileModel):
+class UserProfile(models.Model):
     """
     Stores fields for a single user, used in AUTH_PROFILE_MODULE
     """
@@ -12,6 +11,8 @@ class UserProfile(FacebookProfileModel):
                                 unique=True,
                                 verbose_name=_('user'),
                                 related_name='user_profile')
+    first_name = models.CharField(max_length=50, blank=True, null=True)
+    last_name = models.CharField(max_length=50, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         # Do stuff
