@@ -99,11 +99,13 @@ def ack_invite(request, meal_id, invite_id, action, secret=None):
     invite = Invite.objects.get(pk=invite_id, meal=meal_id)  # Add error checking to shrug off invalid invites
     if action == "y":
         print "gotcha"
+        print request.user
         invite.accept_invite(secret, request.user)
         return HttpResponseRedirect(invite.meal.get_absolute_url())
     elif action == "n":
         invite.decline_invite(None, None)
         return HttpResponseRedirect("/sorry/")
+    return HttpResponseRedirect("/answer-me-here/")
     #return render_to_response("meals/meal/invite/invite_form.html", {'form': form}, context_instance=RequestContext(request))
 
 

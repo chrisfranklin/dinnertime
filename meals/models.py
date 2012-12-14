@@ -41,6 +41,7 @@ class Meal(models.Model):
     """
     Stores an instance of a meal
     """
+    name = models.CharField(max_length=120, blank=True, null=True)
     host = models.ForeignKey(User, related_name="hosted")
     when = models.DateTimeField()
     icon = models.ImageField(upload_to="meal/icon/", blank=True, null=True)
@@ -72,6 +73,7 @@ class Meal(models.Model):
             # We have room at the meal for the person and their plusones
             self.current_guests += plusone + 1  # The extra one is for the actual guest
             guest_model = Guest(user=guest, meal=self)
+            guest_model.save()
             print guest_model
             return True
         else:
@@ -158,7 +160,7 @@ class Invite(models.Model):
         """
         if self.contact:
             # Send Meal invite to the contact
-            self.contact.send_invite(self.meal)
+            self.contact.send_invite(self)
         else:
             # We should never get here
             print "No contact for invite #%s" % self.id
@@ -174,12 +176,12 @@ class Invite(models.Model):
                 # If the user has an email or a facebook we should try and match it to a profile perhaps.
                 if user:
                     # We have a user
-                    if self.meal.add_guest(self.plusones):
+                    print user
+                    if self.meal.add_guest(user, self.plusones):
                         # We have allocated the space at the table
-                        if self.create_guest(user):
-                            # Set status to accepted
-                            self.status = "ACCEPTED"
-                            # We should save any other info we have about the user to the user profile for display
+                        # Set status to accepted
+                        self.status = "ACCEPTED"
+                        # We should save any other info we have about the user to the user profile for display
                     else:
                         # There is not space at the table, we could try with less plusones in future
                         pass
@@ -189,6 +191,7 @@ class Invite(models.Model):
         else:
             # The secret doesn't match
             print("Bad secret")
+            print self.secret
             print secret
         pass
 
@@ -240,7 +243,7 @@ class Invite(models.Model):
         if self.contact.email:
             # Nice and easy we have an email on the contact, also check for allauth and for one on the user
             from django.core.mail import send_mail
-            send_mail('You have been invited to a meal', 'Test message', 'dt@piemonster.me', [self.contact.email], fail_silently=False)
+            send_mail('You have been invited to a meal', 'Test message http://localhost:8000/meal/%s/invite/%s/%s/' % (self.meal.id, self.pk, self.secret), 'dt@piemonster.me', [self.contact.email], fail_silently=False)
 
     def save(self, *args, **kwargs):
         """

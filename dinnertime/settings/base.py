@@ -123,6 +123,8 @@ INSTALLED_APPS = (
     #--------------------------------------------------------------------------
     'djcelery',
 
+    'inplaceeditform',
+
 )
 
 print (INSTALLED_APPS)
@@ -223,6 +225,9 @@ AUTHENTICATION_BACKENDS += (
 )
 
 #FACEBOOK_REGISTRATION_BACKEND = 'django_facebook.registration_backends.UserenaBackend'
+
+ADAPTOR_INPLACEEDIT_EDIT = 'inplaceeditform.perms.AdminDjangoPermEditInline'
+
 
 #==============================================================================
 # Cache Framework - set to memcache

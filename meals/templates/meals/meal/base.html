@@ -1,6 +1,7 @@
 {% extends 'sitebase.html' %}
-
+{% load inplace_edit %}
 {% block extra_js %}
+  {% inplace_static %}
   <script src="{{STATIC_URL}}js/spin.min.js"></script>
   <script src="{{STATIC_URL}}js/bootstrap-ajax.js"></script>
 {% endblock %}

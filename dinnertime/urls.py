@@ -11,6 +11,10 @@ autocomplete_light.autodiscover()
 admin.site = DjrillAdminSite()
 admin.autodiscover()
 
+js_info_dict = {
+    'packages': ('django.conf',),
+}
+
 urlpatterns = patterns('',
    # (r'', include('dinnertime.apps.')),
     #==========================================================
@@ -55,6 +59,8 @@ urlpatterns = patterns('',
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     (r'^comments/', include('django.contrib.comments.urls')),
+    (r'^inplaceeditform/', include('inplaceeditform.urls')),
+    (r'^jsi18n$', 'django.views.i18n.javascript_catalog', js_info_dict),
 
 )
 
