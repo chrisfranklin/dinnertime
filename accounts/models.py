@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from util.fields import MultiSelectField
+from meals.models import Ingredient
 
 
 class UserProfile(models.Model):
@@ -31,8 +32,8 @@ class UserProfile(models.Model):
         ("SOYBEANS", 'Soybeans'),
     )
     allergies = MultiSelectField(max_length=20, blank=True, choices=ALLERGY_CHOICES)
-    # likes
-    # dislikes
+    likes = models.ManyToManyField(Ingredient, related_name="liked_by", blank=True, null=True)
+    dislikes = models.ManyToManyField(Ingredient, related_name="disliked_by", blank=True, null=True)
 
     def save(self, *args, **kwargs):
         # Do stuff

@@ -20,6 +20,13 @@ class Venue(models.Model):
         return ('meals_venue_detail', (), {'pk': self.pk})
 
 
+class Ingredient(models.Model):
+    """
+    Stores an ingredient
+    """
+    name = models.CharField(max_length=50)
+
+
 class Part(models.Model):
     STATUS_CHOICES = (
         ("WANT", 'I want'),
@@ -28,7 +35,7 @@ class Part(models.Model):
     )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
     fulfilled_by = models.ForeignKey(User, blank=True, null=True)
-    name = models.CharField(max_length=100)
+    ingredient = models.ForeignKey(Ingredient, blank=True, null=True)
 
     def __unicode__(self):
         return self.name
