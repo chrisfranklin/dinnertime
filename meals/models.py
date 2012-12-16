@@ -40,7 +40,7 @@ class Part(models.Model):
         ("BEVERAGE", 'Beverage'),
         ("DISH", 'Dish'),
     )
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, blank=True, null=True)
     part_type = models.CharField(max_length=18, choices=TYPE_CHOICES)
     fulfilled_by = models.ForeignKey(User, blank=True, null=True)
     name = models.CharField(max_length=50)
