@@ -20,22 +20,34 @@ class Venue(models.Model):
         return ('meals_venue_detail', (), {'pk': self.pk})
 
 
-class Ingredient(models.Model):
-    """
-    Stores an ingredient
-    """
-    name = models.CharField(max_length=50)
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 
 
 class Part(models.Model):
+    """
+    Stores a have, need or want as a part.
+    """
     STATUS_CHOICES = (
         ("WANT", 'I want'),
         ("NEED", 'I need'),
         ("HAVE", 'I have'),
     )
+    TYPE_CHOICES = (
+        ("FURNITURE", 'Furniture'),
+        ("EQUIPMENT", 'Equipment'),
+        ("INGREDIENT", 'Ingredient'),
+        ("BEVERAGE", 'Beverage'),
+        ("DISH", 'Dish'),
+    )
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    part_type = models.CharField(max_length=18, choices=TYPE_CHOICES)
     fulfilled_by = models.ForeignKey(User, blank=True, null=True)
-    ingredient = models.ForeignKey(Ingredient, blank=True, null=True)
+    name = models.CharField(max_length=50)
+    # Following fields are required for using GenericForeignKey
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    data = generic.GenericForeignKey()
 
     def __unicode__(self):
         return self.name
@@ -45,9 +57,37 @@ class Part(models.Model):
         return ('meals_part_detail', (), {'pk': self.pk})
 
 
+class Ingredient(models.Model):
+    """
+    Stores an ingredient or food item e.g. onions, flour or eggs
+    """
+    item = generic.GenericRelation(Part)
+
+
+class Furniture(models.Model):
+    """
+    Stores details of types of furniture e.g chairs and tables
+    """
+    item = generic.GenericRelation(Part)
+
+
+class Equipment(models.Model):
+    """
+    Stores an item of equipment e.g whisk or plate
+    """
+    item = generic.GenericRelation(Part)
+
+
+class Beverage(models.Model):
+    """
+    Stores a drink e.g beer or orange juice
+    """
+    item = generic.GenericRelation(Part)
+
+
 class Meal(models.Model):
     """
-    Stores an instance of a meal
+    Stores an instance of a meal, very important model.
     """
     name = models.CharField(max_length=120, blank=True, null=True)
     host = models.ForeignKey(User, related_name="hosted")
@@ -77,7 +117,6 @@ class Meal(models.Model):
         """
         Overrides save to provide notification on meal changes
         """
-        
         super(Meal, self).save(*args, **kwargs)  # Call the "real" save() method.
 
     def add_guest(self, guest, invite, plusone=0):

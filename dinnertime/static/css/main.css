@@ -15,6 +15,21 @@
   display: none;
 }
 
+.bgit{
+  /*background: url(/static/img/bg.png) repeat center center; */
+  background: url(/static/img/bg2.jpg) no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  opacity:1;
+}
+
+.bgout{
+  background: url(/static/img/rw2.png) repeat center center; 
+  padding-left:10px;
+  padding-right:10px;
+}
 
 
 /* ==========================================================================
@@ -31,16 +46,14 @@
   padding: 40px 0;
   color: #fff;
   text-align: center;
-  text-shadow: 0 1px 3px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
-  background: #f2825b; /* Old browsers */
-  background: -moz-linear-gradient(left,  #f2825b 0%, #e55b2b 41%, #f07146 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#f2825b), color-stop(41%,#e55b2b), color-stop(100%,#f07146)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left,  #f2825b 0%,#e55b2b 41%,#f07146 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left,  #f2825b 0%,#e55b2b 41%,#f07146 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(left,  #f2825b 0%,#e55b2b 41%,#f07146 100%); /* IE10+ */
-  background: linear-gradient(to right,  #f2825b 0%,#e55b2b 41%,#f07146 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2825b', endColorstr='#f07146',GradientType=1 ); /* IE6-9 */
+  text-shadow: 0 1px 5px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
+  background: url(/static/img/bg2.jpg) no-repeat center center; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
+
 .jumbotron h1 {
   font-size: 80px;
   font-weight: bold;

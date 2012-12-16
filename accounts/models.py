@@ -19,6 +19,9 @@ class UserProfile(models.Model):
         ("MEAT", 'Meat Eater'),
         ("VEGETARIAN", 'Vegetarian'),
         ("VEGAN", 'Vegan'),
+        ("PESKY", 'Pescatarian'),
+        ("HALAL", "Halal"),
+        ("KOSHA", "Kosha"),
     )
     diet = models.CharField(max_length=10, choices=DIET_CHOICES, default="MEAT")
     ALLERGY_CHOICES = (

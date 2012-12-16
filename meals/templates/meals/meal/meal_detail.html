@@ -121,12 +121,18 @@
                 {% csrf_token %}
                 {{form.contact}}
                 <div class="hidden2">{{form.max_plusones}}</div>
-                <button class='btn btn-primary' type='submit'>
+                <button class='btn btn-success' type='submit'>
           
                   Invite
           
                 </button>
+                
             </form>
+            <a class='btn btn-primary' href="/friends/">
+      
+              Manage Contacts
+      
+            </a>
           <!--<h2> Contacts </h2>
           {% for contact in user.contacts.all %}
             {% if contact.email %}
@@ -144,11 +150,11 @@
       </h2>
     </div>
     <div class="span6">
-      <h2>{% if object.venue %}<a href="/venue/{{object.id}}">{% inplace_edit "object.venue.address" auto_height=1, auto_width=1 %}</a>{% else %} Please set a location. {% endif %}</h2> 
+      <h2>{% if object.venue %}<a href="/venue/{{object.id}}">{% inplace_edit "object.venue.address" auto_height=1, auto_width=1 %}</a>{% else %}<a href="/venue/create/"> Please set a location. </a> {% endif %}</h2> 
       {% load easy_maps_tags %}
       {% if object.venue %}
         <!-- Default map with 300x400 dimensions -->
-        {% easy_map object.venue.address 500 500 %}
+        {% easy_map object.venue.address 470 470 %}
       {% endif %}
     </div>
   </div>
@@ -183,7 +189,6 @@
       <p>Please <a href="{% url 'auth_login' %}">log in</a> to leave a comment.</p>
   {% endif %}
   <hr>
-  {% include 'meals/meal/object_table_detail.html' %}
   <form action='{% url meals_meal_delete pk=object.pk %}' charset='utf-8' method='post'>
     <fieldset>
       {% csrf_token %}

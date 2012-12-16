@@ -33,7 +33,7 @@
             <script src="{{ STATIC_URL}}js/modernizr2.6.2.js"></script>
         {% endcompress %}
     </head>
-    <body>
+    <body class="bgit">
         {% load i18n %}
         {% if messages %}
         <ul class="messages">
@@ -52,7 +52,7 @@
             <![endif]-->
 
 
-            <div class='container'>
+            <div class='container bgout'>
               <div class='row-fluid'>
 
                 <div class='content'>
@@ -62,7 +62,7 @@
                     <a href="/">
                       <img class="center" src="{{STATIC_URL}}img/logo.png">
                     </a>
-                    <h2 class="center"> Dinner Time </h2>
+                    <h2 class="center"> Table Surfing </h2>
                     {% block main_sidebar %}
                       <ul class='nav nav-list'>
                           <li class='nav-header'>

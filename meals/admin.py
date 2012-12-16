@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 from easy_maps.widgets import AddressWithMapWidget
-from .models import Meal, Venue, Guest, Invite, Part
+from .models import Meal, Venue, Guest, Invite, Part, Ingredient
 
 
 class MealInline(admin.StackedInline):
@@ -31,3 +31,4 @@ admin.site.register(Meal)
 admin.site.register(Guest)
 admin.site.register(Invite)
 admin.site.register(Part)
+admin.site.register(Ingredient)
