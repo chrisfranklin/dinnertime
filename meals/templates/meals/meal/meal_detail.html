@@ -187,8 +187,8 @@
               <button class='btn btn-primary' type='submit'><i class="icon-plus"> Add</i></button>
           </form>
       {% endif %}
-      {% for part in meal.parts.all %}
-        {{part}}
+      {% for part in meal.mealpart_set.all %}
+        {{part.part}}
         </br>
       {% endfor %}
     </div>

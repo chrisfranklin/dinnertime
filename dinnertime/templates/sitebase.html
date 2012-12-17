@@ -29,6 +29,8 @@
             {% block extra_css %} {% endblock %}
         {% endcompress %}
 
+        <link href='http://fonts.googleapis.com/css?family=Rum+Raisin' rel='stylesheet' type='text/css'>
+
         {% compress js %}
             <script src="{{ STATIC_URL}}js/modernizr2.6.2.js"></script>
         {% endcompress %}
@@ -59,57 +61,40 @@
 
 
                   <div class='span2'>
-                    <a href="/">
-                      <img class="center" src="{{STATIC_URL}}img/logo.png">
-                    </a>
-                    <h2 class="center"> Table Surfing </h2>
+                    </br>
+                    <h2 class="center logo"> Table Surf.in </h2></br>
                     {% block main_sidebar %}
                       <ul class='nav nav-list'>
                           <li class='nav-header'>
-                            {% trans "Meals" %}
+                            {% trans "Hungry?" %}
                           </li>
                           <li>
                             <a href='{% url meals_meal_list %}'>
-                              {% trans "My meals" %}
-                            </a>
-                          </li>
-                          <li>
-                            <a href='{% url meals_meal_list %}'>
-                              {% trans "All meals" %}
+                              {% trans "Find food" %}
                             </a>
                           </li>
                       </ul>
                       <ul class='nav nav-list'>
                           <li class='nav-header'>
-                            {% trans "Venues" %}
+                            {% trans "Cooking?" %}
                           </li>
                           <li>
                             <a href='{% url meals_venue_list %}'>
-                              {% trans "My Venues" %}
-                            </a>
-                          </li>
-                          <li>
-                            <a href='{% url meals_venue_create %}'>
-                              {% trans "Add Venue" %}
+                              {% trans "Create a Meal" %}
                             </a>
                           </li>
                       </ul>
                       <ul class='nav nav-list'>
                           <li class='nav-header'>
-                            {% trans "Contacts" %}
+                            {% trans "Find Friends!" %}
                           </li>
                           <li>
                             <a href='/friends/'>
-                              {% trans "My Friends" %}
-                            </a>
-                          </li>
-                          <li>
-                            <a href='{% url accounts_usercontact_list %}'>
-                              {% trans "My Contacts" %}
+                              {% trans "Friend Feed" %}
                             </a>
                           </li>
                       </ul>
-                    </br>
+                    </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br><b> DEBUG </b>
                     {% endblock %}
 
                     {% block sidebar %}

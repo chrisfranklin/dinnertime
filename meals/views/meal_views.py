@@ -201,10 +201,20 @@ class HaveForm(forms.Form):
     name = forms.CharField(max_length=100)
     status = "HAVE"
 
+
+class NeedForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    status = "NEED"
+
+
+class WantForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    status = "WANT"
+
 from django.shortcuts import render
 
 
-def add_have(request, meal_id, status):  # change this to part
+def add_part(request, meal_id, status):  # change this to part
     if status == "HAVE":
         if request.method == 'POST':  # If the form has been submitted...
             form = HaveForm(request.POST)  # A form bound to the POST data
@@ -234,10 +244,14 @@ class MealDetailView(MealView, DetailView, FormMixin):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         formh = HaveForm()
+        formn = NeedForm()
+        formw = WantForm()
         print actionstream
         context = {
             'form': form,
             'formh': formh,
+            'formn': formn,
+            'formw': formw,
             'actstream': actionstream
         }
         context.update(kwargs)

@@ -31,6 +31,12 @@
   padding-right:10px;
 }
 
+.logo{
+  font-family: 'Rum Raisin', sans-serif;
+  font-size:64px;
+  line-height: 120%;
+}
+
 
 /* ==========================================================================
    Extra Bootstrap
