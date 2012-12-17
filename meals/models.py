@@ -85,6 +85,13 @@ class Beverage(models.Model):
     item = generic.GenericRelation(Part)
 
 
+class Dish(models.Model):
+    """
+    Stores a complete dish e.g bread and butter pudding
+    """
+    item = generic.GenericRelation(Part)
+
+
 class Meal(models.Model):
     """
     Stores an instance of a meal, very important model.
@@ -129,11 +136,56 @@ class Meal(models.Model):
             self.save()
             guest_model = Guest(user=guest, meal=self, invite=invite)
             guest_model.save()
+            action.send(guest, verb='is attending', action_object=self)
             print guest_model
             return True
         else:
             # We do not have room for the person and their plusones
             return False
+
+    def add_type(self, name, part_type, **kwargs):
+        """
+        Add a part_type and relevant model and return it, return False if failed.
+        """
+        if part_type == "INGREDIENT":
+            return Ingredient().save()
+        elif part_type == "EQUIPMENT":
+            return Equipment().save()
+        elif part_type == "FURNITURE":
+            return Furniture().save()
+        elif part_type == "BEVERAGE":
+            return Beverage().save()
+        elif part_type == "DISH":
+            return Dish().save()
+        else:
+            return False
+
+    def add_have(self, name, part_type, **kwargs):
+        """
+        Represents a "have" part of the meal with the relevant item_type populated from add_type() and kwargs
+        """
+        part_type = self.add_type(part_type, kwargs)
+        part = Part.objects.get_or_create(name=name, part_type=part_type, data=part_type, status="HAVE")
+        self.parts.add(part)
+        return True
+
+    def add_need(self, name, part_type, **kwargs):
+        """
+        Represents a "need" part of the meal with the relevant item_type populated from add_type() and kwargs
+        """
+        part_type = self.add_type(part_type, kwargs)
+        part = Part.objects.get_or_create(name=name, part_type=part_type, data=part_type, status="NEED")
+        self.parts.add(part)
+        return True
+
+    def add_want(self, name, part_type, **kwargs):
+        """
+        Represents a "want" part of the meal with the relevant item_type populated from add_type() and kwargs
+        """
+        part_type = self.add_type(part_type, kwargs)
+        part = Part.objects.get_or_create(name=name, part_type=part_type, data=part_type, status="WANT")
+        self.parts.add(part)
+        return True
 
     def remove_guest(self, guest):
         pass
@@ -144,6 +196,7 @@ class Meal(models.Model):
         """
         self.max_guests += 1
         self.save()
+        action.send(self.host, verb='increased max guests for', action_object=self)
         return True
 
     def decrease_max_guests(self):
@@ -154,6 +207,7 @@ class Meal(models.Model):
             # We have room at the meal even after decrementing max guests so lets do it.
             self.max_guests -= 1
             self.save()
+            action.send(self.host, verb='decreased max guests for', action_object=self)
             return True
         else:
             # The meal is full, remove some guests before decreasing the size.
@@ -161,7 +215,7 @@ class Meal(models.Model):
 
     def share_to_facebook(self, graph=None, **kwargs):
         """
-        Stores and tries sending a facebook open graph share of the meal.
+        Stores and tries sending a facebook open graph share of the meal. This is DEPRECATED code from django-facebook
         """
         from django_facebook.models import OpenGraphShare
         #this is where the magic happens
