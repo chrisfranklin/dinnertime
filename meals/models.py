@@ -160,29 +160,29 @@ class Meal(models.Model):
         else:
             return False
 
-    def add_have(self, name, part_type, **kwargs):
+    def add_have(self, name, **kwargs):
         """
         Represents a "have" part of the meal with the relevant item_type populated from add_type() and kwargs
         """
-        part_type = self.add_type(part_type, kwargs)
+        part_type = self.add_type("HAVE", kwargs)
         part = Part.objects.get_or_create(name=name, part_type=part_type, data=part_type, status="HAVE")
         self.parts.add(part)
         return True
 
-    def add_need(self, name, part_type, **kwargs):
+    def add_need(self, name, **kwargs):
         """
         Represents a "need" part of the meal with the relevant item_type populated from add_type() and kwargs
         """
-        part_type = self.add_type(part_type, kwargs)
+        part_type = self.add_type("NEED", kwargs)
         part = Part.objects.get_or_create(name=name, part_type=part_type, data=part_type, status="NEED")
         self.parts.add(part)
         return True
 
-    def add_want(self, name, part_type, **kwargs):
+    def add_want(self, name, **kwargs):
         """
         Represents a "want" part of the meal with the relevant item_type populated from add_type() and kwargs
         """
-        part_type = self.add_type(part_type, kwargs)
+        part_type = self.add_type("WANT", kwargs)
         part = Part.objects.get_or_create(name=name, part_type=part_type, data=part_type, status="WANT")
         self.parts.add(part)
         return True

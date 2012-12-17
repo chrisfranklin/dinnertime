@@ -1,0 +1,69 @@
+
+
+{% extends 'meals/meal/base.html' %}
+
+{% load i18n %}
+
+{% block filename %}
+  /home/chris/Code/Piemonster/dinnertime/meals/templates/meals/meal/meal_form.html
+{% endblock %}
+
+{% block title %}
+  {% if object %}
+    {% trans "Update Meal" %}
+  {% else %}
+    {% trans "Create a New Meal" %}
+  {% endif %}
+{% endblock %}
+
+{% block header-link %}
+  {% if object %}
+    <a href='{% url meals_meal_update pk=object.pk %}'>
+      {% trans "Meal Update" %}
+    </a>
+  {% else %}
+    <a href='{% url meals_meal_create %}'>
+      {% trans "Meal Create" %}
+    </a>
+  {% endif %}
+{% endblock %}
+
+{% block header-description %}
+  {% if object %}
+    {% trans "A view that displays a form for editing an existing object." %}
+  {% else %}
+    {% trans "A view that displays a form for creating an object." %}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+  <form action='' method='post' encoding='utf-8'>
+    <fieldset>
+      {% csrf_token %}
+      {{ form|crispy }}
+      <div class='form-actions'>
+        <button class='btn btn-large btn-success' type='submit'>
+          {% if object %}
+            {% trans "Update" %}
+          {% else %}
+            {% trans "Create" %}
+          {% endif %}
+        </button>
+      </div>
+    </fieldset>
+  </form>
+{% endblock %}
+
+
+{% block extra_css %}
+  <link rel="stylesheet" media="all" type="text/css" href="{{ STATIC_URL}}css/jquery-ui-timepicker-addon.css" />
+{% endblock %}
+
+{% block extra_js %}
+  <script type="text/javascript" src="{{ STATIC_URL}}js/jquery-ui-timepicker-addon.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL}}js/jquery-ui-sliderAccess.js"></script>
+  <script>
+    $('#id_when').datetimepicker();
+  </script>
+{% endblock %}

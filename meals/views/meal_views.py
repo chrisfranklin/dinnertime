@@ -194,6 +194,35 @@ class MealDeleteView(MealView, DeleteView):
 from django.views.generic.edit import FormMixin
 from meals.views.invite_views import InviteForm
 from actstream.models import action_object_stream
+from django import forms
+
+
+class HaveForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    status = "HAVE"
+
+from django.shortcuts import render
+
+
+def add_have(request, meal_id, status):  # change this to part
+    if status == "HAVE":
+        if request.method == 'POST':  # If the form has been submitted...
+            form = HaveForm(request.POST)  # A form bound to the POST data
+            if form.is_valid():  # All validation rules pass
+                # Process the data in form.cleaned_data
+                # ...
+                name = form.cleaned_data['name']
+                meal_object = Meal.objects.get(pk=meal_id)
+                meal_object.add_have(name)
+                return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
+        else:
+            form = HaveForm()  # An unbound form
+
+        return render(request, 'meals/meal/meal_part_form.html', {
+            'form': form,
+        })
+    else:
+        return HttpResponse("Invalid part status i.e. not have")
 
 
 class MealDetailView(MealView, DetailView, FormMixin):

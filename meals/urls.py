@@ -115,6 +115,7 @@ urlpatterns += patterns('',
     # ex: /polls/5/vote/
     url(r'^meal/(?P<meal_id>\d+)/max_guests/(?P<direction>\d+)$', set_max_guests, name='increase_max_guest'),
     url(r'^meal/(?P<meal_id>\d+)/max_guests/(?P<direction>\d+)/$', set_max_guests, name='decrease_max_guest'),
+    url(r'^meal/(?P<meal_id>\d+)/part/add/(?P<status>\w+)/$', add_have, name='meals_meal_part_create'),
 )
 urlpatterns += patterns('',
     url(
