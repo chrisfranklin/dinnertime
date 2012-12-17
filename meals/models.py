@@ -20,19 +20,10 @@ class Venue(models.Model):
         return ('meals_venue_detail', (), {'pk': self.pk})
 
 
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
-
-
 class Part(models.Model):
     """
     Stores a have, need or want as a part.
     """
-    STATUS_CHOICES = (
-        ("WANT", 'I want'),
-        ("NEED", 'I need'),
-        ("HAVE", 'I have'),
-    )
     TYPE_CHOICES = (
         ("FURNITURE", 'Furniture'),
         ("EQUIPMENT", 'Equipment'),
@@ -40,14 +31,10 @@ class Part(models.Model):
         ("BEVERAGE", 'Beverage'),
         ("DISH", 'Dish'),
     )
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, blank=True, null=True)
     part_type = models.CharField(max_length=18, choices=TYPE_CHOICES)
-    fulfilled_by = models.ForeignKey(User, blank=True, null=True)
     name = models.CharField(max_length=50)
-    # Following fields are required for using GenericForeignKey
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    data = generic.GenericForeignKey()
+    description = models.CharField(max_length=50, blank=True, null=True)
+    unit = models.CharField(max_length=30, blank=True, null=True)
 
     def __unicode__(self):
         return self.name
@@ -55,41 +42,6 @@ class Part(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('meals_part_detail', (), {'pk': self.pk})
-
-
-class Ingredient(models.Model):
-    """
-    Stores an ingredient or food item e.g. onions, flour or eggs
-    """
-    item = generic.GenericRelation(Part)
-
-
-class Furniture(models.Model):
-    """
-    Stores details of types of furniture e.g chairs and tables
-    """
-    item = generic.GenericRelation(Part)
-
-
-class Equipment(models.Model):
-    """
-    Stores an item of equipment e.g whisk or plate
-    """
-    item = generic.GenericRelation(Part)
-
-
-class Beverage(models.Model):
-    """
-    Stores a drink e.g beer or orange juice
-    """
-    item = generic.GenericRelation(Part)
-
-
-class Dish(models.Model):
-    """
-    Stores a complete dish e.g bread and butter pudding
-    """
-    item = generic.GenericRelation(Part)
 
 
 class Meal(models.Model):
@@ -116,7 +68,7 @@ class Meal(models.Model):
         ("PUBLIC", 'Public'),
     )
     privacy = models.CharField(max_length=10, choices=PRIVACY_CHOICES, default="PRIVATE")
-    parts = models.ManyToManyField(Part, blank=True, null=True)
+    parts = models.ManyToManyField(Part, blank=True, null=True, through='MealPart')
     #cut off for rsvp needs adding
     #recipe
 
@@ -143,49 +95,32 @@ class Meal(models.Model):
             # We do not have room for the person and their plusones
             return False
 
-    def add_type(self, name, part_type, **kwargs):
-        """
-        Add a part_type and relevant model and return it, return False if failed.
-        """
-        if part_type == "INGREDIENT":
-            return Ingredient().save()
-        elif part_type == "EQUIPMENT":
-            return Equipment().save()
-        elif part_type == "FURNITURE":
-            return Furniture().save()
-        elif part_type == "BEVERAGE":
-            return Beverage().save()
-        elif part_type == "DISH":
-            return Dish().save()
-        else:
-            return False
-
-    def add_have(self, name, **kwargs):
+    def add_have(self, name, user, **kwargs):
         """
         Represents a "have" part of the meal with the relevant item_type populated from add_type() and kwargs
         """
-        part_type = self.add_type("HAVE", kwargs)
-        part = Part.objects.get_or_create(name=name, part_type=part_type, data=part_type, status="HAVE")
-        self.parts.add(part)
-        return True
+        part = Part.objects.get_or_create(name=name)[0]
+        meal_part, created = MealPart.objects.get_or_create(meal=self, part=part, status="HAVE")
+        if created:
+            meal_part.added_by = user
+            meal_part.save()
+        return meal_part
 
-    def add_need(self, name, **kwargs):
+    def add_need(self, name, user, **kwargs):
         """
         Represents a "need" part of the meal with the relevant item_type populated from add_type() and kwargs
         """
-        part_type = self.add_type("NEED", kwargs)
-        part = Part.objects.get_or_create(name=name, part_type=part_type, data=part_type, status="NEED")
-        self.parts.add(part)
-        return True
+        part = Part.objects.get_or_create(name=name)
+        meal_part = MealPart.objects.get_or_create(added_by=user, meal=self, part=part, status="NEED")
+        return meal_part.save()
 
-    def add_want(self, name, **kwargs):
+    def add_want(self, name, user, **kwargs):
         """
         Represents a "want" part of the meal with the relevant item_type populated from add_type() and kwargs
         """
-        part_type = self.add_type("WANT", kwargs)
-        part = Part.objects.get_or_create(name=name, part_type=part_type, data=part_type, status="WANT")
-        self.parts.add(part)
-        return True
+        part = Part.objects.get_or_create(name=name)
+        meal_part = MealPart.objects.get_or_create(added_by=user, meal=self, part=part, status="WANT")
+        return meal_part.save()
 
     def remove_guest(self, guest):
         pass
@@ -213,28 +148,29 @@ class Meal(models.Model):
             # The meal is full, remove some guests before decreasing the size.
             return False
 
-    def share_to_facebook(self, graph=None, **kwargs):
-        """
-        Stores and tries sending a facebook open graph share of the meal. This is DEPRECATED code from django-facebook
-        """
-        from django_facebook.models import OpenGraphShare
-        #this is where the magic happens
-        share = OpenGraphShare.objects.create(
-            user_id=self.user_id,
-            action_domain='fashiolista:love',
-            #content_type=content_type,
-            object_id=self.id,
-        )
-        share.set_share_dict(kwargs)
-        share.save()
-        return share.send()
-
     def __unicode__(self):
         return "%s meal" % (self.host)
 
     @models.permalink
     def get_absolute_url(self):
         return ('meals_meal_detail', (), {'pk': self.pk})
+
+
+class MealPart(models.Model):
+    """
+    Stores an individual part for a meal, junction table for meal.parts
+    """
+    part = models.ForeignKey(Part)
+    meal = models.ForeignKey(Meal)
+    STATUS_CHOICES = (
+        ("WANT", 'I want'),
+        ("NEED", 'I need'),
+        ("HAVE", 'I have'),
+    )
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, blank=True, null=True)
+    quantity = models.IntegerField(blank=True, null=True)
+    added_by = models.ForeignKey(User, blank=True, null=True, related_name="requested")
+    fulfilled_by = models.ForeignKey(User, blank=True, null=True, related_name="fulfilled")
 
 from accounts.models import UserContact
 
@@ -376,5 +312,4 @@ class Guest(models.Model):
     user = models.ForeignKey(User)
     meal = models.ForeignKey(Meal)
     invite = models.ForeignKey(Invite)
-    parts = models.ManyToManyField(Part, blank=True, null=True)
     # TODO: Add something for allergies and *isms

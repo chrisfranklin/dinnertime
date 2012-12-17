@@ -213,7 +213,7 @@ def add_have(request, meal_id, status):  # change this to part
                 # ...
                 name = form.cleaned_data['name']
                 meal_object = Meal.objects.get(pk=meal_id)
-                meal_object.add_have(name)
+                meal_object.add_have(name, request.user)
                 return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
         else:
             form = HaveForm()  # An unbound form
@@ -233,9 +233,11 @@ class MealDetailView(MealView, DetailView, FormMixin):
         actionstream = action_object_stream(self.object)
         form_class = self.get_form_class()
         form = self.get_form(form_class)
+        formh = HaveForm()
         print actionstream
         context = {
             'form': form,
+            'formh': formh,
             'actstream': actionstream
         }
         context.update(kwargs)

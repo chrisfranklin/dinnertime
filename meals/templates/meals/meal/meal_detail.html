@@ -121,14 +121,14 @@
                 {% csrf_token %}
                 {{form.contact}}
                 <div class="hidden2">{{form.max_plusones}}</div>
-                <button class='btn btn-success' type='submit'>
+                <button class='btn btn-primary' type='submit'>
           
-                  Invite
+                  <i class="icon-plus"> Add</i>
           
                 </button>
                 
             </form>
-            <a class='btn btn-primary' href="/friends/">
+            <a class='btn' href="/friends/">
       
               Manage Contacts
       
@@ -145,8 +145,9 @@
             <img src="{% gravatar_url friend.from_user.email 50 %}">
             {{friend.from_user}}
           {% endfor %}
+          -->
         {% endif %}
-        <a class="btn btn-large btn-primary"><i class="icon-plus"></i> Invite </a>-->
+        {# <a class="btn btn-large btn-primary"><i class="icon-plus"></i> Invite </a> #}
       </h2>
     </div>
     <div class="span6">
@@ -160,9 +161,55 @@
   </div>
   
   <hr>
-  <h2> I Have: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
-  <h2> I Need: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
-  <h2> I Want: <span class="pull-right"><a class="btn btn-large btn-success"><i class="icon-plus"></i> Add </a> </span></h2><hr>
+
+  <div class="row-fluid">
+    <div class="span4">
+      <h2> I Have:</h2>
+      {% if request.user == object.host %}
+          <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/HAVE/" data-append="#invites">
+              {% csrf_token %}
+              {{formh.name}}
+              {# <div class="hidden2">{{form.max_plusones}}</div> #}
+              <button class='btn btn-primary' type='submit'><i class="icon-plus"> Add</i></button>
+          </form>
+      {% endif %}
+      {% for part in meal.parts.all %}
+        {{part}}</br>
+      {% endfor %}
+    </div>
+    <div class="span4">
+      <h2> I Need:</h2>
+      {% if request.user == object.host %}
+          <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/NEED/" data-append="#invites">
+              {% csrf_token %}
+              {{formh.name}}
+              {# <div class="hidden2">{{form.max_plusones}}</div> #}
+              <button class='btn btn-primary' type='submit'><i class="icon-plus"> Add</i></button>
+          </form>
+      {% endif %}
+      {% for part in meal.parts.all %}
+        {{part}}
+        </br>
+      {% endfor %}
+    </div>
+    <div class="span4">
+      <h2> I Want:</h2>
+      {% if request.user == object.host %}
+          <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/WANT/" data-append="#invites">
+              {% csrf_token %}
+              {{formh.name}}
+              {# <div class="hidden2">{{form.max_plusones}}</div> #}
+              <button class='btn btn-primary' type='submit'><i class="icon-plus"> Add</i></button>
+          </form>
+      {% endif %}
+      {% for part in meal.parts.all %}
+        {{part}}
+        </br>
+      {% endfor %}
+    </div>
+  </div>
+
+  <hr>
   <h2> Activity </h2>
   {% for entry in actstream %}
     <p>{{entry}}</p>
