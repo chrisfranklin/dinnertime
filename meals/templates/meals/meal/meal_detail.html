@@ -57,7 +57,6 @@
 -->
 {% endblock %}
 
-
 {% block header-link %}
   <a href='/accounts/{{object.host}}/'>
     {% load gravatar %}
@@ -84,8 +83,13 @@
         </span></br>
         {% for guest in meal.guest_set.all %}
           </br>
+
           {% if guest.invite.contact.email %}
-            <img src="{% gravatar_url guest.invite.contact.email 50 %}">
+            {% if "facebook.com" in guest.invite.contact.email %}
+              <img src="http://graph.facebook.com/{{guest.invite.contact.email|cut:"@facebook.com" }}/picture" />
+            {% else %}
+              <img src="{% gravatar_url guest.invite.contact.email 50 %}">
+            {% endif %}
           {% else %}
             <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
           {% endif %}
@@ -105,7 +109,11 @@
         {% for invite in meal.invite_set.all %}
           {% if invite.status == "INVITED" %}
             {% if invite.contact.email %}
+              {% if "facebook.com" in invite.contact.email %}
+                <img src="http://graph.facebook.com/{{invite.contact.email|cut:"@facebook.com" }}/picture" />
+              {% else %}
               <img src="{% gravatar_url invite.contact.email 50 %}">
+              {% endif %}
             {% else %}
               <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
             {% endif %}
@@ -175,8 +183,9 @@
       {% endif %}
       {% for part in meal.mealpart_set.all %}
         {% if part.status == "HAVE" %}
-          {{part.part}}
-          </br>
+          <img src="http://placehold.it/68x68"> <b style="font-size: 20px; padding-left:10px;">{{part.part}}</b>
+          {% load phileo_tags %}
+          {% phileo_widget request.user part.part %}</br>
         {% endif %}
       {% endfor %}
     </div>
@@ -192,8 +201,8 @@
       {% endif %}
       {% for part in meal.mealpart_set.all %}
         {% if part.status == "NEED" %}
-          {{part.part}}
-          </br>
+          <img src="http://placehold.it/68x68"> <b style="font-size: 20px; padding-left:10px;">{{part.part}}</b>
+          {% phileo_widget request.user part.part %}</br>
         {% endif %}
       {% endfor %}
     </div>
@@ -209,20 +218,51 @@
       {% endif %}
       {% for part in meal.mealpart_set.all %}
         {% if part.status == "WANT" %}
-          {{part.part}}
-          </br>
+          <img src="http://placehold.it/68x68"> <b style="font-size: 20px; padding-left:10px;">{{part.part}}</b>
+          {% phileo_widget request.user part.part %}</br>
         {% endif %}
       {% endfor %}
     </div>
   </div>
-
+  {% load comments %}
   <hr>
   <h2> Activity </h2>
   {% for entry in actstream %}
-    <p>{{entry}}</p>
+    <p>
+      {% if entry.actor.email %}
+        {% if "facebook.com" in entry.actor.email %}
+          <img src="http://graph.facebook.com/{{entry.actor.email|cut:"@facebook.com" }}/picture?width=68" />
+        {% else %}
+          <img src="{% gravatar_url entry.actor.email 68 %}">
+        {% endif %}
+      {% else %}
+        <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 68 %}">
+      {% endif %}
+      {{entry}} 
+    </p>  
+    {% phileo_widget request.user entry %}
+    <div>
+      {% render_comment_list for entry %}
+      {% if user.is_authenticated %}
+        <div>
+          {% get_comment_form for entry as form %}
+          <form action="{% comment_form_target %}" method="POST">
+          {% csrf_token %}
+          {{ form.comment }}
+          <div class="hidden2">{{ form.honeypot }}</div>
+          {{ form.content_type }}
+          {{ form.object_pk }}
+          {{ form.timestamp }}
+          {{ form.security_hash }}
+          <input type="hidden" name="next" value="{{object.get_absolute_url}}" />
+          <input type="submit" value="Add comment" id="id_submit" />
+          </form>
+        </div>
+      {% endif %}
+    </div>
   {% endfor %}
   <hr>
-  {% load comments %}
+  
   {% get_comment_count for object as comment_count %}
   <h2> {{comment_count}} Comment(s) </h2>
   {% render_comment_list for object %}

@@ -145,8 +145,10 @@ def import_facebook_contacts(request, access=None, auth_token=None):
     If no auth_token is available redirect to Facebook page.
     If auth_token is availabe, save it into session and redirect to import_contacts view.
     """
-    if auth_token:
-        request.session["facebook_token"] = auth_token
+    from allauth.socialaccount.models import SocialToken
+    token = SocialToken.objects.get(account=request.user, app__provider="facebook")
+    if token.token:
+        request.session["facebook_token"] = token.token
         return HttpResponseRedirect(reverse("friends_suggestions_import_contacts"))
     else:
         return HttpResponseRedirect("%s?%s" % (
@@ -161,8 +163,10 @@ def import_facebook_contacts(request, access=None, auth_token=None):
 def import_twitter_contacts(request, access=None, auth_token=None):
     """
     """
-    if auth_token:
-        request.session["twitter_token"] = auth_token
+    from allauth.socialaccount.models import SocialToken
+    token = SocialToken.objects.get(account=request.user, app__provider="twitter")
+    if token.token:
+        request.session["twitter_token"] = token.token
         return HttpResponseRedirect(reverse("friends_suggestions_import_contacts"))
     else:
         return HttpResponseRedirect("%s?%s" % (
@@ -193,8 +197,10 @@ def import_yahoo_contacts(request, access=None, auth_token=None):
 def import_linkedin_contacts(request, access=None, auth_token=None):
     """
     """
-    if auth_token:
-        request.session["linkedin_token"] = auth_token
+    from allauth.socialaccount.models import SocialToken
+    token = SocialToken.objects.get(account=request.user, app__provider="linkedin")
+    if token.token:
+        request.session["linkedin_token"] = token.token
         return HttpResponseRedirect(reverse("friends_suggestions_import_contacts"))
     else:
         return HttpResponseRedirect("%s?%s" % (

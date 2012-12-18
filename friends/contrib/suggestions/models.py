@@ -39,6 +39,10 @@ class ImportedContact(models.Model):
 
     added = models.DateTimeField(_("added"), default=get_datetime_now)
 
+    service_name = models.CharField(_("service name"), max_length=255, null=True, blank=True)
+    service_ownerid = models.BigIntegerField(blank=True, null=True)
+    service_id = models.BigIntegerField(blank=True, null=True)
+
     def save(self, *args, **kwargs):
         # We should store the contact in user contacts for future use.
         from accounts.models import UserContact

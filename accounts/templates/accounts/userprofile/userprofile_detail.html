@@ -4,6 +4,7 @@
 
 {% load i18n %}
 {% load inplace_edit %}
+{% load avatar_tags %}
 
 {% block filename %}
   /home/chris/Code/Piemonster/dinnertime/accounts/templates/accounts/userprofile/userprofile_detail.html
@@ -15,21 +16,12 @@
 
 
 {% block breadcrumbs %}
-  <ul class='breadcrumb'>
-    <li>
-      User Profile
-    </li>
-  </ul>
+  
 {% endblock %}
 
 
 {% block header-link %}
-  {% load gravatar %}
-  {% if object.user.email %}
-    <img src="{% gravatar_url object.user.email 100 %}">
-  {% else %}
-    <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 100 %}">
-  {% endif %}
+  {% avatar object.user 100 %}
   <a href='{{ object.get_absolute_url }}'>
     {{object.user}}'s profile
   </a>
@@ -38,12 +30,31 @@
 {% block header-description %}
   {% if request.user == object.user %}
     This is your profile
+    <a href="{% url avatar_change %}">Change your avatar</a>
+    
   {% else %}
     This is not your profile
   {% endif %}
 {% endblock %}
 
 {% block content %}
+  {% if request.user == object.user %}
+    <div class="row-fluid">
+    {% for account in request.user.socialaccount_set.all %}
+      <div class="span4">
+        <h2 style="text-transform:capitalize;">{{ account.provider }}</h2>
+        <p><img width="50" height="50" src="{{ account.get_avatar_url }}" /></p>
+        <p>UID: <a href="{{account.extra_data.link }}">{{ account.uid }}</a></p>
+        <p>Username: {{ account.extra_data.username }}</p>
+        <p>First Name: {{ account.extra_data.first_name }}</p>
+        <p>Last Name: {{ account.extra_data.last_name }}</p>
+        <p>Profile Link: <a href="{{ account.extra_data.link }}">{{ account.extra_data.link }}</a></p>
+      </div>
+    {% endfor %}
+    </div>
+  {% else %}
+    This is not your profile
+  {% endif %}
   <h2> Info </h2>
   <b> Diet: </b>{% inplace_edit "object.diet" %}<br>
   <b> Allergies: </b>{{object.allergies }}
@@ -77,7 +88,6 @@
   {% endif %}
   <hr>
   
-  {% include 'accounts/userprofile/object_table_detail.html' %}
   <form action='{% url accounts_userprofile_delete pk=object.pk %}' charset='utf-8' method='post'>
     <fieldset>
       {% csrf_token %}

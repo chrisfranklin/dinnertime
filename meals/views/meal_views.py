@@ -211,37 +211,21 @@ class PartAutocomplete(autocomplete_light.AutocompleteModelBase):
 autocomplete_light.register(Part, PartAutocomplete)
 
 
-class HaveForm(forms.Form):
-    status = "HAVE"
-    name = forms.ModelChoiceField(Part.objects.all(),
-        widget=autocomplete_light.ChoiceWidget('PartAutocomplete'))
+class PartForm(forms.Form):
+    name = forms.CharField()
 
     class Meta:
         pass
+        widgets = {
+            'tags': autocomplete_light.TextWidget('PartAutocomplete'),
+        }
         #name = autocomplete_light.get_widgets_dict(Part)
-
-
-class NeedForm(forms.Form):
-    name = forms.CharField(max_length=100)
-    status = "NEED"
-
-
-class WantForm(forms.Form):
-    name = forms.CharField(max_length=100)
-    status = "WANT"
 
 
 def add_part(request, meal_id, status):  # change this to part
 
     if request.method == 'POST':  # If the form has been submitted...
-        if status == "HAVE":
-            form = HaveForm(request.POST)  # A form bound to the POST data
-        elif status == "NEED":
-            form = NeedForm(request.POST)  # A form bound to the POST data
-        elif status == "WANT":
-            form = WantForm(request.POST)  # A form bound to the POST data
-        else:
-            return HttpResponse("Invalid part status i.e. not have")
+        form = PartForm(request.POST)  # A form bound to the POST data
         if form.is_valid():  # All validation rules pass
             # Process the data in form.cleaned_data
             # ...
@@ -253,7 +237,8 @@ def add_part(request, meal_id, status):  # change this to part
                 meal_object.add_need(name, request.user)
             elif status == "WANT":
                 meal_object.add_want(name, request.user)
-            
+            else:
+                return HttpResponse("Please select have need or want or write generic view.")
             return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
     return HttpResponse("No post data or an error has occured")
 
@@ -266,15 +251,13 @@ class MealDetailView(MealView, DetailView, FormMixin):
         actionstream = action_object_stream(self.object)
         form_class = self.get_form_class()
         form = self.get_form(form_class)
-        formh = HaveForm()
-        formn = NeedForm()
-        formw = WantForm()
+        formpart = PartForm()
         print actionstream
         context = {
             'form': form,
-            'formh': formh,
-            'formn': formn,
-            'formw': formw,
+            'formh': formpart,
+            'formn': formpart,
+            'formw': formpart,
             'actstream': actionstream
         }
         context.update(kwargs)

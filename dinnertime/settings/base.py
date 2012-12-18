@@ -102,17 +102,18 @@ INSTALLED_APPS = (
     #--------------------------------------------------------------------------
     # Allauth Accounts Management
     #--------------------------------------------------------------------------
+    'avatar',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.github',
-    # 'allauth.socialaccount.providers.linkedin',
+    'allauth.socialaccount.providers.linkedin',
     # 'allauth.socialaccount.providers.openid',
     # 'allauth.socialaccount.providers.persona',
     # 'allauth.socialaccount.providers.soundcloud',
-    # 'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.twitter',
 
     #--------------------------------------------------------------------------
     # Facebook Support
@@ -132,7 +133,9 @@ INSTALLED_APPS = (
 
 PHILEO_LIKABLE_MODELS = {
 
-    "meals.Meal": {}  # can override default config settings for each model here
+    "meals.Meal": {},  # can override default config settings for each model here
+    "actstream.Action": {},
+    "meals.Part": {}
 
 }
 
@@ -190,6 +193,8 @@ MEDIA_ROOT = os.path.join(VAR_ROOT, 'uploads')
 STATICFILES_DIRS = (
     os.path.join(PROJECT_DIR, 'static'),
 )
+
+FIXTURE_DIRS += ('%s/fixtures' % PROJECT_DIR,)
 
 #==============================================================================
 # Static Files Finders

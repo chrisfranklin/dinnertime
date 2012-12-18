@@ -1,0 +1,56 @@
+[
+  {
+    "model": "sites.site", 
+    "pk": 1, 
+    "fields": {
+      "domain": "localhost:8000", 
+      "name": "Localhost"
+    }
+  },
+  {
+    "pk": 1, 
+    "model": "socialaccount.socialapp", 
+    "fields": {
+        "key": "122386504587538", 
+        "secret": "2a5b65f780f16335ca624267b91c2f91", 
+        "site": 1, 
+        "name": "localfb", 
+        "provider": "facebook"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "socialaccount.socialapp",
+    "fields": {
+      "key": "294684269512",
+      "secret": "KJ3NH6GbGUINqWG8YHUYnpwy",
+      "site": 1,
+      "name": "localgoogle",
+      "provider": "google"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "socialaccount.socialapp",
+    "fields": {
+      "key": "sO19XaSfl8f7vAaDsQoMVg",
+      "secret": "aGyWmoAKaB8PAzhbCtlcamf5MbMIisAdGQuX8pPPRE",
+      "site": 1,
+      "name": "localtwitter",
+      "provider": "twitter"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "socialaccount.socialapp",
+    "fields": {
+      "key": "vsenv1do6j4y",
+      "secret": "pR9xPEsFXgfxsUTQ",
+      "site": 1,
+      "name": "localin",
+      "provider": "linkedin"
+    }
+  }
+
+
+]

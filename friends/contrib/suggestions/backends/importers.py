@@ -66,7 +66,7 @@ class FacebookImporter(BaseImporter):
     def get_contacts(self, credentials):
         if 'facebook' in SUPPORTED_BACKENDS:
             graph = facebook.GraphAPI(credentials["facebook_token"])
-            friends = graph.get_connections("me", "friends", fields="name, username")
+            friends = graph.get_connections("me", "friends", fields="id, name, username")
             for friend in friends["data"]:
                 print friend
                 if 'username' in friend:
@@ -76,6 +76,7 @@ class FacebookImporter(BaseImporter):
                 yield {
                     "name": friend["name"],
                     "email": email,
+                    "service_id": friend['id'],
                     }
         else:
             raise ImproperlyConfigured("You must define facebook in SUPPORTED_BACKENDS setting")

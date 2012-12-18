@@ -28,6 +28,9 @@ class ModelPersistance(BasePersistance):
             if contact['id']:
                 obj.id = contact["id"]
                 obj.save()
+            if contact["service_id"]:
+                obj.service_id = contact["service_id"]
+                obj.save()
         except:
             created = False
         status["total"] += 1
