@@ -194,12 +194,31 @@ class MealDeleteView(MealView, DeleteView):
 from django.views.generic.edit import FormMixin
 from meals.views.invite_views import InviteForm
 from actstream.models import action_object_stream
+import autocomplete_light
 from django import forms
+from meals.models import Part
+
+
+class PartAutocomplete(autocomplete_light.AutocompleteModelBase):
+    search_fields = ('name',)
+
+    # Note that defining *_js_attributes in a Widget also works. Widget has
+    # priority since it's the most specific.
+    autocomplete_js_attributes = {
+        'placeholder': 'name of the item',
+    }
+
+autocomplete_light.register(Part, PartAutocomplete)
 
 
 class HaveForm(forms.Form):
-    name = forms.CharField(max_length=100)
     status = "HAVE"
+    name = forms.ModelChoiceField(Part.objects.all(),
+        widget=autocomplete_light.ChoiceWidget('PartAutocomplete'))
+
+    class Meta:
+        pass
+        #name = autocomplete_light.get_widgets_dict(Part)
 
 
 class NeedForm(forms.Form):
@@ -211,28 +230,32 @@ class WantForm(forms.Form):
     name = forms.CharField(max_length=100)
     status = "WANT"
 
-from django.shortcuts import render
-
 
 def add_part(request, meal_id, status):  # change this to part
-    if status == "HAVE":
-        if request.method == 'POST':  # If the form has been submitted...
-            form = HaveForm(request.POST)  # A form bound to the POST data
-            if form.is_valid():  # All validation rules pass
-                # Process the data in form.cleaned_data
-                # ...
-                name = form.cleaned_data['name']
-                meal_object = Meal.objects.get(pk=meal_id)
-                meal_object.add_have(name, request.user)
-                return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
-        else:
-            form = HaveForm()  # An unbound form
 
-        return render(request, 'meals/meal/meal_part_form.html', {
-            'form': form,
-        })
-    else:
-        return HttpResponse("Invalid part status i.e. not have")
+    if request.method == 'POST':  # If the form has been submitted...
+        if status == "HAVE":
+            form = HaveForm(request.POST)  # A form bound to the POST data
+        elif status == "NEED":
+            form = NeedForm(request.POST)  # A form bound to the POST data
+        elif status == "WANT":
+            form = WantForm(request.POST)  # A form bound to the POST data
+        else:
+            return HttpResponse("Invalid part status i.e. not have")
+        if form.is_valid():  # All validation rules pass
+            # Process the data in form.cleaned_data
+            # ...
+            name = form.cleaned_data['name']
+            meal_object = Meal.objects.get(pk=meal_id)
+            if status == "HAVE":
+                meal_object.add_have(name, request.user)
+            elif status == "NEED":
+                meal_object.add_need(name, request.user)
+            elif status == "WANT":
+                meal_object.add_want(name, request.user)
+            
+            return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
+    return HttpResponse("No post data or an error has occured")
 
 
 class MealDetailView(MealView, DetailView, FormMixin):

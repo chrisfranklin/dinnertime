@@ -104,7 +104,7 @@ class UserContact(models.Model):
 
 def create_user_contact(self, instance, **kwargs):
     """
-    Create the contacts for either one side or both sides of a friendship.
+    Creates the contacts for either one side or both sides of a friendship.
     """
     print instance.from_user
     print instance.from_user

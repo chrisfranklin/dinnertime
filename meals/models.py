@@ -110,17 +110,23 @@ class Meal(models.Model):
         """
         Represents a "need" part of the meal with the relevant item_type populated from add_type() and kwargs
         """
-        part = Part.objects.get_or_create(name=name)
-        meal_part = MealPart.objects.get_or_create(added_by=user, meal=self, part=part, status="NEED")
-        return meal_part.save()
+        part = Part.objects.get_or_create(name=name)[0]
+        meal_part, created = MealPart.objects.get_or_create(meal=self, part=part, status="NEED")
+        if created:
+            meal_part.added_by = user
+            meal_part.save()
+        return meal_part
 
     def add_want(self, name, user, **kwargs):
         """
         Represents a "want" part of the meal with the relevant item_type populated from add_type() and kwargs
         """
-        part = Part.objects.get_or_create(name=name)
-        meal_part = MealPart.objects.get_or_create(added_by=user, meal=self, part=part, status="WANT")
-        return meal_part.save()
+        part = Part.objects.get_or_create(name=name)[0]
+        meal_part, created = MealPart.objects.get_or_create(meal=self, part=part, status="WANT")
+        if created:
+            meal_part.added_by = user
+            meal_part.save()
+        return meal_part
 
     def remove_guest(self, guest):
         pass

@@ -173,8 +173,11 @@
               <button class='btn btn-primary' type='submit'><i class="icon-plus"> Add</i></button>
           </form>
       {% endif %}
-      {% for part in meal.parts.all %}
-        {{part}}</br>
+      {% for part in meal.mealpart_set.all %}
+        {% if part.status == "HAVE" %}
+          {{part.part}}
+          </br>
+        {% endif %}
       {% endfor %}
     </div>
     <div class="span4">
@@ -188,8 +191,10 @@
           </form>
       {% endif %}
       {% for part in meal.mealpart_set.all %}
-        {{part.part}}
-        </br>
+        {% if part.status == "NEED" %}
+          {{part.part}}
+          </br>
+        {% endif %}
       {% endfor %}
     </div>
     <div class="span4">
@@ -202,9 +207,11 @@
               <button class='btn btn-primary' type='submit'><i class="icon-plus"> Add</i></button>
           </form>
       {% endif %}
-      {% for part in meal.parts.all %}
-        {{part}}
-        </br>
+      {% for part in meal.mealpart_set.all %}
+        {% if part.status == "WANT" %}
+          {{part.part}}
+          </br>
+        {% endif %}
       {% endfor %}
     </div>
   </div>

@@ -56,50 +56,10 @@
 
             <div class='container bgout'>
               <div class='row-fluid'>
-
                 <div class='content'>
-
-
                   <div class='span2'>
                     </br>
                     <h2 class="center logo"> Table Surf.in </h2></br>
-                    {% block main_sidebar %}
-                      <ul class='nav nav-list'>
-                          <li class='nav-header'>
-                            {% trans "Hungry?" %}
-                          </li>
-                          <li>
-                            <a href='{% url meals_meal_list %}'>
-                              {% trans "Find food" %}
-                            </a>
-                          </li>
-                      </ul>
-                      <ul class='nav nav-list'>
-                          <li class='nav-header'>
-                            {% trans "Cooking?" %}
-                          </li>
-                          <li>
-                            <a href='{% url meals_venue_list %}'>
-                              {% trans "Create a Meal" %}
-                            </a>
-                          </li>
-                      </ul>
-                      <ul class='nav nav-list'>
-                          <li class='nav-header'>
-                            {% trans "Find Friends!" %}
-                          </li>
-                          <li>
-                            <a href='/friends/'>
-                              {% trans "Friend Feed" %}
-                            </a>
-                          </li>
-                      </ul>
-                    </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br><b> DEBUG </b>
-                    {% endblock %}
-
-                    {% block sidebar %}
-                        
-                    {% endblock %}
                   </div>
                   <div class='span10'>
                     {% block breadcrumbs %}
@@ -123,15 +83,17 @@
                           {% block header-description %}
                           {% endblock %}
                         </small>
-                        
                       </h1>
-                    </div>
+                    </div> <!-- End page-header -->
+                  </div> <!-- End span 10 -->
+                </div> <!-- End content -->
+              </div> <!-- End row-fluid -->
+              <div class="row-fluid">
+                <div class="content">
+                  <div class='span12'>
                     <!-- Main Content Area -->
-
                     {% block content %}
-                    
                     {% endblock %}
-
                     <!-- End Main Content  -->
                     </hr>
                     <footer>
@@ -140,9 +102,7 @@
                     </footer>
                   </div>
                 </div>
-              </div>
-              <hr>
-            </div>
+            </div><!-- End container -->
 
         {% endblock %}
 
