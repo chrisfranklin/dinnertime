@@ -37,17 +37,42 @@
     </head>
     <body class="bgit">
         {% load i18n %}
-        {% if messages %}
-        <ul class="messages">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+              <a class="brand logo" href="/">TableSurf.in</a>
+              <div class="nav-collapse collapse">
+                <ul class="nav">
+                  <li class="active"><a href="/meal/">Meals</a></li>
+                  <li><a href="/venue/">Venues</a></li>
+                  <li><a href="/friends/">People</a></li>
+                </ul>
+                <ul class="nav pull-right">
+                  {% if request.user.is_authenticated %}
+                     
+                    <li><a href='/accounts/{{request.user}}/'><i class="icon-user"></i> {{request.user}}</a></li>
+                  {% endif %}
+                </ul>
+              </div><!--/.nav-collapse -->
+            </div>
+          </div>
+        </div>
+
+        <div id="messages">
+          {% if messages %}
             {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                {% if message.subject %}<strong>{{ message.subject }}</strong><br />{% endif %}
-                {{ message.message }}<br />
-                {% if message.is_persistent %}<a href="{% url message_mark_read message.pk %}">close</a>{% endif %}
-            </li>
+              <div class="alert alert-{{message.tags}}">
+                <a class="close" data-dismiss="alert">×</a>
+                {{message}}
+              </div>
             {% endfor %}
-        </ul>
-        {% endif %}
+          {% endif %}
+        </div>
         {% block body %}
             <!--[if lt IE 7]>
                 <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to get the most out of the modern internet.</p>
@@ -57,28 +82,14 @@
             <div class='container bgout'>
               <div class='row-fluid'>
                 <div class='content'>
-                  <div class='span2'>
-                    </br>
-                    <h2 class="center logo"> Table Surf.in </h2></br>
-                  </div>
-                  <div class='span10'>
+                  <div class='span12'>
                     {% block breadcrumbs %}
                     {% endblock %}
                     <div class='page-header'>
                       <h1>
                         {% block header-link %}
                         {% endblock %}
-                        {% if request.user.is_authenticated %}
-                          <span class="pull-right">
-                            {{request.user}} 
-                            <a href='/accounts/{{request.user}}/'>
-                              {% load gravatar %}
-
-                              <img src="{% gravatar_url request.user.email 100 %}">
-                            </a> 
-                          </span>
-                        {% endif %}
-                        <br />
+                        
                         <small>
                           {% block header-description %}
                           {% endblock %}

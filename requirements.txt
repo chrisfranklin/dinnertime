@@ -56,3 +56,5 @@ django-inplaceedit
 django-activity-stream==0.4.4
 
 git+https://github.com/eldarion/django-avatar.git
+
+django-jsonfield

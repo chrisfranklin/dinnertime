@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'inplaceeditform',
     'actstream',
     'phileo',
+    'yummly',
 
 )
 
@@ -298,6 +299,9 @@ ACTSTREAM_SETTINGS = {
     'USE_PREFETCH': True,
     #'USE_JSONFIELD': True,
 }
+
+YUMMLY_KEY = "9687047d"
+YUMMLY_SECRET = "48703203011932335cfaf5fb57ef4f1a"
 
 
 #==============================================================================

@@ -63,6 +63,7 @@
     <img src="{% gravatar_url request.user.email 100 %}">
   </a>&nbsp;
   <a href='{{ object.get_absolute_url }}'>{{object.host}}'s meal</a>
+  <span class="pull-right">{% inplace_edit "object.when" %}</span>
 {% endblock %}
 
 {% block header-description %}
@@ -72,13 +73,13 @@
 {% block content %}
   <div class="row-fluid">
     <div class="span6">
-      <h1>{% inplace_edit "object.when" %}</h1>
-      <hr>
       <h2>
         
-        {{object.current_guests}} / {{object.max_guests}} guests.
+        Guests: {{object.current_guests}} out of {{object.max_guests}} 
         <span class="pull-right">
-          <a href= "/meal/{{object.id}}/max_guests/0/" class="btn btn-danger"><i class="icon-minus"></i></a>
+          {% if object.current_guests < object.max_guests and  object.max_guests > 1 %}
+            <a href= "/meal/{{object.id}}/max_guests/0/" class="btn btn-danger"><i class="icon-minus"></i></a>
+          {% endif %}
           <a href= "/meal/{{object.id}}/max_guests/1/" class="btn btn-success"><i class="icon-plus"></i></a>
         </span></br>
         {% for guest in meal.guest_set.all %}
@@ -105,7 +106,7 @@
             {% inplace_edit "invite.plusones" %}
           {% endif %}
         {% endfor %}
-        <h2> Invited Guests </h2>
+        <h2> Invites</h2>
         {% for invite in meal.invite_set.all %}
           {% if invite.status == "INVITED" %}
             {% if invite.contact.email %}
@@ -136,11 +137,6 @@
                 </button>
                 
             </form>
-            <a class='btn' href="/friends/">
-      
-              Manage Contacts
-      
-            </a>
           <!--<h2> Contacts </h2>
           {% for contact in user.contacts.all %}
             {% if contact.email %}
@@ -226,41 +222,51 @@
   </div>
   {% load comments %}
   <hr>
-  <h2> Activity </h2>
-  {% for entry in actstream %}
-    <p>
-      {% if entry.actor.email %}
-        {% if "facebook.com" in entry.actor.email %}
-          <img src="http://graph.facebook.com/{{entry.actor.email|cut:"@facebook.com" }}/picture?width=68" />
-        {% else %}
-          <img src="{% gravatar_url entry.actor.email 68 %}">
-        {% endif %}
-      {% else %}
-        <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 68 %}">
-      {% endif %}
-      {{entry}} 
-    </p>  
-    {% phileo_widget request.user entry %}
-    <div>
-      {% render_comment_list for entry %}
-      {% if user.is_authenticated %}
-        <div>
-          {% get_comment_form for entry as form %}
-          <form action="{% comment_form_target %}" method="POST">
-          {% csrf_token %}
-          {{ form.comment }}
-          <div class="hidden2">{{ form.honeypot }}</div>
-          {{ form.content_type }}
-          {{ form.object_pk }}
-          {{ form.timestamp }}
-          {{ form.security_hash }}
-          <input type="hidden" name="next" value="{{object.get_absolute_url}}" />
-          <input type="submit" value="Add comment" id="id_submit" />
-          </form>
-        </div>
-      {% endif %}
+  <div class="row-fluid">
+    <div class="span6">
+      <h2> Recipe</h2>
     </div>
-  {% endfor %}
+    <div class="span6">
+      <h2> Activity </h2>
+      {% for entry in actstream %}
+        <p>
+          {% if entry.actor.email %}
+            {% if "facebook.com" in entry.actor.email %}
+              <img src="http://graph.facebook.com/{{entry.actor.email|cut:"@facebook.com" }}/picture" />
+            {% else %}
+              <img src="{% gravatar_url entry.actor.email 68 %}">
+            {% endif %}
+          {% else %}
+            <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 68 %}">
+          {% endif %}
+          {{entry}} 
+          <!--<button type="button" class="btn" data-toggle="collapse" data-target="#commentdetail{{entry.id}}">Comment </button> -->
+        </p>  
+        <div class="row">
+          <div class="span10 offset2">
+            {% render_comment_list for entry %}
+            {% if user.is_authenticated %}
+              <div id="commentdetail{{entry.id}}" class="collapse ">
+                {% get_comment_form for entry as form %}
+                <form action="{% comment_form_target %}" method="POST">
+                {% csrf_token %}
+                {{ form.comment }}
+                <div class="hidden2">{{ form.honeypot }}</div>
+                {{ form.content_type }}
+                {{ form.object_pk }}
+                {{ form.timestamp }}
+                {{ form.security_hash }}
+                <input type="hidden" name="next" value="{{object.get_absolute_url}}" />
+                <input type="submit" value="Add comment" id="id_submit" />
+                </form>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  
   <hr>
   
   {% get_comment_count for object as comment_count %}
