@@ -66,7 +66,11 @@ urlpatterns = patterns('',
     (r'^avatar/', include('avatar.urls')),
 )
 
+from django_statsd.urls import urlpatterns as statsd_patterns
 
+urlpatterns += patterns('',
+        ('^services/timing/', include(statsd_patterns)),
+)
 
 
 OAUTH_ACCESS_SETTINGS = {

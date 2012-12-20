@@ -43,6 +43,8 @@ class Part(models.Model):
     def get_absolute_url(self):
         return ('meals_part_detail', (), {'pk': self.pk})
 
+from yummly.models import Recipe
+
 
 class Meal(models.Model):
     """
@@ -70,7 +72,7 @@ class Meal(models.Model):
     privacy = models.CharField(max_length=10, choices=PRIVACY_CHOICES, default="PRIVATE")
     parts = models.ManyToManyField(Part, blank=True, null=True, through='MealPart')
     #cut off for rsvp needs adding
-    #recipe
+    recipe = models.ForeignKey(Recipe, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         """

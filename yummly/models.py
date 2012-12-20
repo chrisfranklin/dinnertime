@@ -74,9 +74,14 @@ class Recipe(models.Model):
     rating = models.CharField(max_length=50, blank=True, null=True)
     name = models.CharField(max_length=50, blank=True, null=True)
     small_image_urls = JSONField(blank=True, null=True)
+    large_image_urls = JSONField(blank=True, null=True)
     source_display_name = models.CharField(max_length=50, blank=True, null=True)
     total_time_in_seconds = models.IntegerField(blank=True, null=True)
-    course = models.ForeignKey(Course, blank=True, null=True)  # get from attributes
+    course = models.ManyToManyField(Course, blank=True, null=True)  # get from attributes
+
+    def small_image(self):
+        if self.small_image_urls:
+            return self.small_image_urls[0]
 
     # DIET_CHOICES = (
     #     ("MEAT", 'Meat Eater'),
@@ -93,7 +98,7 @@ class Recipe(models.Model):
     #     super(UserProfile, self).save(*args, **kwargs)  # Call the "real" save() method.
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
     # @models.permalink
     # def get_absolute_url(self):

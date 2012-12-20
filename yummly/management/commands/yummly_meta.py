@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from yummly.models import Ingredient, Course, Cuisine, Allergy, Diet
+from yummly.models import Ingredient, Course, Cuisine, Allergy, Diet, Recipe
 #from oauth_hook import OAuthHook
 import requests
 import json
@@ -18,7 +18,7 @@ class Command(BaseCommand):
         client = requests.session()
         #response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=quiche'% (ck, cs)) 
 
-        if str(args) == "ingredient":
+        if args != "ingredient":
             response = client.get('http://api.yummly.com/v1/api/metadata/ingredient?_app_id=%s&_app_key=%s'% (ck, cs)) 
             pprint(response.content)
             try:
@@ -38,7 +38,7 @@ class Command(BaseCommand):
                     ingredient_object.use_count = ingredient['useCount']
                 print ingredient_object.save()
 
-        elif args == "course":
+        if args != "course":
             response = client.get('http://api.yummly.com/v1/api/metadata/course?_app_id=%s&_app_key=%s'% (ck, cs)) 
             pprint(response.content)
             try:
@@ -54,7 +54,7 @@ class Command(BaseCommand):
                     course_object.description = course['description']
                 course_object.save()
 
-        elif args == "cuisine":
+        if args != "cuisine":
             response = client.get('http://api.yummly.com/v1/api/metadata/cuisine?_app_id=%s&_app_key=%s'% (ck, cs)) 
             pprint(response.content)
             try:
@@ -70,7 +70,7 @@ class Command(BaseCommand):
                     cuisine_object.description = cuisine['description']
                 cuisine_object.save()
 
-        elif args == "allergy":
+        if args != "allergy":
             response = client.get('http://api.yummly.com/v1/api/metadata/allergy?_app_id=%s&_app_key=%s'% (ck, cs)) 
             pprint(response.content)
             try:
@@ -86,7 +86,7 @@ class Command(BaseCommand):
                     allergy_object.description = allergy['longDescription']
                 allergy_object.save()
 
-        elif args != "diet":
+        if args != "diet":
             response = client.get('http://api.yummly.com/v1/api/metadata/diet?_app_id=%s&_app_key=%s'% (ck, cs)) 
             pprint(response.content)
             try:
@@ -101,8 +101,50 @@ class Command(BaseCommand):
                 if "longDescription" in diet:
                     diet_object.description = diet['longDescription']
                 diet_object.save()
-        else:
-            raise CommandError("Only ingredient or course works for now. %s" % args)
+
+        if args != "recipe":
+            response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=quiche&maxResult=20'% (ck, cs)) 
+            #pprint(response.content)
+            try:
+                results = json.loads(response.content)  # This is for ingredients
+            except:
+                self.stdout.write("Could not load recipe json, out of options, goodbye.")
+            pprint(results)
+            for recipe in results["matches"]:
+                print recipe.keys()
+                recipe_object = Recipe.objects.get_or_create(remote_id=recipe['id'])[0]
+                if "attributes" in recipe:
+                    for attribute in recipe["attributes"]:
+                        print attribute
+                        if "course" in recipe['attributes']:
+                            print recipe['attributes']['course']
+                            for course in recipe['attributes']['course']:
+                                recipe_object.course.add(Course.objects.get(description=course)) 
+                if "recipeName" in recipe:
+                    recipe_object.name = recipe['recipeName']
+                if "rating" in recipe:
+                    recipe_object.rating= recipe['rating']
+                if "smallImageUrls" in recipe:
+                    recipe_object.small_image_urls = recipe['smallImageUrls'] # Add code for big images here
+                if "totalTimeInSeconds" in recipe:
+                    recipe_object.total_time_in_seconds = recipe['totalTimeInSeconds']
+                if "sourceDisplayName" in recipe:
+                    recipe_object.source_display_name = recipe['sourceDisplayName']
+                recipe_object.save()
+
+        # flavors = models.CharField(max_length=50, blank=True, null=True)
+        # remote_id = models.CharField(max_length=50, blank=True, null=True)
+        # ingredients = models.ManyToManyField(Ingredient, blank=True, null=True)
+        # rating = models.CharField(max_length=50, blank=True, null=True)
+        # name = models.CharField(max_length=50, blank=True, null=True)
+        # small_image_urls = JSONField(blank=True, null=True)
+        # large_image_urls = JSONField(blank=True, null=True)
+        # source_display_name = models.CharField(max_length=50, blank=True, null=True)
+        # total_time_in_seconds = models.IntegerField(blank=True, null=True)
+        # course = models.ForeignKey(Course, blank=True, null=True)  # get from attributes
+
+        # else:
+        #     raise CommandError("Only ingredient or course works for now. %s" % args)
 
         # for poll_id in args:
         #     try:

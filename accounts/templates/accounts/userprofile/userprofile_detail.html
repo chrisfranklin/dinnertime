@@ -21,8 +21,8 @@
 
 
 {% block header-link %}
-  {% avatar object.user 100 %}
-  <a href='{{ object.get_absolute_url }}'>
+  <a href='{% if request.user == object.user %}{% url avatar_change %}{% else %}{% endif %}'>{% avatar object.user 100 %}</a>
+  <a href='{% if request.user %}{{object.user.get_profile.get_absolute_url}}{% endif %}'>
     {{object.user}}'s profile
   </a>
 {% endblock %}
@@ -30,7 +30,6 @@
 {% block header-description %}
   {% if request.user == object.user %}
     This is your profile
-    <a href="{% url avatar_change %}">Change your avatar</a>
     
   {% else %}
     This is not your profile

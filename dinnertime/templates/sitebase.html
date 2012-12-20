@@ -33,6 +33,12 @@
 
         {% compress js %}
             <script src="{{ STATIC_URL}}js/modernizr2.6.2.js"></script>
+            <script src="{{ STATIC_URL}}js/boomerang-0-9.js"></script>
+            <script>
+              BOOMR.init({
+                beacon_url: '/services/timing/record'
+              }).addVar('client', 'boomerang');
+            </script>
         {% endcompress %}
     </head>
     <body class="bgit">
@@ -53,10 +59,24 @@
                   <li><a href="/friends/">People</a></li>
                 </ul>
                 <ul class="nav pull-right">
-                  {% if request.user.is_authenticated %}
-                     
-                    <li><a href='/accounts/{{request.user}}/'><i class="icon-user"></i> {{request.user}}</a></li>
-                  {% endif %}
+                  <li class="dropdown">
+                      <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                        {% if request.user.is_authenticated %}  
+                          {{request.user}}
+                        {% else %}
+                          <a href="/accounts/login/"> Login </a>
+                        {% endif %} 
+                        <b class="caret"></b>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+                        <li><a tabindex="-1" href="{{request.user.get_profile.get_absolute_url}}">Profile</a></li>
+                        <li><a tabindex="-1" href="/accounts/social/connections">Social Accounts</a></li>
+                        <li><a tabindex="-1" href="/accounts/usercontact/">Contacts</a></li>
+                        <li class="divider"></li>
+                        <li><a tabindex="-1" href="/accounts/logout/">Logout</a></li>
+                      </ul>
+                  </li>
+                  
                 </ul>
               </div><!--/.nav-collapse -->
             </div>
@@ -106,7 +126,7 @@
                     {% block content %}
                     {% endblock %}
                     <!-- End Main Content  -->
-                    </hr>
+                    <hr>
                     <footer>
                         {% block footer %} {% endblock %}
                         <p>&copy; 2012 Piemonster Technology Ltd </p>
@@ -128,16 +148,21 @@
             <!-- End Fallback to Local Javascript -->
             {% include 'autocomplete_light/static.html' %}
             <!-- Bootstrap JS files -->
-            <script src="{{ STATIC_URL}}bootstrap/js/bootstrap.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL}}bootstrap/js/bootstrap.js"></script>
             <!-- End Bootstrap JS files -->
 
             <!-- JQuery plugins -->
-            <script src="{{ STATIC_URL}}js/plugins.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL}}js/plugins.js"></script>
             <!-- End JQuery plugins -->
 
             <!-- Site Wide Javascript -->
-            <script src="{{ STATIC_URL}}js/main.js"></script>
-            <script src="{{ STATIC_URL}}js/moment.min.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL}}js/raven-0.7.1.min.js"></script>
+            <script >
+              Raven.config('{{SENTRY_DSN}}');
+              window.onerror = Raven.process;
+            </script>
+            <script type="text/javascript" src="{{ STATIC_URL}}js/main.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL}}js/moment.min.js"></script>
             <!-- End Site Wide Javascript -->
 
         {% endcompress %}
@@ -146,7 +171,7 @@
             {% block extra_js %}{% endblock %}
         {% endcompress %}
 
-        <script> <!-- Google Analytics Code  -->
+        <script type="text/javascript"> <!-- Google Analytics Code  -->
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';

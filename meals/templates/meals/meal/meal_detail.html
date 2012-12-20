@@ -100,6 +100,7 @@
            guest(s) 
         {% endfor %}
         <hr>
+        
         {% for invite in meal.invite_set.all %}
           {% if invite.contact.email == request.user.email or invite.contact.user == request.user %}
             {% inplace_edit "invite.status" %}
@@ -157,7 +158,7 @@
     <div class="span6">
       <h2>{% if object.venue %}<a href="/venue/{{object.id}}">{% inplace_edit "object.venue.address" auto_height=1, auto_width=1 %}</a>{% else %}<a href="/venue/create/"> Please set a location. </a> {% endif %}</h2> 
       {% load easy_maps_tags %}
-      {% if object.venue %}
+      {% if object.venuePOOPOO %}
         <!-- Default map with 300x400 dimensions -->
         {% easy_map object.venue.address 470 470 %}
       {% endif %}
@@ -225,6 +226,11 @@
   <div class="row-fluid">
     <div class="span6">
       <h2> Recipe</h2>
+      {% if object.recipe %}
+        <img src="{{object.recipe.small_image}}">
+        {{object.recipe.ingredients}}
+      {% endif %}
+      {% inplace_edit "object.recipe" auto_height=1, auto_width=1 %}
     </div>
     <div class="span6">
       <h2> Activity </h2>
@@ -273,6 +279,8 @@
   <h2> {{comment_count}} Comment(s) </h2>
   {% render_comment_list for object %}
   {% if user.is_authenticated %}
+    <button type="button" class="btn" data-toggle="collapse" data-target="#comdetail{{entry.id}}">Add Comment <b class="caret"></b></button>
+    <div id="comdetail{{entry.id}}" class="collapse ">
       {% get_comment_form for object as form %}
       <form action="{% comment_form_target %}" method="POST">
       {% csrf_token %}
@@ -285,6 +293,7 @@
       <input type="hidden" name="next" value="{{object.get_absolute_url}}" />
       <input type="submit" value="Add comment" id="id_submit" />
       </form>
+    </div>
   {% else %}
       <p>Please <a href="{% url 'auth_login' %}">log in</a> to leave a comment.</p>
   {% endif %}

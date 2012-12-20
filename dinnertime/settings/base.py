@@ -128,9 +128,30 @@ INSTALLED_APPS = (
     'actstream',
     'phileo',
     'yummly',
+    'django_statsd',
+    'app_metrics',
+    'raven.contrib.django',
 
 )
 
+# For raven and ultimately sentry
+SENTRY_DSN = "https://280631656bac415cbf5eeeebd4c3e94b:10f7d01657dd4a4dad2b7bb32c68b31f@app.getsentry.com/4327"
+
+APP_METRICS_BACKEND = 'app_metrics.backends.statsd'
+
+STATSD_CLIENT = 'django_statsd.clients.log'
+STATSD_PATCHES = [
+        'django_statsd.patches.db',
+        'django_statsd.patches.cache',
+]
+# This next bit is for beacon support, add more keys from the beacon if you wish (yahoo beacon)
+STATSD_RECORD_KEYS = [
+        'window.performance.timing.domComplete',
+        'window.performance.timing.domInteractive',
+        'window.performance.timing.domLoading',
+        'window.performance.navigation.redirectCount',
+        'window.performance.navigation.type',
+]
 
 PHILEO_LIKABLE_MODELS = {
 
@@ -226,6 +247,8 @@ TEMPLATE_CONTEXT_PROCESSORS += (
 
 MIDDLEWARE_CLASSES += (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_statsd.middleware.GraphiteRequestTimingMiddleware',
+    'django_statsd.middleware.GraphiteMiddleware',
 )
 
 #==============================================================================
@@ -238,6 +261,8 @@ AUTHENTICATION_BACKENDS += (
     'lazysignup.backends.LazySignupBackend',
     'phileo.auth_backends.CanLikeBackend',
 )
+
+ACCOUNT_EMAIL_REQUIRED = True
 
 #FACEBOOK_REGISTRATION_BACKEND = 'django_facebook.registration_backends.UserenaBackend'
 
@@ -308,3 +333,57 @@ YUMMLY_SECRET = "48703203011932335cfaf5fb57ef4f1a"
 # Third party app settings
 #==============================================================================
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    # 'filters': {
+    #     'special': {
+    #         '()': 'project.logging.SpecialFilter',
+    #         'foo': 'bar',
+    #     }
+    # },
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'django.utils.log.NullHandler',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            #'filters': ['special']
+        },
+        # 'test_statsd_handler': {
+        #     'class': 'django_statsd.loggers.errors.StatsdHandler',
+        # },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'INFO',
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        # 'myproject.custom': {
+        #     'handlers': ['console', 'mail_admins'],
+        #     'level': 'INFO',
+        #     'filters': ['special']
+        # }
+    }
+}

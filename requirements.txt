@@ -58,3 +58,7 @@ django-activity-stream==0.4.4
 git+https://github.com/eldarion/django-avatar.git
 
 django-jsonfield
+
+django-statsd-mozilla
+django-app-metrics
+phileo

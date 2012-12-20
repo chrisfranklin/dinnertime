@@ -10,7 +10,7 @@
 
 {% block header-link %}
   <a href='{% url meals_meal_list %}'>
-    {% trans "Meal List" %}
+    {% trans "Meals" %}
   </a>
 {% endblock %}
 
@@ -20,8 +20,52 @@
 
 {% block content %}
   <h2>
-    {% trans "Meals" %}
+    {% trans "Upcoming Meals" %}
   </h2>
-  {% include 'meals/meal/object_table_list.html' %}
-  {% include 'meals/meal/pagination.html' %}
+  <table class='table table-bordered table-striped'>
+    {% load avatar_tags %}
+    {% for object in object_list %}
+      <tr>
+
+          <td>
+            <a href="{{object.host.get_profile.get_absolute_url}}">
+              {% avatar object.host %}
+            </a>
+            <p class="center">{{ object.host }}</p>
+          </td>
+
+          <td>
+            <h3>
+              <a href='{{ object.get_absolute_url }}'>
+                {% if object.name %}
+                  {{ object.name }}
+                {% else %}
+                  {{ object }}
+                {% endif %}
+              </a>
+            </h3>
+          </td>
+        
+          <td>{{ object.when }}</br>{{ object.venue.address }}</td>
+        
+          <td>{{ object.description }}</td>
+        
+        
+          <td>{{ object.privacy }}</td>
+        
+        
+      </tr>
+    {% endfor %}
+  </table>
+  <hr>
+  <h2>
+    {% trans "Meal Invites" %}
+  </h2>
+  <p> No invites yet </p>
+  <hr>
+  <h2>
+    {% trans "Past Meals" %}
+  </h2>
+  <p> You have not been to any meals</p>
+
 {% endblock %}

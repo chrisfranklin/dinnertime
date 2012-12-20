@@ -37,7 +37,7 @@ urlpatterns = patterns('',
     url(
         regex=r'^userprofile/(?P<pk>\d+)/$',
         view=UserProfileDetailView.as_view(),
-        name='profile_detail'
+        name='accounts_userprofile_detail'
     ),
     url(
         regex=r'^userprofile/$',
