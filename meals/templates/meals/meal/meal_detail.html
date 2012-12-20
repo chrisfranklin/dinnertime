@@ -85,6 +85,9 @@
         {% for guest in meal.guest_set.all %}
           </br>
 
+          {% if guest.invite.contact.user %}
+            <a href="{{guest.invite.contact.user.get_profile.get_absolute_url}}">
+          {% endif %}
           {% if guest.invite.contact.email %}
             {% if "facebook.com" in guest.invite.contact.email %}
               <img src="http://graph.facebook.com/{{guest.invite.contact.email|cut:"@facebook.com" }}/picture" />
@@ -94,13 +97,17 @@
           {% else %}
             <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
           {% endif %}
+          {% if guest.invite.contact.user %}
+            </a>
+          {% endif %}
+
           {{guest.invite.contact}}
           + 
           {% inplace_edit "guest.invite.plusones" auto_height=1, auto_width=1, edit_empty_value="add" %}
            guest(s) 
         {% endfor %}
         <hr>
-        
+
         {% for invite in meal.invite_set.all %}
           {% if invite.contact.email == request.user.email or invite.contact.user == request.user %}
             {% inplace_edit "invite.status" %}
@@ -169,7 +176,7 @@
 
   <div class="row-fluid">
     <div class="span4">
-      <h2> I Have:</h2>
+      <h2> Have:</h2>
       {% if request.user == object.host %}
           <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/HAVE/" data-append="#invites">
               {% csrf_token %}
@@ -187,7 +194,7 @@
       {% endfor %}
     </div>
     <div class="span4">
-      <h2> I Need:</h2>
+      <h2> Need:</h2>
       {% if request.user == object.host %}
           <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/NEED/" data-append="#invites">
               {% csrf_token %}
@@ -204,7 +211,7 @@
       {% endfor %}
     </div>
     <div class="span4">
-      <h2> I Want:</h2>
+      <h2> Want:</h2>
       {% if request.user == object.host %}
           <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/WANT/" data-append="#invites">
               {% csrf_token %}
@@ -225,17 +232,27 @@
   <hr>
   <div class="row-fluid">
     <div class="span6">
-      <h2> Recipe</h2>
+      <h2>{% inplace_edit "object.recipe" auto_height=1, auto_width=1, edit_empty_value="Set a Recipe!"  %}</h2>
       {% if object.recipe %}
-        <img src="{{object.recipe.small_image}}">
-        {{object.recipe.ingredients}}
+        <img src="{{object.recipe.large_image}}">
+        <h3> Ingredients: </h3>
+        <ul>
+          {% for ingredient in object.recipe.ingredients.all %}
+            <li>{{ingredient}}</li>
+          {% endfor %}
+        </ul>
+        <h3> Cooking Time </h3>
+        {{object.recipe.total_time_in_seconds}} seconds.
       {% endif %}
-      {% inplace_edit "object.recipe" auto_height=1, auto_width=1 %}
+      
     </div>
     <div class="span6">
       <h2> Activity </h2>
       {% for entry in actstream %}
         <p>
+          {% if entry.actor.user %}
+            <a href="{{entry.actor.user.get_profile.get_absolute_url}}">
+          {% endif %}
           {% if entry.actor.email %}
             {% if "facebook.com" in entry.actor.email %}
               <img src="http://graph.facebook.com/{{entry.actor.email|cut:"@facebook.com" }}/picture" />
@@ -244,6 +261,9 @@
             {% endif %}
           {% else %}
             <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 68 %}">
+          {% endif %}
+          {% if entry.actor.user %}
+            </a>
           {% endif %}
           {{entry}} 
           <!--<button type="button" class="btn" data-toggle="collapse" data-target="#commentdetail{{entry.id}}">Comment </button> -->

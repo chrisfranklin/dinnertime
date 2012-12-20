@@ -83,6 +83,10 @@ class Recipe(models.Model):
         if self.small_image_urls:
             return self.small_image_urls[0]
 
+    def large_image(self):
+        if self.large_image_urls:
+            return self.large_image_urls[0]
+
     # DIET_CHOICES = (
     #     ("MEAT", 'Meat Eater'),
     #     ("VEGETARIAN", 'Vegetarian'),

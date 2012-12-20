@@ -134,14 +134,9 @@ urlpatterns += patterns('',
         name='meals_meal_invite_update'
     ),
     url(
-        regex=r'^meal/(?P<meal_id>\d+?)/invite/(?P<invite_id>\d+?)/(?P<action>\w+?)/$',
+        regex=r'^meal/(?P<meal_id>\d+?)/invite/(?P<action>\w+?)/(?P<secret>\w+?)/$',
         view=ack_invite,
         name='meals_meal_invite_ack'
-    ),
-    url(
-        regex=r'^meal/(?P<meal_id>\d+?)/invite/(?P<invite_id>\d+?)/(?P<action>\w+?)/(?P<secret>\w+?)/$',
-        view=ack_invite,
-        name='meals_meal_invite_ack_secret'
     ),
     url(
         regex=r'^meal/create/$',

@@ -299,7 +299,7 @@ class Invite(models.Model):
         if self.contact.email:
             # Nice and easy we have an email on the contact, also check for allauth and for one on the user
             from django.core.mail import send_mail
-            send_mail('You have been invited to a meal', 'Test message http://localhost:8000/meal/%s/invite/%s/y/%s/' % (self.meal.id, self.pk, self.secret), 'dt@piemonster.me', [self.contact.email], fail_silently=False)
+            send_mail('You have been invited to a meal', 'Test message http://localhost:8000/meal/%s/invite/y/%s/' % (self.meal.id, self.secret), 'dt@piemonster.me', [self.contact.email], fail_silently=False)
 
     def save(self, *args, **kwargs):
         """

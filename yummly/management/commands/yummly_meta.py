@@ -1,10 +1,9 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand  # CommandError
 from yummly.models import Ingredient, Course, Cuisine, Allergy, Diet, Recipe
 #from oauth_hook import OAuthHook
 import requests
 import json
 from pprint import pprint
- 
 
 
 class Command(BaseCommand):
@@ -16,10 +15,10 @@ class Command(BaseCommand):
         cs = "48703203011932335cfaf5fb57ef4f1a"
 
         client = requests.session()
-        #response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=quiche'% (ck, cs)) 
+        #response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=quiche' % (ck, cs))
 
-        if args != "ingredient":
-            response = client.get('http://api.yummly.com/v1/api/metadata/ingredient?_app_id=%s&_app_key=%s'% (ck, cs)) 
+        if args == "ingredient":
+            response = client.get('http://api.yummly.com/v1/api/metadata/ingredient?_app_id=%s&_app_key=%s' % (ck, cs))
             pprint(response.content)
             try:
                 results = json.loads(response.content[26:-2])  # This is for ingredients
@@ -38,8 +37,8 @@ class Command(BaseCommand):
                     ingredient_object.use_count = ingredient['useCount']
                 print ingredient_object.save()
 
-        if args != "course":
-            response = client.get('http://api.yummly.com/v1/api/metadata/course?_app_id=%s&_app_key=%s'% (ck, cs)) 
+        if args == "course":
+            response = client.get('http://api.yummly.com/v1/api/metadata/course?_app_id=%s&_app_key=%s' % (ck, cs))
             pprint(response.content)
             try:
                 results = json.loads(response.content[23:-2])  # This is for ingredients
@@ -54,8 +53,8 @@ class Command(BaseCommand):
                     course_object.description = course['description']
                 course_object.save()
 
-        if args != "cuisine":
-            response = client.get('http://api.yummly.com/v1/api/metadata/cuisine?_app_id=%s&_app_key=%s'% (ck, cs)) 
+        if args == "cuisine":
+            response = client.get('http://api.yummly.com/v1/api/metadata/cuisine?_app_id=%s&_app_key=%s' % (ck, cs))
             pprint(response.content)
             try:
                 results = json.loads(response.content[23:-2])  # This is for ingredients
@@ -70,8 +69,8 @@ class Command(BaseCommand):
                     cuisine_object.description = cuisine['description']
                 cuisine_object.save()
 
-        if args != "allergy":
-            response = client.get('http://api.yummly.com/v1/api/metadata/allergy?_app_id=%s&_app_key=%s'% (ck, cs)) 
+        if args == "allergy":
+            response = client.get('http://api.yummly.com/v1/api/metadata/allergy?_app_id=%s&_app_key=%s' % (ck, cs))
             pprint(response.content)
             try:
                 results = json.loads(response.content[23:-2])  # This is for ingredients
@@ -86,8 +85,8 @@ class Command(BaseCommand):
                     allergy_object.description = allergy['longDescription']
                 allergy_object.save()
 
-        if args != "diet":
-            response = client.get('http://api.yummly.com/v1/api/metadata/diet?_app_id=%s&_app_key=%s'% (ck, cs)) 
+        if args == "diet":
+            response = client.get('http://api.yummly.com/v1/api/metadata/diet?_app_id=%s&_app_key=%s' % (ck, cs))
             pprint(response.content)
             try:
                 results = json.loads(response.content[20:-2])  # This is for ingredients
@@ -103,7 +102,7 @@ class Command(BaseCommand):
                 diet_object.save()
 
         if args != "recipe":
-            response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=quiche&maxResult=20'% (ck, cs)) 
+            response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=quiche&maxResult=20' % (ck, cs))
             #pprint(response.content)
             try:
                 results = json.loads(response.content)  # This is for ingredients
@@ -119,17 +118,25 @@ class Command(BaseCommand):
                         if "course" in recipe['attributes']:
                             print recipe['attributes']['course']
                             for course in recipe['attributes']['course']:
-                                recipe_object.course.add(Course.objects.get(description=course)) 
+                                recipe_object.course.add(Course.objects.get(description=course))
                 if "recipeName" in recipe:
                     recipe_object.name = recipe['recipeName']
                 if "rating" in recipe:
-                    recipe_object.rating= recipe['rating']
+                    recipe_object.rating = recipe['rating']
                 if "smallImageUrls" in recipe:
-                    recipe_object.small_image_urls = recipe['smallImageUrls'] # Add code for big images here
+                    recipe_object.small_image_urls = recipe['smallImageUrls']  # Add code for big images here
+                    image_list = list()
+                    for image in recipe['smallImageUrls']:
+                        image_list.append(image[:-5] + "l.png")
+                    recipe_object.large_image_urls = image_list
                 if "totalTimeInSeconds" in recipe:
                     recipe_object.total_time_in_seconds = recipe['totalTimeInSeconds']
                 if "sourceDisplayName" in recipe:
                     recipe_object.source_display_name = recipe['sourceDisplayName']
+                if "ingredients" in recipe:
+                    recipe_object.ingredients.clear()
+                    for ingredient in recipe['ingredients']:
+                        recipe_object.ingredients.add(Ingredient.objects.get_or_create(term=ingredient)[0])
                 recipe_object.save()
 
         # flavors = models.CharField(max_length=50, blank=True, null=True)
