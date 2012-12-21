@@ -2,6 +2,9 @@
 
 {% extends 'accounts/userprofile/base.html' %}
 
+{% load url from future %}
+
+
 {% load i18n %}
 
 {% block filename %}
@@ -13,14 +16,14 @@
 {% block breadcrumbs %}
   <ul class='breadcrumb'>
     <li>
-      <a href='{% url accounts_userprofile_archive_index %}'>
+      <a href='{% url 'accounts_userprofile_archive_index' %}'>
         {% trans "Archive Index" %}
       </a>
     </li>
   </ul>
 {% endblock %}
 {% block header-link %}
-  <a href='{% url accounts_userprofile_archive_index %}'>
+  <a href='{% url 'accounts_userprofile_archive_index' %}'>
     {% trans "UserProfile Archive Index" %}
   </a>
 {% endblock %}
@@ -34,7 +37,7 @@
   <ul class='nav nav-tabs nav-stacked'>
     {% for date in date_list %}
       <li>
-        <a href='{% url accounts_userprofile_year_archive year=date.year %}'>
+        <a href='{% url 'accounts_userprofile_year_archive' year=date.year %}'>
           {{ date.year }}
         </a>
       </li>

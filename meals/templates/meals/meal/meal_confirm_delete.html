@@ -2,6 +2,9 @@
 
 {% extends 'meals/meal/base.html' %}
 
+{% load url from future %}
+
+
 {% load i18n %}
 
 {% block filename %}
@@ -13,7 +16,7 @@
 {% endblock %}
 
 {% block header-link %}
-  <a href='{% url meals_meal_delete pk=object.pk %}'>
+  <a href='{% url 'meals_meal_delete' pk=object.pk %}'>
     {% trans "Meal Confirm Delete" %}
   </a>
 {% endblock %}

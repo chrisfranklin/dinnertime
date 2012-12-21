@@ -1,4 +1,7 @@
 {% extends 'friends/base.html' %}
+
+{% load url from future %}
+
 {% load i18n %}
 
 {% block friends_title %}{% trans "Suggested friends" %}{% endblock %}
@@ -6,7 +9,7 @@
 {% block friends_content %}
 <ul>
 {% for friend in suggested_friends %}
-	<li><a href="{% url profile_detail username=friend.username %}">{{ friend }}</a> (<a href="{% url friends_invite friend.username %}">{% trans "invite to friends" %}</a>)</li>
+	<li><a href="{% url 'profile_detail' username=friend.username %}">{{ friend }}</a> (<a href="{% url 'friends_invite' friend.username %}">{% trans "invite to friends" %}</a>)</li>
 {% endfor %}
 </ul>
 {% endblock %}

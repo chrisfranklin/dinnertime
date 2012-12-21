@@ -2,6 +2,9 @@
 
 {% extends 'accounts/userprofile/base.html' %}
 
+{% load url from future %}
+
+
 {% load i18n %}
 
 {% block filename %}
@@ -10,7 +13,7 @@
 {% block breadcrumbs %}
   <ul class='breadcrumb'>
     <li>
-      <a href='{% url accounts_userprofile_archive_index %}'>
+      <a href='{% url 'accounts_userprofile_archive_index' %}'>
         {% trans "Archive Index" %}
       </a>
       <span class='divider'>
@@ -18,7 +21,7 @@
       </span>
     </li>
     <li>
-      <a href='{% url accounts_userprofile_year_archive year=month.year %}'>
+      <a href='{% url 'accounts_userprofile_year_archive' year=month.year %}'>
         {% trans "Year Archive" %}
       </a>
       <span class='divider'>
@@ -26,14 +29,14 @@
       </span>
     </li>
     <li>
-      <a href='{% url accounts_userprofile_month_archive year=month.year month=month.month %}'>
+      <a href='{% url 'accounts_userprofile_month_archive' year=month.year month=month.month %}'>
         {% trans "Month Archive" %}
       </a>
     </li>
   </ul>
 {% endblock %}
 {% block header-link %}
-  <a href='{% url accounts_userprofile_month_archive year=month.year month=month.month %}'>
+  <a href='{% url 'accounts_userprofile_month_archive' year=month.year month=month.month %}'>
     {% trans "UserProfile Month Archive" %}
   </a>
 {% endblock %}
@@ -47,7 +50,7 @@
   <ul class='nav nav-tabs nav-stacked'>
     {% for date in date_list %}
       <li>
-        <a href='{% url accounts_userprofile_day_archive year=date.year month=date.month day=date.day %}'>
+        <a href='{% url 'accounts_userprofile_day_archive' year=date.year month=date.month day=date.day %}'>
           {{ date|date:"M. d, Y" }}
         </a>
       </li>

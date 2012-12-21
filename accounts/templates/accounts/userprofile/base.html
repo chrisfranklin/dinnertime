@@ -1,4 +1,7 @@
 {% extends 'sitebase.html' %}
+
+{% load url from future %}
+
 {% block extra_js %}
   {% load inplace_edit %}
   {% inplace_static %}
@@ -10,7 +13,7 @@
         <div class='page-header site-header'>
           <h1>
             {% block header %}
-              <a href='{% url accounts_userprofile_list %}'>
+              <a href='{% url 'accounts_userprofile_list' %}'>
                 {% trans "UserProfiles" %}
               </a>
             {% endblock %}
@@ -24,12 +27,12 @@
                     {% trans "Views" %}
                   </li>
                   <li>
-                    <a href='{% url accounts_userprofile_list %}'>
+                    <a href='{% url 'accounts_userprofile_list' %}'>
                       {% trans "List View" %}
                     </a>
                   </li>
                   <li>
-                    <a href='{% url accounts_userprofile_create %}'>
+                    <a href='{% url 'accounts_userprofile_create' %}'>
                       {% trans "Create View" %}
                     </a>
                   </li>
@@ -40,12 +43,12 @@
                       </a>
                     </li>
                     <li>
-                      <a href='{% url accounts_userprofile_update pk=object.pk %}'>
+                      <a href='{% url 'accounts_userprofile_update' pk=object.pk %}'>
                         {% trans "Update View" %}
                       </a>
                     </li>
                     <li>
-                      <a href='{% url accounts_userprofile_delete pk=object.pk %}'>
+                      <a href='{% url 'accounts_userprofile_delete' pk=object.pk %}'>
                         {% trans "Delete View" %}
                       </a>
                     </li>

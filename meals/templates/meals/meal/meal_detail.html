@@ -2,6 +2,9 @@
 
 {% extends 'meals/meal/base.html' %}
 
+{% load url from future %}
+
+
 {% load i18n %}
 {% load inplace_edit %}
 
@@ -17,7 +20,7 @@
 {% block breadcrumbs %}
 <!--  <ul class='breadcrumb'>
     <li>
-      <a href='{% url meals_meal_archive_index %}'>
+      <a href='{% url 'meals_meal_archive_index' %}'>
         {% trans "Archive Index" %}
       </a>
       <span class='divider'>
@@ -25,7 +28,7 @@
       </span>
     </li>
     <li>
-      <a href='{% url meals_meal_year_archive year=object.when.year %}'>
+      <a href='{% url 'meals_meal_year_archive' year=object.when.year %}'>
         {% trans "Year Archive" %}
       </a>
       <span class='divider'>
@@ -33,7 +36,7 @@
       </span>
     </li>
     <li>
-      <a href='{% url meals_meal_month_archive year=object.when.year month=object.when.month %}'>
+      <a href='{% url 'meals_meal_month_archive' year=object.when.year month=object.when.month %}'>
         {% trans "Month Archive" %}
       </a>
       <span class='divider'>
@@ -41,7 +44,7 @@
       </span>
     </li>
     <li>
-      <a href='{% url meals_meal_day_archive year=object.when.year month=object.when.month day=object.when.day %}'>
+      <a href='{% url 'meals_meal_day_archive' year=object.when.year month=object.when.month day=object.when.day %}'>
         {% trans "Day Archive" %}
       </a>
       <span class='divider'>
@@ -49,7 +52,7 @@
       </span>
     </li>
     <li>
-      <a href='{% url meals_meal_date_detail year=object.when.year month=object.when.month day=object.when.day pk=object.pk %}'>
+      <a href='{% url 'meals_meal_date_detail' year=object.when.year month=object.when.month day=object.when.day pk=object.pk %}'>
         {% trans "Date Detail" %}
       </a>
     </li>
@@ -331,11 +334,11 @@
   
   <!--
   <hr>
-  <form action='{% url meals_meal_delete pk=object.pk %}' charset='utf-8' method='post'>
+  <form action='{% url 'meals_meal_delete' pk=object.pk %}' charset='utf-8' method='post'>
     <fieldset>
       {% csrf_token %}
       <div class='form-actions'>
-        <a class='btn btn-success' href='{% url meals_meal_update pk=object.pk %}'>
+        <a class='btn btn-success' href='{% url 'meals_meal_update' pk=object.pk %}'>
           {% trans "Update" %}
         </a>
         <button class='btn btn-danger' type='submit'>

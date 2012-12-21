@@ -1,11 +1,14 @@
 {% extends 'sitebase.html' %}
+
+{% load url from future %}
+
 {% load i18n %}
     <div class='container'>
       <div class='row'>
         <div class='page-header site-header'>
           <h1>
             {% block header %}
-              <a href='{% url meals_invite_list %}'>
+              <a href='{% url 'meals_invite_list' %}'>
                 {% trans "Invites" %}
               </a>
             {% endblock %}
@@ -19,12 +22,12 @@
                     {% trans "Views" %}
                   </li>
                   <li>
-                    <a href='{% url meals_invite_list %}'>
+                    <a href='{% url 'meals_invite_list' %}'>
                       {% trans "List View" %}
                     </a>
                   </li>
                   <li>
-                    <a href='{% url meals_invite_create %}'>
+                    <a href='{% url 'meals_invite_create' %}'>
                       {% trans "Create View" %}
                     </a>
                   </li>
@@ -35,12 +38,12 @@
                       </a>
                     </li>
                     <li>
-                      <a href='{% url meals_invite_update pk=object.pk %}'>
+                      <a href='{% url 'meals_invite_update' pk=object.pk %}'>
                         {% trans "Update View" %}
                       </a>
                     </li>
                     <li>
-                      <a href='{% url meals_invite_delete pk=object.pk %}'>
+                      <a href='{% url 'meals_invite_delete' pk=object.pk %}'>
                         {% trans "Delete View" %}
                       </a>
                     </li>

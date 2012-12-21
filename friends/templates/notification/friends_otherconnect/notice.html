@@ -1,2 +1,3 @@
-{% load i18n %}{% url profile_detail username=your_friend.username as your_friend_url %}{% url profile_detail username=new_friend.username as new_friend_url %}
+{% load url from future %}
+{% load i18n %}{% url 'profile_detail' username=your_friend.username as your_friend_url %}{% url 'profile_detail' username=new_friend.username as new_friend_url %}
 {% blocktrans %}Your friend <a href="{{ your_friend_url }}">{{ your_friend }}</a> and <a href="{{ new_friend_url }}">{{ new_friend }}</a> are now friends.{% endblocktrans %}

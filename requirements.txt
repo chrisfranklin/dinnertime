@@ -4,7 +4,7 @@
 #
 #     pip install -r requirements.pip
 
-django==1.4.2
+django==1.4.3
 south==0.7.6
 #django-fiber==0.9.8.9
 git+https://github.com/Piemonster/django-generate-scaffold.git
@@ -62,3 +62,4 @@ django-statsd-mozilla
 django-app-metrics
 phileo
 raven
+
