@@ -131,7 +131,7 @@ INSTALLED_APPS = (
     'django_statsd',
     'app_metrics',
     'raven.contrib.django',
-    'cities_light',  # Just here to help tests pass at the moment, will eventually be replaced with cities and geodjango
+    #'cities_light',  # Just here to help tests pass at the moment, will eventually be replaced with cities and geodjango
 
 )
 
@@ -311,7 +311,10 @@ if os.getenv('JENKINS_URL', False):
     INSTALLED_APPS += ('django_jenkins', )
     #'MANAGER': 'myapp.streams.MyActionManager',
     #  temporarily removed django.contrib.auth from test due to bug #17966 in django, test cannot be run as it is.
-    PROJECT_APPS = ('django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'django.contrib.comments', 'meals', 'util', 'easy_maps', 'rest_framework', 'autocomplete_light', 'lazysignup', 'django_gravatar', 'crispy_forms', 'friends', 'oauth_access', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'avatar', 'allauth', 'allauth.account', 'allauth.socialaccount', 'allauth.socialaccount.providers.facebook', 'allauth.socialaccount.providers.google', 'allauth.socialaccount.providers.linkedin', 'allauth.socialaccount.providers.twitter', 'djcelery', 'inplaceeditform', 'actstream', 'phileo', 'yummly', 'django_statsd', 'app_metrics', 'raven.contrib.django')
+    #  temp remove 'autocomplete_light',
+    #  temp remove 'lazysignup','app_metrics',
+    #  temp remove 'avatar', 'compressor',
+    PROJECT_APPS = ('django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'django.contrib.comments', 'meals', 'util', 'easy_maps', 'rest_framework', 'django_gravatar', 'crispy_forms', 'friends', 'oauth_access', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'allauth', 'allauth.account', 'allauth.socialaccount', 'allauth.socialaccount.providers.facebook', 'allauth.socialaccount.providers.google', 'allauth.socialaccount.providers.linkedin', 'allauth.socialaccount.providers.twitter', 'djcelery', 'inplaceeditform', 'actstream',  'phileo', 'yummly', 'django_statsd', 'raven.contrib.django')
     # DATABASES['default'].update(dict(
     #     ENGINE=os.getenv('DBA_SQL_DJANGO_ENGINE'),
     #     USER=os.getenv('DBA_SQL_ADMIN'),
