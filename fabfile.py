@@ -303,3 +303,23 @@ def fix_permissions(path='.'):
             run('chgrp -R {0} -- {1}'.format(system_user, path))
         else:
             run('chmod -R go= -- {0}'.format(path))
+
+
+def check_build_status():
+    import json
+    import urllib2
+    from fabric.colors import green, red
+    from fabric.utils import abort
+    data = json.loads(urllib2.urlopen(env.jenkins_api_url).read())
+    project = env.jenkins_project
+    for job in data['jobs']:
+        if job['name'] == project:
+            status = job['color'] == 'blue'
+            if status:
+                print(green('Build \'%s\' is passing' % project))
+                return
+            else:
+                print(red('Build \'%s\' is FAILING!' % project))
+    else:
+        print(red('Could not find project \'%s\' in Jenkins' % project))
+    abort('Aborting deploy.')
