@@ -38,6 +38,11 @@ class UserProfile(models.Model):
     likes = models.ManyToManyField(Part, related_name="liked_by", blank=True, null=True)
     dislikes = models.ManyToManyField(Part, related_name="disliked_by", blank=True, null=True)
 
+    def get_emails(self):
+        # Should check allauth.account.models.EmailAddress
+        # Should also check social account extra data but would be better to just import that ourselves
+        return self.email
+
     def save(self, *args, **kwargs):
         # Do stuff
         super(UserProfile, self).save(*args, **kwargs)  # Call the "real" save() method.

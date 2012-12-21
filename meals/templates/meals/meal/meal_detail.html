@@ -58,10 +58,8 @@
 {% endblock %}
 
 {% block header-link %}
-  <a href='/accounts/{{object.host}}/'>
-    {% load gravatar %}
-    <img src="{% gravatar_url request.user.email 100 %}">
-  </a>&nbsp;
+  {% load gravatar %}
+  <a href='{{object.host.get_profile.get_absolute_url}}'><img src="{% gravatar_url request.user.email 100 %}"></a> &nbsp;
   <a href='{{ object.get_absolute_url }}'>{{object.host}}'s meal</a>
   <span class="pull-right">{% inplace_edit "object.when" %}</span>
 {% endblock %}
@@ -72,103 +70,39 @@
 
 {% block content %}
   <div class="row-fluid">
+
     <div class="span6">
-      <h2>
-        
-        Guests: {{object.current_guests}} out of {{object.max_guests}} 
-        <span class="pull-right">
-          {% if object.current_guests < object.max_guests and  object.max_guests > 1 %}
-            <a href= "/meal/{{object.id}}/max_guests/0/" class="btn btn-danger"><i class="icon-minus"></i></a>
-          {% endif %}
-          <a href= "/meal/{{object.id}}/max_guests/1/" class="btn btn-success"><i class="icon-plus"></i></a>
-        </span></br>
-        {% for guest in meal.guest_set.all %}
-          </br>
-
-          {% if guest.invite.contact.user %}
-            <a href="{{guest.invite.contact.user.get_profile.get_absolute_url}}">
-          {% endif %}
-          {% if guest.invite.contact.email %}
-            {% if "facebook.com" in guest.invite.contact.email %}
-              <img src="http://graph.facebook.com/{{guest.invite.contact.email|cut:"@facebook.com" }}/picture" />
-            {% else %}
-              <img src="{% gravatar_url guest.invite.contact.email 50 %}">
-            {% endif %}
-          {% else %}
-            <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
-          {% endif %}
-          {% if guest.invite.contact.user %}
-            </a>
-          {% endif %}
-
-          {{guest.invite.contact}}
-          + 
-          {% inplace_edit "guest.invite.plusones" auto_height=1, auto_width=1, edit_empty_value="add" %}
-           guest(s) 
-        {% endfor %}
-        <hr>
-
-        {% for invite in meal.invite_set.all %}
-          {% if invite.contact.email == request.user.email or invite.contact.user == request.user %}
-            {% inplace_edit "invite.status" %}
-            {% inplace_edit "invite.plusones" %}
-          {% endif %}
-        {% endfor %}
-        <h2> Invites</h2>
-        {% for invite in meal.invite_set.all %}
-          {% if invite.status == "INVITED" %}
-            {% if invite.contact.email %}
-              {% if "facebook.com" in invite.contact.email %}
-                <img src="http://graph.facebook.com/{{invite.contact.email|cut:"@facebook.com" }}/picture" />
-              {% else %}
-              <img src="{% gravatar_url invite.contact.email 50 %}">
-              {% endif %}
-            {% else %}
-              <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
-            {% endif %}
-            {{invite.contact}} 
-            {% if invite.max_plusones %}
-              + {% inplace_edit "invite.max_plusones" %} guest(s)
-            {% endif %}
-            </br></br>
-          {% endif %}
-        {% endfor %}
-        {% if request.user == object.host %}
-          <form class="form-inline" method="post" action="/meal/{{object.id}}/invite/create/" data-append="#invites">
-                {% csrf_token %}
-                {{form.contact}}
-                <div class="hidden2">{{form.max_plusones}}</div>
-                <button class='btn btn-primary' type='submit'>
-          
-                  <i class="icon-plus"> Add</i>
-          
-                </button>
-                
-            </form>
-          <!--<h2> Contacts </h2>
-          {% for contact in user.contacts.all %}
-            {% if contact.email %}
-              <img src="{% gravatar_url contact.email 50 %}">
-            {% endif %}
-            {{contact}}
-          {% endfor %} 
-          <h2> Friends </h2>
-          {% for friend in user.friends.all %}
-            <img src="{% gravatar_url friend.from_user.email 50 %}">
-            {{friend.from_user}}
-          {% endfor %}
-          -->
-        {% endif %}
-        {# <a class="btn btn-large btn-primary"><i class="icon-plus"></i> Invite </a> #}
-      </h2>
+      <h2>{% inplace_edit "object.recipe" auto_height=1, auto_width=1, edit_empty_value="Set a Recipe!"  %}</h2>
+      {% if object.recipe %}
+        <img src="{{object.recipe.large_image}}">
+        <div class="row-fluid">
+          <div class="span7">
+            <h3> Ingredients: </h3>
+            <ul>
+              {% for ingredient in object.recipe.ingredients.all %}
+                <li>{{ingredient}}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="span5">
+            <h3> Cooking Time: </h3>
+            <h4>{{object.recipe.total_time_in_seconds}} seconds.</h4>
+            <h3> Rating: </h3>
+            <h4>{{object.recipe.rating}} out of 5</h4>
+          </div>
+        </div>
+      {% endif %}
+      
     </div>
+    
     <div class="span6">
       <h2>{% if object.venue %}<a href="/venue/{{object.id}}">{% inplace_edit "object.venue.address" auto_height=1, auto_width=1 %}</a>{% else %}<a href="/venue/create/"> Please set a location. </a> {% endif %}</h2> 
       {% load easy_maps_tags %}
-      {% if object.venuePOOPOO %}
+      {% if object.venue %}
         <!-- Default map with 300x400 dimensions -->
-        {% easy_map object.venue.address 470 470 %}
+        {% easy_map object.venue.address 560 380 %}
       {% endif %}
+      <h3> Directions </h3>
     </div>
   </div>
   
@@ -231,20 +165,122 @@
   {% load comments %}
   <hr>
   <div class="row-fluid">
+
     <div class="span6">
-      <h2>{% inplace_edit "object.recipe" auto_height=1, auto_width=1, edit_empty_value="Set a Recipe!"  %}</h2>
-      {% if object.recipe %}
-        <img src="{{object.recipe.large_image}}">
-        <h3> Ingredients: </h3>
-        <ul>
-          {% for ingredient in object.recipe.ingredients.all %}
-            <li>{{ingredient}}</li>
+      <h2> Guests </h2>
+        
+        <h3>
+          {{object.current_guests}} out of {{object.max_guests}}
+          <span class="pull-right">
+            {% if object.current_guests < object.max_guests and  object.max_guests > 1 %}
+              <a href= "/meal/{{object.id}}/max_guests/0/" class="btn btn-danger"><i class="icon-minus"></i></a>
+            {% endif %}
+            <a href= "/meal/{{object.id}}/max_guests/1/" class="btn btn-success"><i class="icon-plus"></i></a>
+          </span>
+        </h3>
+        {% for guest in meal.guest_set.all %}
+          <h4>
+            {% if guest.invite.contact.user %}
+              <a href="{{guest.invite.contact.user.get_profile.get_absolute_url}}">
+            {% endif %}
+            {% if guest.invite.contact.email %}
+              {% if "facebook.com" in guest.invite.contact.email %}
+                <img src="http://graph.facebook.com/{{guest.invite.contact.email|cut:"@facebook.com" }}/picture" />
+              {% else %}
+                <img src="{% gravatar_url guest.invite.contact.email 50 %}">
+              {% endif %}
+            {% else %}
+              <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
+            {% endif %}
+            {% if guest.invite.contact.user %}
+              </a>
+            {% endif %}
+
+            {{guest.invite.contact}}
+            + 
+            {% inplace_edit "guest.invite.plusones" auto_height=1, auto_width=1, edit_empty_value="add extra" %}
+             guest(s)
+          </h4> 
+        {% endfor %}
+        <hr>
+
+        {% for invite in meal.invite_set.all %}
+          {% if invite.contact.email == request.user.email or invite.contact.user == request.user %}
+            {% inplace_edit "invite.status" %}
+            {% inplace_edit "invite.plusones" %}
+          {% endif %}
+        {% endfor %}
+        <h2> Invites</h2>
+        {% for invite in meal.invite_set.all %}
+          {% if invite.status == "INVITED" %}
+            <h4>
+              {% if invite.contact.email %}
+                {% if "facebook.com" in invite.contact.email %}
+                  <img src="http://graph.facebook.com/{{invite.contact.email|cut:"@facebook.com" }}/picture" />
+                {% else %}
+                <img src="{% gravatar_url invite.contact.email 50 %}">
+                {% endif %}
+              {% else %}
+                <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
+              {% endif %}
+              {{invite.contact}} 
+              {% if invite.max_plusones %}
+                + {% inplace_edit "invite.max_plusones" %} guest(s)
+              {% endif %}
+            </h4>
+          {% endif %}
+        {% endfor %}
+        {% if request.user == object.host %}
+          <form class="form-inline" method="post" action="/meal/{{object.id}}/invite/create/" data-append="#invites">
+                {% csrf_token %}
+                {{form}}
+                <div class="hidden2">{{form.max_plusones}}</div>
+                <button class='btn btn-primary' type='submit'>
+          
+                  <i class="icon-plus"> Add</i>
+          
+                </button>
+                
+            </form>
+          <!--<h2> Contacts </h2>
+          {% for contact in user.contacts.all %}
+            {% if contact.email %}
+              <img src="{% gravatar_url contact.email 50 %}">
+            {% endif %}
+            {{contact}}
+          {% endfor %} 
+          <h2> Friends </h2>
+          {% for friend in user.friends.all %}
+            <img src="{% gravatar_url friend.from_user.email 50 %}">
+            {{friend.from_user}}
           {% endfor %}
-        </ul>
-        <h3> Cooking Time </h3>
-        {{object.recipe.total_time_in_seconds}} seconds.
+          -->
+        {% endif %}
+        {# <a class="btn btn-large btn-primary"><i class="icon-plus"></i> Invite </a> #}
+      <hr>
+  
+      {% get_comment_count for object as comment_count %}
+      <h2> {{comment_count}} Comment(s) </h2>
+      {% render_comment_list for object %}
+      {% if user.is_authenticated %}
+        <button type="button" class="btn" data-toggle="collapse" data-target="#comdetail{{entry.id}}">Add Comment <b class="caret"></b></button>
+        <div id="comdetail{{entry.id}}" class="collapse ">
+          {% get_comment_form for object as form %}
+          <form action="{% comment_form_target %}" method="POST">
+          {% csrf_token %}
+          {{ form.comment }}
+          <div class="hidden2">{{ form.honeypot }}</div>
+          {{ form.content_type }}
+          {{ form.object_pk }}
+          {{ form.timestamp }}
+          {{ form.security_hash }}
+          <input type="hidden" name="next" value="{{object.get_absolute_url}}" />
+          <input type="submit" value="Add comment" id="id_submit" />
+          </form>
+        </div>
+      {% else %}
+          <p>Please <a href="{% url 'auth_login' %}">log in</a> to leave a comment.</p>
       {% endif %}
-      
     </div>
     <div class="span6">
       <h2> Activity </h2>
@@ -293,30 +329,7 @@
     </div>
   </div>
   
-  <hr>
-  
-  {% get_comment_count for object as comment_count %}
-  <h2> {{comment_count}} Comment(s) </h2>
-  {% render_comment_list for object %}
-  {% if user.is_authenticated %}
-    <button type="button" class="btn" data-toggle="collapse" data-target="#comdetail{{entry.id}}">Add Comment <b class="caret"></b></button>
-    <div id="comdetail{{entry.id}}" class="collapse ">
-      {% get_comment_form for object as form %}
-      <form action="{% comment_form_target %}" method="POST">
-      {% csrf_token %}
-      {{ form.comment }}
-      <div class="hidden2">{{ form.honeypot }}</div>
-      {{ form.content_type }}
-      {{ form.object_pk }}
-      {{ form.timestamp }}
-      {{ form.security_hash }}
-      <input type="hidden" name="next" value="{{object.get_absolute_url}}" />
-      <input type="submit" value="Add comment" id="id_submit" />
-      </form>
-    </div>
-  {% else %}
-      <p>Please <a href="{% url 'auth_login' %}">log in</a> to leave a comment.</p>
-  {% endif %}
+  <!--
   <hr>
   <form action='{% url meals_meal_delete pk=object.pk %}' charset='utf-8' method='post'>
     <fieldset>
@@ -331,4 +344,5 @@
       </div>
     </fieldset>
   </form>
+  -->
 {% endblock %}

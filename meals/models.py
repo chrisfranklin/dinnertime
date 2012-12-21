@@ -180,8 +180,6 @@ class MealPart(models.Model):
     added_by = models.ForeignKey(User, blank=True, null=True, related_name="requested")
     fulfilled_by = models.ForeignKey(User, blank=True, null=True, related_name="fulfilled")
 
-from accounts.models import UserContact
-
 
 class Invite(models.Model):
     """
@@ -189,7 +187,8 @@ class Invite(models.Model):
     """
     meal = models.ForeignKey(Meal)
     secret = models.CharField(max_length=50, blank=True, null=True)
-    contact = models.ForeignKey(UserContact, blank=True, null=True)
+    user = models.ForeignKey(User, unique=True, blank=True, null=True)
+    email = models.EmailField(max_length=254)
     STATUS_CHOICES = (
         ("INVITED", 'Invited'),
         ("ACCEPTED", 'Accepted'),
@@ -201,7 +200,7 @@ class Invite(models.Model):
     max_plusones = models.IntegerField(default=1, blank=True, null=True)
     single_use = models.BooleanField(default=True)
 
-    invited_by = models.ForeignKey(User, blank=True, null=True)
+    invited_by = models.ForeignKey(User, blank=True, null=True, related_name="invited_by")
 
     @models.permalink
     def get_absolute_url(self):
@@ -291,15 +290,16 @@ class Invite(models.Model):
         """
         return self.secret == secret
 
-    def send_email(self):
+    def send_email(self, from_email):
         """
         Sends an email if we have one available
         """
         print "wanknut"
         if self.contact.email:
             # Nice and easy we have an email on the contact, also check for allauth and for one on the user
+            to_email = self.contact.email
             from django.core.mail import send_mail
-            send_mail('You have been invited to a meal', 'Test message http://localhost:8000/meal/%s/invite/y/%s/' % (self.meal.id, self.secret), 'dt@piemonster.me', [self.contact.email], fail_silently=False)
+            send_mail('You have been invited to a meal', 'Test http://localhost:8000/meal/%s/invite/y/%s/' % (self.meal.id, self.secret), from_email, [to_email], fail_silently=False)
 
     def save(self, *args, **kwargs):
         """
@@ -308,6 +308,16 @@ class Invite(models.Model):
         if not self.secret:
             self.secret = self.generate_secret()
         if self.id is None:
+            # The invite has just been created, lets see if we have a user
+            if self.user:
+                pass
+            else:
+                # We do not have a user set already, let's see if any match our requirements
+                from accounts.models import UserProfile
+                self.user = UserProfile.objects.get(user__email=self.email).user
+                # If none match our requirements then we send an invite to the address we are given
+                # The user can choose to login and link to an existing account or register for a new account.
+
             self.send_email()
             action.send(self.contact, verb='was invited to', action_object=self.meal)
         super(Invite, self).save(*args, **kwargs)  # Call the "real" save() method.

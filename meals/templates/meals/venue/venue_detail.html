@@ -15,20 +15,25 @@
 
 
 {% block header-link %}
-  <a href='{{ object.get_absolute_url }}'>
-    {% trans "Venue" %}
-  </a>
+    {% if object.name %}
+      {{object.name}}
+    {% else %}
+      {% trans "Venue" %}
+    {% endif %}
 {% endblock %}
 
 {% block header-description %}
-  {% trans "A page representing an individual object." %}
+  {% if object.address %}
+    {{object.address}}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
 {% load easy_maps_tags %}
 
   <!-- Default map with 300x400 dimensions -->
-  {% easy_map object.address 970 600 %}
+  {% easy_map object.address 1170 700 %}
+  <!--
   {% include 'meals/venue/object_table_detail.html' %}
   <form action='{% url meals_venue_delete pk=object.pk %}' charset='utf-8' method='post'>
     <fieldset>
@@ -43,4 +48,5 @@
       </div>
     </fieldset>
   </form>
+  -->
 {% endblock %}

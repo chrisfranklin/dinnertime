@@ -23,16 +23,13 @@
   -o-background-size: cover;
   background-size: cover;
   opacity:1;
-  height:100%;
-  min-height: 100%;
 }
 
 .bgout{
   background: url(/static/img/rw2.png) repeat; 
-  padding-left:10px;
-  padding-right:10px;
+  padding-left:20px;
+  padding-right:20px;
   height:100%;
-  min-height: 100%;
 }
 
 .logo{
@@ -48,7 +45,8 @@ body{
 }
 
 html{
-  height:100%;
+  
+  min-height:100%;
 }
 
 /* ==========================================================================

@@ -156,7 +156,7 @@
             <!-- End JQuery plugins -->
 
             <!-- Site Wide Javascript -->
-            <script type="text/javascript" src="{{ STATIC_URL}}js/raven-0.7.1.min.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL}}js/raven-0.7.1.js"></script>
             <script >
               Raven.config('{{SENTRY_DSN}}');
               window.onerror = Raven.process;

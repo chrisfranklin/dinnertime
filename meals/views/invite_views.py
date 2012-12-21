@@ -40,20 +40,26 @@ class UserContactAutocomplete(autocomplete_light.AutocompleteModelBase):
 
 autocomplete_light.register(UserContact, UserContactAutocomplete)
 
+from django.contrib.auth.models import User
+
 
 class InviteForm(forms.ModelForm):
+    choices = (
+        User.objects.all(),
+    )
     #user = forms.ModelChoiceField(User.objects.all(),
     #    widget=autocomplete_light.ChoiceWidget('UserAutocomplete'))
 
-    contact = forms.ModelChoiceField(UserContact.objects.all(),
-        widget=autocomplete_light.ChoiceWidget('UserContactAutocomplete'))
+    email = forms.CharField(widget=autocomplete_light.TextWidget('InviteAutocomplete'))
+    #email = forms.ModelChoiceField(UserContact.objects.all(), widget=autocomplete_light.TextWidget('InviteAutocomplete'))
 
     # Note that defining *_js_attributes on Autocomplete classes or instances
     # also work.
 
     class Meta:
         model = Invite
-        exclude = ('secret', 'plusones', 'status', 'single_use', 'meal', 'invited_by')
+        exclude = ('secret', 'plusones', 'status', 'single_use', 'meal', 'invited_by', 'user')
+
 
 
 from django.shortcuts import render_to_response
