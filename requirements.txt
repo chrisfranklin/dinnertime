@@ -62,3 +62,4 @@ django-jsonfield
 django-statsd-mozilla
 django-app-metrics
 phileo
+raven
