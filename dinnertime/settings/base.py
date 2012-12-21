@@ -308,7 +308,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap'
 
 if os.getenv('JENKINS_URL', False):
     INSTALLED_APPS += ('django_jenkins', )
-    PROJECT_APPS = ('django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'meals', 'util', 'easy_maps', 'django_facebook', 'crispy_forms', 'friends', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'allauth', 'djcelery')
+    #'MANAGER': 'myapp.streams.MyActionManager',
+    #  temporarily removed django.contrib.auth from test due to bug #17966 in django, test cannot be run as it is.
+    PROJECT_APPS = ('django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.sites', 'django.contrib.syndication', 'django.contrib.messages', 'django.contrib.staticfiles', 'django.contrib.admin', 'django.contrib.admindocs', 'django.contrib.comments', 'meals', 'util', 'easy_maps', 'rest_framework', 'autocomplete_light', 'lazysignup', 'django_gravatar', 'crispy_forms', 'friends', 'oauth_access', 'friends.contrib.suggestions', 'notification', 'launchpad', 'accounts', 'djrill', 'mptt', 'compressor', 'avatar', 'allauth', 'allauth.account', 'allauth.socialaccount', 'allauth.socialaccount.providers.facebook', 'allauth.socialaccount.providers.google', 'allauth.socialaccount.providers.linkedin', 'allauth.socialaccount.providers.twitter', 'djcelery', 'inplaceeditform', 'actstream', 'phileo', 'yummly', 'django_statsd', 'app_metrics', 'raven.contrib.django')
     # DATABASES['default'].update(dict(
     #     ENGINE=os.getenv('DBA_SQL_DJANGO_ENGINE'),
     #     USER=os.getenv('DBA_SQL_ADMIN'),
