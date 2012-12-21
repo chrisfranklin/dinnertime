@@ -61,3 +61,4 @@ git+https://github.com/eldarion/django-avatar.git
 django-statsd-mozilla
 django-app-metrics
 phileo
+raven
