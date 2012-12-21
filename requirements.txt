@@ -63,3 +63,4 @@ django-app-metrics
 phileo
 raven
 
+django-cities-light
