@@ -2,6 +2,9 @@
 
 {% extends 'accounts/usercontact/base.html' %}
 
+{% load url from future %}
+
+
 {% load i18n %}
 
 {% block filename %}
@@ -13,7 +16,7 @@
 {% endblock %}
 
 {% block header-link %}
-  <a href='{% url accounts_usercontact_delete pk=object.pk %}'>
+  <a href='{% url 'accounts_usercontact_delete' pk=object.pk %}'>
     {% trans "UserContact Confirm Delete" %}
   </a>
 {% endblock %}

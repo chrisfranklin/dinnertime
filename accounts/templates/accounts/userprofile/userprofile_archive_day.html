@@ -2,6 +2,9 @@
 
 {% extends 'accounts/userprofile/base.html' %}
 
+{% load url from future %}
+
+
 {% load i18n %}
 
 {% block filename %}
@@ -13,7 +16,7 @@
 {% block breadcrumbs %}
   <ul class='breadcrumb'>
     <li>
-      <a href='{% url accounts_userprofile_archive_index %}'>
+      <a href='{% url 'accounts_userprofile_archive_index' %}'>
         {% trans "Archive Index" %}
       </a>
       <span class='divider'>
@@ -21,7 +24,7 @@
       </span>
     </li>
     <li>
-      <a href='{% url accounts_userprofile_year_archive year=day.year %}'>
+      <a href='{% url 'accounts_userprofile_year_archive' year=day.year %}'>
         {% trans "Year Archive" %}
       </a>
       <span class='divider'>
@@ -29,7 +32,7 @@
       </span>
     </li>
     <li>
-      <a href='{% url accounts_userprofile_month_archive year=day.year month=day.month %}'>
+      <a href='{% url 'accounts_userprofile_month_archive' year=day.year month=day.month %}'>
         {% trans "Month Archive" %}
       </a>
       <span class='divider'>
@@ -37,14 +40,14 @@
       </span>
     </li>
     <li>
-      <a href='{% url accounts_userprofile_day_archive year=day.year month=day.month day=day.day %}'>
+      <a href='{% url 'accounts_userprofile_day_archive' year=day.year month=day.month day=day.day %}'>
         {% trans "Day Archive" %}
       </a>
     </li>
   </ul>
 {% endblock %}
 {% block header-link %}
-  <a href='{% url accounts_userprofile_day_archive year=day.year month=day.month day=day.day %}'>
+  <a href='{% url 'accounts_userprofile_day_archive' year=day.year month=day.month day=day.day %}'>
     {% trans "UserProfile Day Archive" %}
   </a>
 {% endblock %}

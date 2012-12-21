@@ -1,4 +1,7 @@
 {% extends 'friends/base.html' %}
+
+{% load url from future %}
+
 {% load i18n %}
 
 {% block friends_title %}{% if status == 'received' %}{% trans "Received invitations" %}{% endif %}{% if status == 'sent' %}{% trans "Sent invitations" %}{% endif %}{% endblock %}
@@ -15,11 +18,11 @@
 	<tbody>{% for invitation in invitations %}
 		<tr>
 			<td>
-				<a href="{% if status == 'received' %}{% url profile_detail username=invitation.from_user.username %}{% endif %}{% if status == 'sent' %}{% url profile_detail username=invitation.to_user.username %}{% endif %}">{% if status == 'received' %}{{ invitation.from_user }}{% endif %}{% if status == 'sent' %}{{ invitation.to_user }}{% endif %}</a>
+				<a href="{% if status == 'received' %}{% url 'profile_detail' username=invitation.from_user.username %}{% endif %}{% if status == 'sent' %}{% url 'profile_detail' username=invitation.to_user.username %}{% endif %}">{% if status == 'received' %}{{ invitation.from_user }}{% endif %}{% if status == 'sent' %}{{ invitation.to_user }}{% endif %}</a>
 			</td>
 			<td>{{ invitation.sent }}</td>
 			<td>
-				<a href="{% url friends_show_invitation invitation.pk %}">{% trans "Details" %}</a>
+				<a href="{% url 'friends_show_invitation' invitation.pk %}">{% trans "Details" %}</a>
 			</td>
 		</tr>{% endfor %}
 	</tbody>

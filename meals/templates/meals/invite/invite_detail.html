@@ -2,6 +2,9 @@
 
 {% extends 'meals/invite/base.html' %}
 
+{% load url from future %}
+
+
 {% load i18n %}
 
 {% block filename %}
@@ -26,11 +29,11 @@
 
 {% block content %}
   {% include 'meals/invite/object_table_detail.html' %}
-  <form action='{% url meals_invite_delete pk=object.pk %}' charset='utf-8' method='post'>
+  <form action='{% url 'meals_invite_delete' pk=object.pk %}' charset='utf-8' method='post'>
     <fieldset>
       {% csrf_token %}
       <div class='form-actions'>
-        <a class='btn btn-success' href='{% url meals_invite_update pk=object.pk %}'>
+        <a class='btn btn-success' href='{% url 'meals_invite_update' pk=object.pk %}'>
           {% trans "Update" %}
         </a>
         <button class='btn btn-danger' type='submit'>

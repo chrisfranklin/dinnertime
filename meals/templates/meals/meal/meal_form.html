@@ -2,6 +2,9 @@
 
 {% extends 'meals/meal/base.html' %}
 
+{% load url from future %}
+
+
 {% load i18n %}
 
 {% block filename %}
@@ -18,11 +21,11 @@
 
 {% block header-link %}
   {% if object %}
-    <a href='{% url meals_meal_update pk=object.pk %}'>
+    <a href='{% url 'meals_meal_update' pk=object.pk %}'>
       {% trans "Meal Update" %}
     </a>
   {% else %}
-    <a href='{% url meals_meal_create %}'>
+    <a href='{% url 'meals_meal_create' %}'>
       {% trans "Meal Create" %}
     </a>
   {% endif %}
@@ -38,7 +41,7 @@
 
 {% block content %}
 {% load crispy_forms_tags %}
-  <form action='{% if object %}{% url meals_meal_update pk=object.pk %}{% else %}{% url meals_meal_create %}{% endif %}' method='post' encoding='utf-8'>
+  <form action='{% if object %}{% url 'meals_meal_update' pk=object.pk %}{% else %}{% url 'meals_meal_create' %}{% endif %}' method='post' encoding='utf-8'>
     <fieldset>
       {% csrf_token %}
       {{ form|crispy }}

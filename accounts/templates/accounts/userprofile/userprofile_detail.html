@@ -2,6 +2,9 @@
 
 {% extends 'accounts/userprofile/base.html' %}
 
+{% load url from future %}
+
+
 {% load i18n %}
 {% load inplace_edit %}
 {% load avatar_tags %}
@@ -21,7 +24,7 @@
 
 
 {% block header-link %}
-  <a href='{% if request.user == object.user %}{% url avatar_change %}{% else %}{% endif %}'>{% avatar object.user 100 %}</a>
+  <a href='{% if request.user == object.user %}{% url 'avatar_change' %}{% else %}{% endif %}'>{% avatar object.user 100 %}</a>
   <a href='{% if request.user %}{{object.user.get_profile.get_absolute_url}}{% endif %}'>
     {{object.user}}'s profile
   </a>
@@ -83,15 +86,15 @@
       <input type="submit" value="Add comment" id="id_submit" />
       </form>
   {% else %}
-      <p>Please <a href="{% url 'auth_login' %}">log in</a> to leave a comment.</p>
+      <p>Please <a href="{% url ''auth_login'' %}">log in</a> to leave a comment.</p>
   {% endif %}
   <hr>
   
-  <form action='{% url accounts_userprofile_delete pk=object.pk %}' charset='utf-8' method='post'>
+  <form action='{% url 'accounts_userprofile_delete' pk=object.pk %}' charset='utf-8' method='post'>
     <fieldset>
       {% csrf_token %}
       <div class='form-actions'>
-        <a class='btn btn-success' href='{% url accounts_userprofile_update pk=object.pk %}'>
+        <a class='btn btn-success' href='{% url 'accounts_userprofile_update' pk=object.pk %}'>
           {% trans "Update" %}
         </a>
         <button class='btn btn-danger' type='submit'>

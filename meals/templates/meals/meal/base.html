@@ -1,4 +1,7 @@
 {% extends 'sitebase.html' %}
+
+{% load url from future %}
+
 {% load inplace_edit %}
 {% block extra_js %}
   {% inplace_static %}
@@ -20,12 +23,12 @@
                     {% trans "Views" %}
                   </li>
                   <li>
-                    <a href='{% url meals_meal_list %}'>
+                    <a href='{% url 'meals_meal_list' %}'>
                       {% trans "List View" %}
                     </a>
                   </li>
                   <li>
-                    <a href='{% url meals_meal_create %}'>
+                    <a href='{% url 'meals_meal_create' %}'>
                       {% trans "Create View" %}
                     </a>
                   </li>
@@ -36,12 +39,12 @@
                       </a>
                     </li>
                     <li>
-                      <a href='{% url meals_meal_update pk=object.pk %}'>
+                      <a href='{% url 'meals_meal_update' pk=object.pk %}'>
                         {% trans "Update View" %}
                       </a>
                     </li>
                     <li>
-                      <a href='{% url meals_meal_delete pk=object.pk %}'>
+                      <a href='{% url 'meals_meal_delete' pk=object.pk %}'>
                         {% trans "Delete View" %}
                       </a>
                     </li>
@@ -51,12 +54,12 @@
                     {% trans "Date-based Views" %}
                   </li>
                   <li>
-                    <a href='{% url meals_meal_archive_index %}'>
+                    <a href='{% url 'meals_meal_archive_index' %}'>
                       {% trans "Archive Index" %}
                     </a>
                   </li>
                   {% if object %}
-                    <a href='{% url meals_meal_date_detail year=object.when.year month=object.when.month day=object.when.day pk=object.pk %}'>
+                    <a href='{% url 'meals_meal_date_detail' year=object.when.year month=object.when.month day=object.when.day pk=object.pk %}'>
                       {% trans "Date Detail View" %}
                     </a>
                   {% endif %}

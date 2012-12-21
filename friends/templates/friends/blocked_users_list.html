@@ -1,4 +1,7 @@
 {% extends 'friends/base.html' %}
+
+{% load url from future %}
+
 {% load i18n %}
 
 {% block friends_title %}{% trans "Blocked users" %}{% endblock %}
@@ -6,7 +9,7 @@
 {% block friends_content %}
 <ul>
 {% for friend in friends %}
-	<li><a href="{% url profile_detail username=friend.username %}">{{ friend }}</a> (<a href="{% url friends_unblock_user friend.username %}">{% trans "unblock" %}</a>)</li>
+	<li><a href="{% url 'profile_detail' username=friend.username %}">{{ friend }}</a> (<a href="{% url 'friends_unblock_user' friend.username %}">{% trans "unblock" %}</a>)</li>
 {% endfor %}
 </ul>
 {% endblock %}

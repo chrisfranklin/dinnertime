@@ -2,6 +2,9 @@
 
 {% extends 'meals/meal/base.html' %}
 
+{% load url from future %}
+
+
 {% load i18n %}
 
 {% block filename %}
@@ -11,7 +14,7 @@
 {% block breadcrumbs %}
   <ul class='breadcrumb'>
     <li>
-      <a href='{% url meals_meal_archive_index %}'>
+      <a href='{% url 'meals_meal_archive_index' %}'>
         {% trans "Archive Index" %}
       </a>
       <span class='divider'>
@@ -19,7 +22,7 @@
       </span>
     </li>
     <li>
-      <a href='{% url meals_meal_year_archive year=year %}'>
+      <a href='{% url 'meals_meal_year_archive' year=year %}'>
         {% trans "Year Archive" %}
       </a>
     </li>
@@ -27,7 +30,7 @@
 {% endblock %}
 
 {% block header-link %}
-  <a href='{% url meals_meal_year_archive year=year %}'>
+  <a href='{% url 'meals_meal_year_archive' year=year %}'>
     {% trans "Meal Year Archive" %}
   </a>
 {% endblock %}
@@ -41,7 +44,7 @@
   <ul class='nav nav-tabs nav-stacked'>
     {% for date in date_list %}
       <li>
-        <a href='{% url meals_meal_month_archive year=date.year month=date.month %}'>
+        <a href='{% url 'meals_meal_month_archive' year=date.year month=date.month %}'>
           {{ date|date:"M Y" }}
         </a>
       </li>

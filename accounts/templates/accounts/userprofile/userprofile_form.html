@@ -2,6 +2,9 @@
 
 {% extends 'accounts/userprofile/base.html' %}
 
+{% load url from future %}
+
+
 {% load i18n %}
 
 {% block filename %}
@@ -18,11 +21,11 @@
 
 {% block header-link %}
   {% if object %}
-    <a href='{% url accounts_userprofile_update pk=object.pk %}'>
+    <a href='{% url 'accounts_userprofile_update' pk=object.pk %}'>
       {% trans "UserProfile Update" %}
     </a>
   {% else %}
-    <a href='{% url accounts_userprofile_create %}'>
+    <a href='{% url 'accounts_userprofile_create' %}'>
       {% trans "UserProfile Create" %}
     </a>
   {% endif %}
@@ -37,7 +40,7 @@
 {% endblock %}
 
 {% block content %}
-  <form action='{% if object %}{% url accounts_userprofile_update pk=object.pk %}{% else %}{% url accounts_userprofile_create %}{% endif %}' method='post' encoding='utf-8'>
+  <form action='{% if object %}{% url 'accounts_userprofile_update' pk=object.pk %}{% else %}{% url 'accounts_userprofile_create' %}{% endif %}' method='post' encoding='utf-8'>
     <fieldset>
       {% csrf_token %}
       {{ form }}
