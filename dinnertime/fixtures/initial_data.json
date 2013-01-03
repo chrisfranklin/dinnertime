@@ -6,7 +6,9 @@
       "domain": "localhost:8000", 
       "name": "Localhost"
     }
-  },
+  }
+
+  ,
   {
     "pk": 1, 
     "model": "socialaccount.socialapp", 

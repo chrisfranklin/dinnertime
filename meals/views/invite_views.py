@@ -89,9 +89,12 @@ def add_invite(request, meal_id):
         form = InviteForm(request.POST, request.FILES)
         if form.is_valid():
             meal = Meal.objects.get(pk=meal_id)
-            contact = form.cleaned_data['contact']
+            email = form.cleaned_data['email']
+            # we have a valid email address, we should check if we have a user with that email and add that too maybe. 
+            user = User.objects.get(email=email)
+            print user
             max_plusones = form.cleaned_data['max_plusones']
-            invite = Invite.objects.get_or_create(contact=contact, max_plusones=max_plusones, meal=meal)[0]
+            invite = Invite.objects.get_or_create(email=email, max_plusones=max_plusones, meal=meal, user=user)[0]
             #data = _invite_data(request, invite)
             #return HttpResponseRedirect(invite.meal.get_absolute_url())
             return HttpResponseRedirect(meal.get_absolute_url())
@@ -100,7 +103,7 @@ def add_invite(request, meal_id):
     return render_to_response("meals/meal/invite/invite_form.html", {'form': form}, context_instance=RequestContext(request))
 
 
-def ack_invite(request, meal_id, action, secret=None):
+def ack_invite(request, meal_id, action, secret):
     #meal = Meal.objects.get(pk=meal_id)
     invite = Invite.objects.get(secret=secret, meal=meal_id)  # Add error checking to shrug off invalid invites
     if action == "y":

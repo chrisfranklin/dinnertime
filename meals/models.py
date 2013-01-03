@@ -181,14 +181,67 @@ class MealPart(models.Model):
     fulfilled_by = models.ForeignKey(User, blank=True, null=True, related_name="fulfilled")
 
 
+class Invitee(models.Model):
+    """
+    Stores contact details for an individual invitee
+    """
+    name = models.CharField(max_length=50, blank=True, null=True)
+    user = models.ForeignKey(User, unique=True, blank=True, null=True)
+    email = models.EmailField(max_length=254, blank=True, null=True)
+
+    def get_avatar(self):
+        return self.email
+
+    def get_email(self):
+        if self.email:
+            return self.email
+        elif self.user:
+            if self.user.email:
+                return self.user.email
+        else:
+            return "No email or error!"
+
+    def save(self, *args, **kwargs):
+        """
+        Overrides save to tie to a user if one exists for the email.
+        """
+        if self.id is None:
+            # The invitee has just been created, lets see if we have a user
+            if self.user:
+                # we do have a user with that email address, we should get the name if its not set
+                if self.name:
+                    pass # we already have a name
+                else:
+                    self.name = str(self.user) # set invitee name to username
+                pass
+            else:
+                # We do not have a user set already, let's see if any match our requirements
+                from accounts.models import UserProfile
+                self.user = UserProfile.objects.get(user__email=self.email).user
+                # If none match our requirements then we send an invite to the address we are given
+                # The user can choose to login and link to an existing account or register for a new account.
+            if self.invited_by:
+                from_email = self.invited_by.email
+            else:
+                from_email = "chris@piemonster.me"
+            self.send_email(from_email)
+            if self.user:
+                contact = self.user
+            else:
+                # here we should lookup in our contact table to get the invitees name
+                contact = self.email
+            action.send(contact, verb='was invited to', action_object=self.meal)
+        super(Invite, self).save(*args, **kwargs)  # Call the "real" save() method.
+
+
+
 class Invite(models.Model):
     """
     Stores an individual invite to a meal, converts invite to guest with correct secret.
     """
     meal = models.ForeignKey(Meal)
     secret = models.CharField(max_length=50, blank=True, null=True)
-    user = models.ForeignKey(User, unique=True, blank=True, null=True)
-    email = models.EmailField(max_length=254)
+    invitee = models.ForeignKey(Invitee, blank=True, null=True)
     STATUS_CHOICES = (
         ("INVITED", 'Invited'),
         ("ACCEPTED", 'Accepted'),
@@ -295,12 +348,13 @@ class Invite(models.Model):
         Sends an email if we have one available
         """
         print "wanknut"
-        if self.contact.email:
+        if self.email:
             # Nice and easy we have an email on the contact, also check for allauth and for one on the user
-            to_email = self.contact.email
+            to_email = self.email
             from django.core.mail import send_mail
             send_mail('You have been invited to a meal', 'Test http://localhost:8000/meal/%s/invite/y/%s/' % (self.meal.id, self.secret), from_email, [to_email], fail_silently=False)
-
+        else:
+            print "No email has been found!"
     def save(self, *args, **kwargs):
         """
         Overrides save to generate a secret if their isn't one
@@ -317,9 +371,17 @@ class Invite(models.Model):
                 self.user = UserProfile.objects.get(user__email=self.email).user
                 # If none match our requirements then we send an invite to the address we are given
                 # The user can choose to login and link to an existing account or register for a new account.
-
-            self.send_email()
-            action.send(self.contact, verb='was invited to', action_object=self.meal)
+            if self.invited_by:
+                from_email = self.invited_by.email
+            else:
+                from_email = "chris@piemonster.me"
+            self.send_email(from_email)
+            if self.user:
+                contact = self.user
+            else:
+                # here we should lookup in our contact table to get the invitees name
+                contact = self.email
+            action.send(contact, verb='was invited to', action_object=self.meal)
         super(Invite, self).save(*args, **kwargs)  # Call the "real" save() method.
 
 

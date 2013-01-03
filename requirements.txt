@@ -10,7 +10,7 @@ south==0.7.6
 git+https://github.com/Piemonster/django-generate-scaffold.git
 #git+https://github.com/Piemonster/django-staticfiles-bootstrap.git
 django-debug-toolbar
-django-allauth
+django-allauth==0.8.2
 djrill
 django-reversion>=1.6.4
 django-celery
