@@ -8,26 +8,30 @@
     }
   }
 
-  ,
+,
   {
-    "pk": 1, 
-    "model": "socialaccount.socialapp", 
+    "pk": 1,
+    "model": "socialaccount.socialapp",
     "fields": {
-        "key": "122386504587538", 
-        "secret": "2a5b65f780f16335ca624267b91c2f91", 
-        "site": 1, 
-        "name": "localfb", 
-        "provider": "facebook"
+      "sites": [
+        1
+      ],
+      "secret": "2a5b65f780f16335ca624267b91c2f91",
+      "name": "localfb",
+      "key": "122386504587538",
+      "provider": "facebook"
     }
   },
   {
     "pk": 2,
     "model": "socialaccount.socialapp",
     "fields": {
-      "key": "294684269512",
+      "sites": [
+        1
+      ],
       "secret": "KJ3NH6GbGUINqWG8YHUYnpwy",
-      "site": 1,
       "name": "localgoogle",
+      "key": "294684269512",
       "provider": "google"
     }
   },
@@ -35,10 +39,12 @@
     "pk": 3,
     "model": "socialaccount.socialapp",
     "fields": {
-      "key": "sO19XaSfl8f7vAaDsQoMVg",
+      "sites": [
+        1
+      ],
       "secret": "aGyWmoAKaB8PAzhbCtlcamf5MbMIisAdGQuX8pPPRE",
-      "site": 1,
       "name": "localtwitter",
+      "key": "sO19XaSfl8f7vAaDsQoMVg",
       "provider": "twitter"
     }
   },
@@ -46,13 +52,13 @@
     "pk": 4,
     "model": "socialaccount.socialapp",
     "fields": {
-      "key": "vsenv1do6j4y",
+      "sites": [
+        1
+      ],
       "secret": "pR9xPEsFXgfxsUTQ",
-      "site": 1,
       "name": "localin",
+      "key": "vsenv1do6j4y",
       "provider": "linkedin"
     }
   }
-
-
 ]

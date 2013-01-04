@@ -210,29 +210,19 @@ class Invitee(models.Model):
             if self.user:
                 # we do have a user with that email address, we should get the name if its not set
                 if self.name:
-                    pass # we already have a name
+                    pass  # we already have a name
                 else:
-                    self.name = str(self.user) # set invitee name to username
+                    self.name = str(self.user)  # set invitee name to username
                 pass
             else:
                 # We do not have a user set already, let's see if any match our requirements
                 from accounts.models import UserProfile
-                self.user = UserProfile.objects.get(user__email=self.email).user
-                # If none match our requirements then we send an invite to the address we are given
-                # The user can choose to login and link to an existing account or register for a new account.
-            if self.invited_by:
-                from_email = self.invited_by.email
-            else:
-                from_email = "chris@piemonster.me"
-            self.send_email(from_email)
-            if self.user:
-                contact = self.user
-            else:
-                # here we should lookup in our contact table to get the invitees name
-                contact = self.email
-            action.send(contact, verb='was invited to', action_object=self.meal)
-        super(Invite, self).save(*args, **kwargs)  # Call the "real" save() method.
-
+                try:
+                    self.user = UserProfile.objects.get(user__email=self.email).user
+                except:
+                    print "No user :("
+                    pass
+        super(Invitee, self).save(*args, **kwargs)  # Call the "real" save() method.
 
 
 class Invite(models.Model):
@@ -348,13 +338,15 @@ class Invite(models.Model):
         Sends an email if we have one available
         """
         print "wanknut"
-        if self.email:
+        # here we should check if we have a user and if we do then use the users preferred method of contact.
+        if self.invitee.email:
             # Nice and easy we have an email on the contact, also check for allauth and for one on the user
-            to_email = self.email
+            to_email = self.invitee.email
             from django.core.mail import send_mail
             send_mail('You have been invited to a meal', 'Test http://localhost:8000/meal/%s/invite/y/%s/' % (self.meal.id, self.secret), from_email, [to_email], fail_silently=False)
         else:
             print "No email has been found!"
+
     def save(self, *args, **kwargs):
         """
         Overrides save to generate a secret if their isn't one
@@ -363,25 +355,12 @@ class Invite(models.Model):
             self.secret = self.generate_secret()
         if self.id is None:
             # The invite has just been created, lets see if we have a user
-            if self.user:
-                pass
-            else:
-                # We do not have a user set already, let's see if any match our requirements
-                from accounts.models import UserProfile
-                self.user = UserProfile.objects.get(user__email=self.email).user
-                # If none match our requirements then we send an invite to the address we are given
-                # The user can choose to login and link to an existing account or register for a new account.
             if self.invited_by:
                 from_email = self.invited_by.email
             else:
                 from_email = "chris@piemonster.me"
             self.send_email(from_email)
-            if self.user:
-                contact = self.user
-            else:
-                # here we should lookup in our contact table to get the invitees name
-                contact = self.email
-            action.send(contact, verb='was invited to', action_object=self.meal)
+            action.send(self.invitee, verb='was invited to', action_object=self.meal)
         super(Invite, self).save(*args, **kwargs)  # Call the "real" save() method.
 
 

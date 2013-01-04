@@ -63,17 +63,19 @@
                       <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">
                         {% if request.user.is_authenticated %}  
                           {{request.user}}
-                        {% else %}
-                          <a href="/accounts/login/"> Login </a>
                         {% endif %} 
                         <b class="caret"></b>
                       </a>
                       <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                        <li><a tabindex="-1" href="{{request.user.get_profile.get_absolute_url}}">Profile</a></li>
-                        <li><a tabindex="-1" href="/accounts/social/connections">Social Accounts</a></li>
-                        <li><a tabindex="-1" href="/accounts/usercontact/">Contacts</a></li>
-                        <li class="divider"></li>
-                        <li><a tabindex="-1" href="/accounts/logout/">Logout</a></li>
+                        {% if request.user.is_authenticated %}  
+                          <li><a tabindex="-1" href="{{request.user.get_profile.get_absolute_url}}">Profile</a></li>
+                          <li><a tabindex="-1" href="/accounts/social/connections">Social Accounts</a></li>
+                          <li><a tabindex="-1" href="/accounts/usercontact/">Contacts</a></li>
+                          <li class="divider"></li>
+                          <li><a tabindex="-1" href="/accounts/logout/">Logout</a></li>
+                        {% else %}
+                          <li><a tabindex="-1" href="/accounts/login/">Login</a></li>
+                        {% endif %}
                       </ul>
                   </li>
                   
@@ -126,7 +128,7 @@
                     {% block content %}
                     {% endblock %}
                     <!-- End Main Content  -->
-                    <hr>
+                    
                     <footer>
                         {% block footer %} {% endblock %}
                         <p>&copy; 2012 Piemonster Technology Ltd </p>
