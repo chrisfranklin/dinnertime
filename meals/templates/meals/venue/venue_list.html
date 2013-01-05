@@ -13,18 +13,17 @@
 
 {% block header-link %}
   <a href='{% url 'meals_venue_list' %}'>
-    {% trans "Venue List" %}
+    {% trans "Venues" %}
   </a>
 {% endblock %}
 
 {% block header-description %}
-  {% trans "A page representing a list of objects." %}
+  {% trans "Where are you eating?" %}
 {% endblock %}
 
 {% block content %}
-  <h2>
-    {% trans "Venues" %}
-  </h2>
+  <h1><i class="icon-home"> My Venues </i> </h1>
+  <h1><i class="icon-star"> Find a Venue </i> </h1>
   {% include 'meals/venue/object_table_list.html' %}
   {% include 'meals/venue/pagination.html' %}
 {% endblock %}

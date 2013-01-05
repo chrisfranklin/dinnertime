@@ -6,6 +6,14 @@
 
 {% block friends_title %}{% trans "Friends" %}{% endblock %}
 
+{% block header-link %}
+  <a href="/friends/">People</a>
+{% endblock %}
+
+{% block header-description %}
+  Here you can view your friends that use the site.
+{% endblock %}
+
 {% block friends_content %}
 <h3> Friends </h3>
 <ul>
@@ -21,11 +29,11 @@
 <h3> Suggested Friends </h3>
 <h3> Import Contacts </h3>
 <p>{% trans "Select service from which you want to import your contacts:" %}</p>
-<ul class="contact-importers">
-    <li><a href="{% url 'friends_suggestions_import_google_contacts' %}">Google</a></li>
-    <li><a href="{% url 'friends_suggestions_import_facebook_contacts' %}">Facebook</a></li>
-    <li><a href="{% url 'friends_suggestions_import_twitter_contacts' %}">Twitter</a></li>
-    <li><a href="{% url 'friends_suggestions_import_yahoo_contacts' %}">Yahoo</a></li>
-    <li><a href="{% url 'friends_suggestions_import_linkedin_contacts' %}">LinkedIn</a></li>
-</ul>
+<i class="icon-facebook"><a href="{% url 'friends_suggestions_import_facebook_contacts' %}"> Facebook</a></i> | 
+<i class="icon-google-plus-sign"><a href="{% url 'friends_suggestions_import_google_contacts' %}"> Google</a> </i> | 
+<i class="icon-linkedin"><a href="{% url 'friends_suggestions_import_linkedin_contacts' %}"> LinkedIn</a></i> | 
+<i class="icon-twitter"><a href="{% url 'friends_suggestions_import_twitter_contacts' %}"> Twitter</a></i> | 
+<i class="icon-sign-blank"><a href="{% url 'friends_suggestions_import_yahoo_contacts' %}"> Yahoo</a></i>
+<hr>
+<a href="/accounts/usercontact/" class="btn btn-primary"> View Contacts </a>
 {% endblock %}

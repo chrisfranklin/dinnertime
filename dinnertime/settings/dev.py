@@ -22,8 +22,9 @@ print DATABASES
 INSTALLED_APPS += (
     # 'dinnertime.apps.',
     'debug_toolbar',
-    
 )
+
+FIXTURE_DIRS += ('%s/fixtures/dev' % PROJECT_DIR,)
 
 
 #==============================================================================

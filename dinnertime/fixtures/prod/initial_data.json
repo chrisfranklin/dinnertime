@@ -1,0 +1,64 @@
+[
+  {
+    "model": "sites.site", 
+    "pk": 1, 
+    "fields": {
+      "domain": "tablesurf.in", 
+      "name": "Tablesurf.in"
+    }
+  }
+
+,
+  {
+    "pk": 1,
+    "model": "socialaccount.socialapp",
+    "fields": {
+      "sites": [
+        1
+      ],
+      "secret": "a6976d28267f98ef3474f5398ebc6e42",
+      "name": "prodfb",
+      "key": "559089214107050",
+      "provider": "facebook"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "socialaccount.socialapp",
+    "fields": {
+      "sites": [
+        1
+      ],
+      "secret": "KJ3NH6GbGUINqWG8YHUYnpwy",
+      "name": "localgoogle",
+      "key": "294684269512",
+      "provider": "google"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "socialaccount.socialapp",
+    "fields": {
+      "sites": [
+        1
+      ],
+      "secret": "HHrwTgF23XDNC0ANknBE9U0vZvC34EIhYBFwjwLq5M",
+      "name": "prodtwitter",
+      "key": " uXtQrWWv2oHGA5nqpylA",
+      "provider": "twitter"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "socialaccount.socialapp",
+    "fields": {
+      "sites": [
+        1
+      ],
+      "secret": "pR9xPEsFXgfxsUTQ",
+      "name": "localin",
+      "key": "vsenv1do6j4y",
+      "provider": "linkedin"
+    }
+  }
+]

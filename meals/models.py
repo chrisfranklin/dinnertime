@@ -277,7 +277,7 @@ class Invite(models.Model):
                         # Set status to accepted
                         self.status = "ACCEPTED"
                         self.save()
-                        action.send(self.contact, verb='accepted invite to', action_object=self.meal)
+                        action.send(self.invitee, verb='accepted invite to', action_object=self.meal)
                         # We should save any other info we have about the user to the user profile for display
                     else:
                         # There is not space at the table, we could try with less plusones in future
@@ -343,7 +343,7 @@ class Invite(models.Model):
             # Nice and easy we have an email on the contact, also check for allauth and for one on the user
             to_email = self.invitee.email
             from django.core.mail import send_mail
-            send_mail('You have been invited to a meal', 'Test http://localhost:8000/meal/%s/invite/y/%s/' % (self.meal.id, self.secret), from_email, [to_email], fail_silently=False)
+            send_mail('You have been invited to a meal', 'Test http://localhost:8000/meal/%s/invite/%s/y/' % (self.meal.id, self.secret), from_email, [to_email], fail_silently=False)
         else:
             print "No email has been found!"
 

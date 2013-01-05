@@ -116,7 +116,7 @@ def import_contacts(request,
     if not extra_context:
         extra_context = dict()
     extra_context['import_in_progress'] = import_in_progress
-    return HttpResponseRedirect(settings.SHARE_CONTACTS_REDIRECT_URL+'?provider='+provider+'#import_list_id')
+    return HttpResponseRedirect(settings.SHARE_CONTACTS_REDIRECT_URL + '?provider=' + provider + '#import_list_id')
 #    return render_to_response(template_name,
 #                              extra_context,
 #                              context_instance=RequestContext(request))
@@ -146,7 +146,12 @@ def import_facebook_contacts(request, access=None, auth_token=None):
     If auth_token is availabe, save it into session and redirect to import_contacts view.
     """
     from allauth.socialaccount.models import SocialToken
-    token = SocialToken.objects.get(account=request.user, app__provider="facebook")
+    print request.user
+    alltokens = SocialToken.objects.all()
+    for tok in alltokens:
+        if tok.app.provider == "facebook":
+            token = tok
+
     if token.token:
         request.session["facebook_token"] = token.token
         return HttpResponseRedirect(reverse("friends_suggestions_import_contacts"))

@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView, CreateView, \
                                  DeleteView, UpdateView
 
 
-from meals.models import Invite, Meal
+from meals.models import Invite, Invitee, Meal
 
 from accounts.models import UserContact
 from django.http import HttpResponseRedirect
@@ -28,7 +28,7 @@ from django import forms
 import autocomplete_light
 
 
-class UserContactAutocomplete(autocomplete_light.AutocompleteModelBase):
+class UserContactAutocomplete(autocomplete_light.AutocompleteGenericBase):
     search_fields = ('name', 'email')
 
     # Note that defining *_js_attributes in a Widget also works. Widget has
@@ -50,7 +50,7 @@ class InviteForm(forms.ModelForm):
     #user = forms.ModelChoiceField(User.objects.all(),
     #    widget=autocomplete_light.ChoiceWidget('UserAutocomplete'))
 
-    email = forms.CharField(widget=autocomplete_light.TextWidget('InviteAutocomplete'))
+    email = forms.CharField(widget=autocomplete_light.ChoiceWidget('InviteAutocomplete'))
     #email = forms.ModelChoiceField(UserContact.objects.all(), widget=autocomplete_light.TextWidget('InviteAutocomplete'))
 
     # Note that defining *_js_attributes on Autocomplete classes or instances
@@ -58,8 +58,7 @@ class InviteForm(forms.ModelForm):
 
     class Meta:
         model = Invite
-        exclude = ('secret', 'plusones', 'status', 'single_use', 'meal', 'invited_by', 'user')
-
+        exclude = ('secret', 'plusones', 'status', 'single_use', 'meal', 'invited_by', 'user', 'invitee')
 
 
 from django.shortcuts import render_to_response
@@ -89,12 +88,22 @@ def add_invite(request, meal_id):
         form = InviteForm(request.POST, request.FILES)
         if form.is_valid():
             meal = Meal.objects.get(pk=meal_id)
+            for item in form.cleaned_data:
+                print item
+                print "-"
             email = form.cleaned_data['email']
-            # we have a valid email address, we should check if we have a user with that email and add that too maybe. 
-            user = User.objects.get(email=email)
-            print user
+            # we have a valid email address, we should check if we have a user with that email and add that too maybe.
+            try:
+                user = User.objects.get(email=email)[0]
+                print user
+            except:
+                print "no user found"
+                user = None
             max_plusones = form.cleaned_data['max_plusones']
-            invite = Invite.objects.get_or_create(email=email, max_plusones=max_plusones, meal=meal, user=user)[0]
+            invitee = Invitee.objects.get_or_create(email=email)[0]
+            invitee.user = user
+            invite = Invite.objects.get_or_create(max_plusones=max_plusones, meal=meal, invitee=invitee)[0]
+            print invite
             #data = _invite_data(request, invite)
             #return HttpResponseRedirect(invite.meal.get_absolute_url())
             return HttpResponseRedirect(meal.get_absolute_url())
@@ -103,18 +112,23 @@ def add_invite(request, meal_id):
     return render_to_response("meals/meal/invite/invite_form.html", {'form': form}, context_instance=RequestContext(request))
 
 
-def ack_invite(request, meal_id, action, secret):
+def ack_invite(request, meal_id, secret, action=None):
     #meal = Meal.objects.get(pk=meal_id)
     invite = Invite.objects.get(secret=secret, meal=meal_id)  # Add error checking to shrug off invalid invites
-    if action == "y":
-        print "gotcha"
-        print request.user
-        invite.accept_invite(secret, request.user)
-        return HttpResponseRedirect(invite.meal.get_absolute_url())
-    elif action == "n":
-        invite.decline_invite(None, None)
-        return HttpResponseRedirect("/sorry/")
-    return HttpResponseRedirect("/answer-me-here/")
+    if invite.secret == secret:
+        # The secret mathes continue
+        if action == "y":
+            print "gotcha"
+            print request.user
+            invite.accept_invite(secret, request.user)
+            return HttpResponseRedirect(invite.meal.get_absolute_url())
+        elif action == "n":
+            invite.decline_invite(None, None)
+            return HttpResponseRedirect("/sorry/")
+        else:
+            return HttpResponseRedirect(invite.get_absolute_url() + "$secret=%s" % (invite.secret))
+    else:
+        return HttpResponseRedirect("/invalid-secret/")
     #return render_to_response("meals/meal/invite/invite_form.html", {'form': form}, context_instance=RequestContext(request))
 
 

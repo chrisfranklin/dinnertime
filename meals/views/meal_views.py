@@ -152,7 +152,7 @@ class MealCreateView(MealView, AjaxableResponseMixin, CreateView):
     form_class = MealForm
     #success_url = 'success'
     from django.utils.decorators import method_decorator
-    from lazysignup.decorators import allow_lazy_user
+    #from lazysignup.decorators import allow_lazy_user
 
     def form_valid(self, form):
         # Set the host to request.user on form success
@@ -162,7 +162,7 @@ class MealCreateView(MealView, AjaxableResponseMixin, CreateView):
         from django.http import HttpResponseRedirect
         return HttpResponseRedirect('/meal/%s/' % obj.id)
 
-    @method_decorator(allow_lazy_user)
+    #@method_decorator(allow_lazy_user)
     def dispatch(self, *args, **kwargs):
         return super(MealCreateView, self).dispatch(*args, **kwargs)
 
@@ -242,6 +242,9 @@ def add_part(request, meal_id, status):  # change this to part
             return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
     return HttpResponse("No post data or an error has occured")
 
+from meals.models import Invitee
+from accounts.models import UserContact
+
 
 class MealDetailView(MealView, DetailView, FormMixin):
     form_class = InviteForm
@@ -254,7 +257,7 @@ class MealDetailView(MealView, DetailView, FormMixin):
         formpart = PartForm()
         print actionstream
         context = {
-            'form': form,
+            'form':  form,
             'formh': formpart,
             'formn': formpart,
             'formw': formpart,

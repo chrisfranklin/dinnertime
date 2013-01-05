@@ -21,17 +21,18 @@
         <h2 class="btn btn-primary btn-large"> I'm cooking </h2>
       </div>
     </div> -->
-
-    <h3> We are currently cooking things up, please register your interest below </h3>
-    <div>
-      <form method="post" action="/interest/">{% csrf_token %}
-        <h3><input type="email" placeholder="you@example.com" name="email" id="id_email" /></h3>
-        <h3 class="hidden2 success">Success!</h3>
-        <h3 class="hidden2 failure">Failure!</h3>
-        <button  type="submit">Notify me!</button>
-      </form>
-    </div>
-    </br></br>
+    {% if not request.user %}
+      <h3> We are currently cooking things up, please register your interest below </h3>
+      <div>
+        <form method="post" action="/interest/">{% csrf_token %}
+          <h3><input type="email" placeholder="you@example.com" name="email" id="id_email" /></h3>
+          <h3 class="hidden2 success">Success!</h3>
+          <h3 class="hidden2 failure">Failure!</h3>
+          <button  type="submit">Notify me!</button>
+        </form>
+      </div>
+      </br></br>
+    {% endif %}
     {% if request.user.is_staff %}
       </hr>
       <div class="row">
@@ -39,7 +40,7 @@
           <h2><a href="/meal/create/"><i class="icon-bullhorn"></i> I'm cooking </a></h2>
         </div>
         <div class="span3">
-          <h2><a href="/meal/"><i class="icon-link"></i> I'm hungry </a></h2>
+          <h2><a href="/meal/"><i class="icon-food"></i> I'm hungry </a></h2>
         </div>
       </div>
 

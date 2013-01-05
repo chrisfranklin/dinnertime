@@ -5,30 +5,98 @@
 {% load url from future %}
 
 
-{% load i18n %}
+{% load i18n gravatar %}
 
 {% block filename %}
   /home/chris/Code/Piemonster/dinnertime/meals/templates/meals/invite/invite_detail.html
 {% endblock %}
 
 {% block title %}
-  {% trans "Invite Detail" %}
+  {% trans "Invitation to" %} {{object.meal}}
 {% endblock %}
 
 
 
 {% block header-link %}
+  <a href='{{object.meal.host.get_profile.get_absolute_url}}'><img src="{% gravatar_url object.meal.host.email 100 %}"></a> &nbsp;
   <a href='{{ object.get_absolute_url }}'>
-    {% trans "Invite Detail" %}
+    {% trans "An invitation to" %} {{object.meal}}
   </a>
 {% endblock %}
 
 {% block header-description %}
-  {% trans "A page representing an individual object." %}
+  {{object.meal.when}}
 {% endblock %}
 
 {% block content %}
-  {% include 'meals/invite/object_table_detail.html' %}
+  {% load easy_maps_tags %}
+
+  <!-- Default map with 300x400 dimensions -->
+  {% easy_map object.meal.venue.address 1170 300 %}
+  {{object.meal.description}}
+  {% if request.user.is_authenticated %}
+    {% if object.status == "INVITED" %}
+      <h2> Please RSVP </h2>
+      <a href="{{object.meal.get_absolute_url}}invite/{{object.secret}}/y/" class="btn btn-success"> Accept </a>
+      <a href="{{object.meal.get_absolute_url}}invite/{{object.secret}}/n/" class="btn btn-danger"> Decline </a>
+    {% elif object.status == "ACCEPTED" %}
+      <h2> You are attending </h2>
+      <a href="{{object.meal.get_absolute_url}}invite/{{object.secret}}/n/" class="btn btn-danger"> Cancel </a>
+    {% endif %}
+  {% else %}
+    <hr>
+    <h1><i class="icon-asterisk"> You must be logged in to respond to this invite. </i> </h1><hr>
+    <div class="row-fluid">
+      <div class="span4">
+        <h2><i class="icon-star"> Login </i></h2>
+        <form class="login" method="POST" action="/accounts/login/">
+            {% csrf_token %}
+            <p><label for="id_login">Username:</label> <input id="id_login" type="text" placeholder="Username" name="login" maxlength="30" /></p>
+            <p><label for="id_password">Password:</label> <input type="password" placeholder="Password" name="password" id="id_password" /></p>
+            <p><label for="id_remember">Remember Me:</label> <input type="checkbox" name="remember" id="id_remember" /></p>
+            
+            <a class="button secondaryAction" href="/accounts/password/reset/">
+                Forgot Password?
+            </a>
+            <button class="primaryAction" type="submit">Sign In</button>
+        </form>
+      </div>
+      <div class="span4">
+        <h2><i class="icon-star"> Social Accounts </i></h2>
+        <ul class="socialaccount_providers"> 
+          <li>
+            <a title="Twitter" class="socialaccount_provider twitter" 
+               href="/accounts/twitter/login/">Twitter</a>
+          </li>
+          <li>
+            <a title="Google" class="socialaccount_provider google" 
+               href="/accounts/google/login/">Google</a>
+          </li>
+          <li>
+            <a title="Facebook" class="socialaccount_provider facebook" 
+               href="/accounts/facebook/login/">Facebook</a>
+          </li>
+          <li>
+            <a title="LinkedIn" class="socialaccount_provider linkedin" 
+               href="/accounts/linkedin/login/">LinkedIn</a>
+          </li>
+        </ul>
+
+      </div>
+      <div class="span4">
+        <h2><i class="icon-star"> Register </i></h2>
+        <form class="signup" id="signup_form" method="post" action="/accounts/signup/">
+            {% csrf_token %}
+            <p><label for="id_username">Username:</label> <input id="id_username" type="text" name="username" maxlength="30" /></p>
+            <p><label for="id_password1">Password:</label> <input type="password" placeholder="Password" name="password1" id="id_password1" /></p>
+            <p><label for="id_password2">Password (again):</label> <input type="password" placeholder="Password" name="password2" id="id_password2" /></p>
+            <p><label for="id_email">E-mail:</label> <input type="text" name="email" id="id_email" /><input type="hidden" name="confirmation_key" id="id_confirmation_key" /></p>
+            <button type="submit">Sign Up &raquo;</button>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+  <!--{% include 'meals/invite/object_table_detail.html' %}
   <form action='{% url 'meals_invite_delete' pk=object.pk %}' charset='utf-8' method='post'>
     <fieldset>
       {% csrf_token %}
@@ -41,5 +109,5 @@
         </button>
       </div>
     </fieldset>
-  </form>
+  </form> -->
 {% endblock %}

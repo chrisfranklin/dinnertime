@@ -58,7 +58,7 @@ INSTALLED_APPS = (
 
     'autocomplete_light',
 
-    'lazysignup',
+    #'lazysignup',
     #'django_facebook',  DEPRECATED, remove soon
     'django_gravatar',
     'crispy_forms',
@@ -217,7 +217,7 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_DIR, 'static'),
 )
 
-FIXTURE_DIRS += ('%s/fixtures' % PROJECT_DIR,)
+FIXTURE_DIRS += ('%s/fixtures/prod' % PROJECT_DIR,)
 
 #==============================================================================
 # Static Files Finders
@@ -259,7 +259,7 @@ MIDDLEWARE_CLASSES += (
 AUTHENTICATION_BACKENDS += (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-    'lazysignup.backends.LazySignupBackend',
+    #'lazysignup.backends.LazySignupBackend',
     'phileo.auth_backends.CanLikeBackend',
 )
 
@@ -324,7 +324,7 @@ if os.getenv('JENKINS_URL', False):
     # ))
 
 ACTSTREAM_SETTINGS = {
-    'MODELS': ('auth.user', 'auth.group', 'comments.comment', 'accounts.usercontact', 'accounts.userprofile', 'meals.meal', 'meals.invite', 'meals.guest'),
+    'MODELS': ('auth.user', 'auth.group', 'comments.comment', 'accounts.usercontact', 'accounts.userprofile', 'meals.meal', 'meals.invite', 'meals.guest', 'meals.invitee'),
     #'MANAGER': 'myapp.streams.MyActionManager',
     'FETCH_RELATIONS': True,
     'USE_PREFETCH': True,

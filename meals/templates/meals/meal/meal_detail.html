@@ -75,7 +75,10 @@
   <div class="row-fluid">
 
     <div class="span6">
-      <h2>{% inplace_edit "object.recipe" auto_height=1, auto_width=1, edit_empty_value="Set a Recipe!"  %}</h2>
+      <h2>
+        <i class="icon-food"> Recipe</i>
+      </h2>
+      <h3>{% inplace_edit "object.recipe" auto_height=1, auto_width=1, edit_empty_value="Set a Recipe!"  %}</h3>
       {% if object.recipe %}
         <img src="{{object.recipe.large_image}}">
         <div class="row-fluid">
@@ -99,13 +102,21 @@
     </div>
     
     <div class="span6">
-      <h2>{% if object.venue %}<a href="/venue/{{object.id}}">{% inplace_edit "object.venue.address" auto_height=1, auto_width=1 %}</a>{% else %}<a href="/venue/create/"> Please set a location. </a> {% endif %}</h2> 
+      <h2>
+        <i class="icon-building"> Venue </i>
+        <span>
+          {% if object.venue %}
+            <a href="/venue/{{object.id}}">{% inplace_edit "object.venue.address" auto_height=1, auto_width=1 %}</a>
+          {% else %}
+            <a href="/venue/create/"> Please set a location. </a> 
+          {% endif %}
+        </span>
+      </h2> 
       {% load easy_maps_tags %}
       {% if object.venue %}
         <!-- Default map with 300x400 dimensions -->
         {% easy_map object.venue.address 560 380 %}
       {% endif %}
-      <h3> Directions </h3>
     </div>
   </div>
   
@@ -113,7 +124,7 @@
 
   <div class="row-fluid">
     <div class="span4">
-      <h2> Have:</h2>
+      <h2><i class="icon-check"> Have:</i></h2>
       {% if request.user == object.host %}
           <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/HAVE/" data-append="#invites">
               {% csrf_token %}
@@ -131,7 +142,7 @@
       {% endfor %}
     </div>
     <div class="span4">
-      <h2> Need:</h2>
+      <h2><i class="icon-plus-sign-alt"> Need:</i></h2>
       {% if request.user == object.host %}
           <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/NEED/" data-append="#invites">
               {% csrf_token %}
@@ -148,7 +159,7 @@
       {% endfor %}
     </div>
     <div class="span4">
-      <h2> Want:</h2>
+      <h2><i class="icon-asterisk">  Want: </i></h2>
       {% if request.user == object.host %}
           <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/WANT/" data-append="#invites">
               {% csrf_token %}
@@ -170,10 +181,10 @@
   <div class="row-fluid">
 
     <div class="span6">
-      <h2> Guests </h2>
+      <h2><i class="icon-group"> Guests </i></h2>
         
         <h3>
-          {{object.current_guests}} out of {{object.max_guests}}
+          {{object.current_guests}} out of a maximum of {{object.max_guests}}
           <span class="pull-right">
             {% if object.current_guests < object.max_guests and  object.max_guests > 1 %}
               <a href= "/meal/{{object.id}}/max_guests/0/" class="btn btn-danger"><i class="icon-minus"></i></a>
@@ -186,20 +197,20 @@
             {% if guest.invite.contact.user %}
               <a href="{{guest.invite.contact.user.get_profile.get_absolute_url}}">
             {% endif %}
-            {% if guest.invite.contact.email %}
-              {% if "facebook.com" in guest.invite.contact.email %}
-                <img src="http://graph.facebook.com/{{guest.invite.contact.email|cut:"@facebook.com" }}/picture" />
+            {% if guest.invite.invitee.email%}
+              {% if "facebook.com" in guest.invite.invitee.email %}
+                <img src="http://graph.facebook.com/{{guest.invite.invitee.email|cut:"@facebook.com" }}/picture" />
               {% else %}
-                <img src="{% gravatar_url guest.invite.contact.email 50 %}">
+                <img src="{% gravatar_url guest.invite.invitee.email 68 %}">
               {% endif %}
             {% else %}
-              <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
+              <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 68 %}">
             {% endif %}
-            {% if guest.invite.contact.user %}
+            {% if guest.invite.invitee.email %}
               </a>
             {% endif %}
 
-            {{guest.invite.contact}}
+            {{guest.invite.invitee.email}}
             + 
             {% inplace_edit "guest.invite.plusones" auto_height=1, auto_width=1, edit_empty_value="add extra" %}
              guest(s)
@@ -213,7 +224,7 @@
             {% inplace_edit "invite.plusones" %}
           {% endif %}
         {% endfor %}
-        <h2> Invites</h2>
+        <h2><i class="icon-bullhorn"> Invites </i></h2>
         {% for invite in meal.invite_set.all %}
           {% if invite.status == "INVITED" %}
             <h4>
@@ -221,12 +232,12 @@
                 {% if "facebook.com" in invite.contact.email %}
                   <img src="http://graph.facebook.com/{{invite.contact.email|cut:"@facebook.com" }}/picture" />
                 {% else %}
-                <img src="{% gravatar_url invite.contact.email 50 %}">
+                <img src="{% gravatar_url invite.contact.email 68 %}">
                 {% endif %}
               {% else %}
-                <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 50 %}">
+                <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 68 %}">
               {% endif %}
-              {{invite.contact}} 
+              {{invite.invitee.email}} 
               {% if invite.max_plusones %}
                 + {% inplace_edit "invite.max_plusones" %} guest(s)
               {% endif %}
@@ -263,7 +274,7 @@
       <hr>
   
       {% get_comment_count for object as comment_count %}
-      <h2> {{comment_count}} Comment(s) </h2>
+      <h2><i class="icon-comment-alt"> {{comment_count}} Comment(s) </i></h2>
       {% render_comment_list for object %}
       {% if user.is_authenticated %}
         <button type="button" class="btn" data-toggle="collapse" data-target="#comdetail{{entry.id}}">Add Comment <b class="caret"></b></button>
@@ -282,11 +293,11 @@
           </form>
         </div>
       {% else %}
-          <p>Please <a href="{% url 'auth_login' %}">log in</a> to leave a comment.</p>
+          <p>Please <a href="/accounts/login/">log in</a> to leave a comment.</p>
       {% endif %}
     </div>
     <div class="span6">
-      <h2> Activity </h2>
+      <h2><i class="icon-exchange"> Activity Feed</i></h2>
       {% for entry in actstream %}
         <p>
           {% if entry.actor.user %}

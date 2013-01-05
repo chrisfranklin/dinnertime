@@ -11,7 +11,7 @@ ERR!     <http://bugs.debian.org/npm>
 ERR! or use
 ERR!     reportbug --attach /home/chris/Code/Piemonster/dinnertime/npm-debug.log npm
 ERR! 
-ERR! System Linux 3.2.0-33-generic
+ERR! System Linux 3.2.0-35-generic
 ERR! command "node" "/usr/bin/npm" "completion"
 ERR! cwd /home/chris/Code/Piemonster/dinnertime
 ERR! node -v v0.6.12
