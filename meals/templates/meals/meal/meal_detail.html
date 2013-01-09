@@ -18,46 +18,21 @@
 
 
 {% block breadcrumbs %}
-<!--  <ul class='breadcrumb'>
+<ul class='breadcrumb'>
     <li>
-      <a href='{% url 'meals_meal_archive_index' %}'>
-        {% trans "Archive Index" %}
+      <a href='/meal/'>
+        {% trans "Meals" %}
       </a>
       <span class='divider'>
         /
       </span>
     </li>
     <li>
-      <a href='{% url 'meals_meal_year_archive' year=object.when.year %}'>
-        {% trans "Year Archive" %}
-      </a>
-      <span class='divider'>
-        /
-      </span>
+      {{object}}
     </li>
-    <li>
-      <a href='{% url 'meals_meal_month_archive' year=object.when.year month=object.when.month %}'>
-        {% trans "Month Archive" %}
-      </a>
-      <span class='divider'>
-        /
-      </span>
-    </li>
-    <li>
-      <a href='{% url 'meals_meal_day_archive' year=object.when.year month=object.when.month day=object.when.day %}'>
-        {% trans "Day Archive" %}
-      </a>
-      <span class='divider'>
-        /
-      </span>
-    </li>
-    <li>
-      <a href='{% url 'meals_meal_date_detail' year=object.when.year month=object.when.month day=object.when.day pk=object.pk %}'>
-        {% trans "Date Detail" %}
-      </a>
-    </li>
+
   </ul>
--->
+
 {% endblock %}
 
 {% block header-link %}

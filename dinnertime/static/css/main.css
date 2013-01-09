@@ -36,6 +36,7 @@
   font-family: 'Rum Raisin', sans-serif;
   font-size:64px;
   line-height: 120%;
+  color:black;
 }
 
 body{
@@ -65,7 +66,6 @@ html{
   color: #fff;
   text-align: center;
   text-shadow: 0 1px 5px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
-  background: url(/static/img/bg2.jpg) no-repeat center center; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

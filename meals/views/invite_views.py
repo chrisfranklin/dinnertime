@@ -58,7 +58,7 @@ class InviteForm(forms.ModelForm):
 
     class Meta:
         model = Invite
-        exclude = ('secret', 'plusones', 'status', 'single_use', 'meal', 'invited_by', 'user', 'invitee')
+        exclude = ('secret', 'plusones', 'status', 'single_use', 'meal', 'invited_by', 'user', 'invitee', 'max_plusones')
 
 
 from django.shortcuts import render_to_response
@@ -99,7 +99,10 @@ def add_invite(request, meal_id):
             except:
                 print "no user found"
                 user = None
-            max_plusones = form.cleaned_data['max_plusones']
+            if 'max_plusones' in form.cleaned_data:
+                max_plusones = form.cleaned_data['max_plusones']
+            else:
+                max_plusones = 1
             invitee = Invitee.objects.get_or_create(email=email)[0]
             invitee.user = user
             invite = Invite.objects.get_or_create(max_plusones=max_plusones, meal=meal, invitee=invitee)[0]
@@ -121,12 +124,13 @@ def ack_invite(request, meal_id, secret, action=None):
             print "gotcha"
             print request.user
             invite.accept_invite(secret, request.user)
+            # Add message to display success
             return HttpResponseRedirect(invite.meal.get_absolute_url())
         elif action == "n":
             invite.decline_invite(None, None)
             return HttpResponseRedirect("/sorry/")
         else:
-            return HttpResponseRedirect(invite.get_absolute_url() + "$secret=%s" % (invite.secret))
+            return HttpResponseRedirect(invite.get_absolute_url())
     else:
         return HttpResponseRedirect("/invalid-secret/")
     #return render_to_response("meals/meal/invite/invite_form.html", {'form': form}, context_instance=RequestContext(request))

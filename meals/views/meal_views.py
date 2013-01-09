@@ -131,14 +131,19 @@ class MealArchiveIndexView(
     MealDateView, MealBaseListView, ArchiveIndexView):
     pass
 
+from django import forms
+import autocomplete_light
+
 
 class MealForm(ModelForm):
     """
     Provides form for creation and modification, need to explicitly set this.
     """
+    venue = forms.CharField(widget=autocomplete_light.TextWidget('VenueAutocomplete'))
+
     class Meta:
         model = Meal
-        exclude = ('host', 'guests', 'wants', 'needs', 'haves', 'icon', 'description', 'venue', 'current_guests', 'suitable_for', 'parts')
+        exclude = ('host', 'guests', 'wants', 'needs', 'haves', 'icon', 'description', 'venue', 'current_guests', 'suitable_for', 'parts', 'recipe', 'name')
         # widgets = {
         #     'when': BootstrapSplitDateTimeWidget(attrs={'date_class': 'datepicker-default', 'time_class': 'timepicker-default input-timepicker'}),
         #     #'description': Textarea(attrs={'cols': 40, 'rows': 20})
