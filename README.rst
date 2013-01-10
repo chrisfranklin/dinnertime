@@ -1,6 +1,6 @@
 .. 
 
-Dinner Time
+Dinner Time - Alpha
 ======================
 
 What is dinner time?
@@ -24,7 +24,7 @@ To bootstrap the project::
     pip install -e .
     cp dinnertime/settings/local.py.example dinnertime/settings/local.py
     manage.py syncdb --migrate
-
+    manage.py yummlymeta
 
 
 Documentation
