@@ -5,7 +5,7 @@ from django.contrib import admin
 from djrill import DjrillAdminSite
 from django.views.generic import TemplateView
 import autocomplete_light
-
+from dinnertime.views import home_view
 autocomplete_light.autodiscover()
 # Mandrill Email Support
 admin.site = DjrillAdminSite()
@@ -29,7 +29,9 @@ urlpatterns = patterns('',
     #==========================================================
     # Home Page - Not managed by cms but provided by index.html
     #==========================================================
-    url(r'^/?$', TemplateView.as_view(template_name='index.html'), name='home'),
+    #url(r'^/?$', TemplateView.as_view(template_name='index.html'), name='home'),
+
+    url(r'^/?$', home_view, name='increase_max_guest'),
     url(r'^notifications/', include('notification.urls')),
     url(r'^friends/', include('friends.urls')),
     url(r'^friends/suggestions/', include('friends.contrib.suggestions.urls')),

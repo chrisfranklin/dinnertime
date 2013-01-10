@@ -37,66 +37,39 @@
   {% endblock %}
 
   {% block extra_body %}
-    {% if request.user %}
-      </hr>
-      <div class="row">
-        <div class="span6">
-          <h2><i class="icon-bullhorn"></i> I'm cooking </h2>
-          <form action='/meal/create/' method='post' encoding='utf-8'>
-            <fieldset>
-              <div style='display:none'><input type='hidden' name='csrfmiddlewaretoken' value='LOcjcIL8N7JsjzcuGvUFcJcgYWO8aIzw' /></div>
-              
-
-              <div id="div_id_when" class="control-group">
-                <label for="id_when" class="control-label requiredField">
-                When<span class="asteriskField">*</span></label>
-                <div class="controls"><input id="id_when" type="text" class="datetimeinput" name="when" /> </div>
-              </div>
-              <div id="div_id_max_guests" class="control-group">
-                <label for="id_max_guests" class="control-label requiredField">
-                  Max guests<span class="asteriskField">*</span>
-                </label>
-                <div class="controls"><input id="id_max_guests" type="text" class="textinput textInput" value="4" name="max_guests" /> </div>
-              </div>
-              <div id="div_id_privacy" class="control-group">
-                <label for="id_privacy" class="control-label requiredField">
-                  Privacy<span class="asteriskField">*</span>
-                </label>
-                <div class="controls">
-                  <select id="id_privacy" class="select" name="privacy">
-                  <option value="PRIVATE" selected="selected">Invite Only</option>
-                  <option value="PUBLIC">Public</option></select>
-                </div>
-              </div>
-
-                <button class='btn btn-large btn-success' type='submit'>
-                  
-                    Create
-                  
-                </button>
-            </fieldset>
-          </form>
-        </div>
-        <div class="span6">
-          <h2><i class="icon-food"></i> I'm hungry</h2>
-        </div>
+    <div class="container center">
+      <div class="well">
+        {% include 'login_bar.html' %}
       </div>
+      {% if request.user %}
+        </hr>
+        <div class="row">
+          <div class="span6">
+            <h2><i class="icon-bullhorn"></i> I'm cooking </h2>
+            {{meal_form}}
+          </div>
+          <div class="span6">
+            <h2><i class="icon-food"></i> I'm hungry</h2>
+          </div>
+        </div>
 
-      <!--</hr>
-      
-      </br></br></br></br></br></br>
-      <ul class="masthead-links">
-        <li>
-          <a href="http://github.com/piemonster" >Piemonster</a>
-        </li>
-        <li>
-          <a href="/admin/" >Admin</a>
-        </li>
-        <li>
-          <a href="/" >Help</a>
-        </li>
-      </ul> -->
-    {% endif %}
+        <!--</hr>
+        
+        </br></br></br></br></br></br>
+        <ul class="masthead-links">
+          <li>
+            <a href="http://github.com/piemonster" >Piemonster</a>
+          </li>
+          <li>
+            <a href="/admin/" >Admin</a>
+          </li>
+          <li>
+            <a href="/" >Help</a>
+          </li>
+        </ul> -->
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}
 
   {% block extra_js %}

@@ -139,7 +139,7 @@ class MealForm(ModelForm):
     """
     Provides form for creation and modification, need to explicitly set this.
     """
-    venue = forms.CharField(widget=autocomplete_light.TextWidget('VenueAutocomplete'))
+    #venue = forms.CharField(widget=autocomplete_light.TextWidget('VenueAutocomplete'))
 
     class Meta:
         model = Meal
@@ -197,7 +197,7 @@ class MealDeleteView(MealView, DeleteView):
         return reverse('meals_meal_list')
 
 from django.views.generic.edit import FormMixin
-from meals.views.invite_views import InviteForm
+
 from actstream.models import action_object_stream
 import autocomplete_light
 from django import forms
@@ -247,11 +247,12 @@ def add_part(request, meal_id, status):  # change this to part
             return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
     return HttpResponse("No post data or an error has occured")
 
-from meals.models import Invitee
-from accounts.models import UserContact
+# from meals.models import Invitee
+# from accounts.models import UserContact
 
 
 class MealDetailView(MealView, DetailView, FormMixin):
+    from meals.views.invite_views import InviteForm
     form_class = InviteForm
 
     def get_context_data(self, **kwargs):

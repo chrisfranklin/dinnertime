@@ -131,6 +131,9 @@ INSTALLED_APPS = (
     'django_statsd',
     'app_metrics',
     'raven.contrib.django',
+    'cities_light',
+
+    #'south',
     #'cities_light',  # Just here to help tests pass at the moment, will eventually be replaced with cities and geodjango
 
 )

@@ -1,0 +1,53 @@
+<div class="row-fluid">
+
+  <div class="span4">
+    <h2><i class="icon-star"> Login </i></h2>
+    <form class="login" method="POST" action="/accounts/login/">
+        {% csrf_token %}
+        <p><label for="id_login">Username:</label> <input id="id_login" type="text" placeholder="Username" name="login" maxlength="30" /></p>
+        <p><label for="id_password">Password:</label> <input type="password" placeholder="Password" name="password" id="id_password" /></p>
+        <p><label for="id_remember">Remember Me:</label> <input type="checkbox" name="remember" id="id_remember" /></p>
+        
+        <a class="button secondaryAction" href="/accounts/password/reset/">
+            Forgot Password?
+        </a>
+        <button class="primaryAction" type="submit">Sign In</button>
+    </form>
+  </div>
+
+  <div class="span4">
+    <h2><i class="icon-star"> Social Accounts </i></h2>
+    <ul class="socialaccount_providers"> 
+      <li>
+        <a title="Twitter" class="socialaccount_provider twitter" 
+           href="/accounts/twitter/login/"><img src="{{STATIC_URL}}/img/fc-webicon-twitter.svg" height="50px" width="50px"> <h4> Twitter </h4></a>
+      </li>
+      <li>
+        <a title="Google" class="socialaccount_provider google" 
+           href="/accounts/google/login/"><img src="{{STATIC_URL}}/img/fc-webicon-googleplus.svg" height="50px" width="50px"><h4> Google </h4></a>
+      </li>
+      <li>
+        <a title="Facebook" class="socialaccount_provider facebook" 
+           href="/accounts/facebook/login/"><img src="{{STATIC_URL}}/img/fc-webicon-facebook.svg" height="50px" width="50px"><h4> Facebook </h4></a>
+      </li>
+      <li>
+        <a title="LinkedIn" class="socialaccount_provider linkedin" 
+           href="/accounts/linkedin/login/"><img src="{{STATIC_URL}}/img/fc-webicon-linkedin.svg" height="50px" width="50px"><h4> LinkedIn </h4></a>
+      </li>
+    </ul>
+    <h3> Is it that easy? Find out. </h3>
+  </div>
+
+  <div class="span4">
+    <h2><i class="icon-star"> Register </i></h2>
+    <form class="signup" id="signup_form" method="post" action="/accounts/signup/">
+        {% csrf_token %}
+        <p> <input id="id_username" placeholder="Username" type="text" name="username" maxlength="30" /></p>
+        <p> <input type="password" placeholder="Password" name="password1" id="id_password1" /></p>
+        <p> <input type="password" placeholder="Enter password again" name="password2" id="id_password2" /></p>
+        <p> <input type="text" placeholder="Email" name="email" id="id_email" /><input type="hidden" name="confirmation_key" id="id_confirmation_key" /></p>
+        <button type="submit">Sign Up &raquo;</button>
+    </form>
+  </div>
+
+</div>
