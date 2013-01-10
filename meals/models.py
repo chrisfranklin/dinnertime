@@ -201,6 +201,12 @@ class Invitee(models.Model):
         else:
             return "No email or error!"
 
+    def __unicode__(self):
+        if self.name:
+            return self.name
+        else:
+            return self.get_email()
+
     def save(self, *args, **kwargs):
         """
         Overrides save to tie to a user if one exists for the email.

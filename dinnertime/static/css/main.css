@@ -61,11 +61,11 @@ html{
 ------------------------- */
 .jumbotron {
   position: relative;
-  padding: 40px 0;
+  padding: 20px 0;
   padding-top: 0;
-  color: #fff;
+  color: black;
   text-align: center;
-  text-shadow: 0 1px 5px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
+  text-shadow: 0 2px 5px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -132,7 +132,7 @@ html{
 /* Masthead (docs home)
 ------------------------- */
 .masthead {
-  padding: 70px 0 80px;
+  padding: 0px 0 50px;
   margin-bottom: 0;
   color: #fff;
 }

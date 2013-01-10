@@ -106,6 +106,28 @@
 
             <div class='container well'>
               <a class="brand logo" href="/"><i class="icon-food"></i> TableSurf.in</a>
+              <div class="btn-group pull-right">
+                {% if request.user.is_authenticated %}  
+                  <a class="btn btn-primary" href="{{request.user.get_profile.get_absolute_url}}"><i class="icon-user"></i> {{request.user}} </a>
+                {% else %}
+                  <a class="btn btn-primary" href="/accounts/login/"><i class="icon-user"></i> Login or Register</a>
+                {% endif %} 
+                
+                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-caret-down"></span></a>
+                <ul class="dropdown-menu">
+                  {% if request.user.is_authenticated %}  
+                    <li><a tabindex="-1" href="/accounts/social/connections">Social Accounts</a></li>
+                    <li><a tabindex="-1" href="/accounts/usercontact/"><i class="icon-pencil"></i> Contacts</a></li>
+                    <li class="divider"></li>
+                    <li><a tabindex="-1" href="/accounts/logout/"><i class="icon-trash"></i>Logout</a></li>
+                  {% else %}
+                    <li><a tabindex="-1" href="/accounts/login/">Login</a></li>
+                     <li><a tabindex="-1" href="/accounts/login/">Register</a></li>
+                  {% endif %}
+                  
+                </ul>
+              </div>
+
               <div class='row-fluid'>
                 <div class='content'>
                   <div class='span12'>

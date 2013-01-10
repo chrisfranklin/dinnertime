@@ -21,35 +21,41 @@
         <h2 class="btn btn-primary btn-large"> I'm cooking </h2>
       </div>
     </div> -->
-    {% if not request.user %}
-      <h3> We are currently cooking things up, please register your interest below </h3>
-      <div>
+    {% if not request.user.is_authenticated %}
+      <div class="well">
+        <h3> We are currently cooking things up, please register your interest below </h3>
+      
         <form method="post" action="/interest/">{% csrf_token %}
           <h3><input type="email" placeholder="you@example.com" name="email" id="id_email" /></h3>
           <h3 class="hidden2 success">Success!</h3>
           <h3 class="hidden2 failure">Failure!</h3>
-          <button  type="submit">Notify me!</button>
+          <button class="btn btn-primary"  type="submit">Notify me!</button>
         </form>
       </div>
-      </br></br>
     {% endif %}
 
   {% endblock %}
 
   {% block extra_body %}
     <div class="container center">
-      <div class="well">
-        {% include 'login_bar.html' %}
-      </div>
-      {% if request.user %}
-        </hr>
+        
+      {% if request.user.is_authenticated %}
         <div class="row">
-          <div class="span6">
-            <h2><i class="icon-bullhorn"></i> I'm cooking </h2>
-            {{meal_form}}
+          <div class="offset2 span4">
+            <div class="well">
+              <h2><i class="icon-bullhorn"></i> I'm cooking </h2>
+              <form class="login" method="POST" action="/accounts/login/">
+                  {% csrf_token %}
+                  {{meal_form}}<hr>
+                  <button class="btn btn-primary" type="submit">Host a meal!</button>
+              </form>
+            </div>
           </div>
-          <div class="span6">
-            <h2><i class="icon-food"></i> I'm hungry</h2>
+          <div class="span4">
+            <div class="well">
+              <h2><i class="icon-food"></i> I'm hungry</h2>
+              <a class="btn btn-primary" href="/meal/"> View all meals </a>
+            </div>
           </div>
         </div>
 
@@ -67,6 +73,10 @@
             <a href="/" >Help</a>
           </li>
         </ul> -->
+      {% else %}
+        <div class="well">
+          {% include 'login_bar.html' %}
+        </div>
       {% endif %}
     </div>
   </div>
