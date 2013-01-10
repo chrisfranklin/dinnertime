@@ -211,20 +211,22 @@ class Invitee(models.Model):
         """
         Overrides save to tie to a user if one exists for the email.
         """
-        if self.id is None:
+        if self.id is None or True:
             # The invitee has just been created, lets see if we have a user
             if self.user:
                 # we do have a user with that email address, we should get the name if its not set
                 if self.name:
                     pass  # we already have a name
                 else:
-                    self.name = str(self.user)  # set invitee name to username
-                pass
+                    self.name = self.user.username  # set invitee name to username
+                    print "saving as %s" % self.user
             else:
                 # We do not have a user set already, let's see if any match our requirements
                 from accounts.models import UserProfile
                 try:
                     self.user = UserProfile.objects.get(user__email=self.email).user
+                    self.name = self.user.username  # set invitee name to username
+                    print "saving as %s" % self.user
                 except:
                     print "No user :("
                     pass

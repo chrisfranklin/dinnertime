@@ -61,7 +61,19 @@
             <h3> Ingredients: </h3>
             <ul>
               {% for ingredient in object.recipe.ingredients.all %}
-                <li>{{ingredient}}</li>
+                <li>
+                  {{ingredient}}
+                  <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/HAVE/" data-append="#invites">
+                      {% csrf_token %}
+                      <input type="hidden" value="{{ingredient}}" name="name" id="id_name"></input>
+                      <button class='btn btn-primary' type='submit'><i class="icon-plus"> Have</i></button>
+                  </form>
+                  <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/NEED/" data-append="#invites">
+                      {% csrf_token %}
+                      <input type="hidden" value="{{ingredient}}" name="name" id="id_name"></input>
+                      <button class='btn btn-primary' type='submit'><i class="icon-plus"> Need</i></button>
+                  </form>
+                </li>
               {% endfor %}
             </ul>
           </div>
@@ -295,7 +307,7 @@
           {% if entry.actor.user %}
             </a>
           {% endif %}
-          
+
           {{entry}} 
           <!--<button type="button" class="btn" data-toggle="collapse" data-target="#commentdetail{{entry.id}}">Comment </button> -->
         </p>  

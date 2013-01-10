@@ -7,6 +7,7 @@ from meals.models import Invite, Invitee, Meal
 from accounts.models import UserContact
 from django.http import HttpResponseRedirect
 
+from django.contrib.auth.models import User
 
 class InviteView(object):
     model = Invite
@@ -36,6 +37,8 @@ class UserContactAutocomplete(autocomplete_light.AutocompleteGenericBase):
     autocomplete_js_attributes = {
         'placeholder': 'type a user name ...',
     }
+
+    
 
 
 autocomplete_light.register(UserContact, UserContactAutocomplete)
@@ -86,25 +89,27 @@ def _invite_data(request, invite):
 def add_invite(request, meal_id):
     if request.method == "POST":
         form = InviteForm(request.POST, request.FILES)
-        if form.is_valid():
+        print form.data
+        no_contact = False
+        if 'email' not in form.data:
+            saved_email = form.data['email-autocomplete']
+            no_contact = True
+            print "no email setting %s" % saved_email
+        if form.is_valid() or no_contact:
             meal = Meal.objects.get(pk=meal_id)
-            for item in form.cleaned_data:
-                print item
-                print "-"
-            email = form.cleaned_data['email']
-            # we have a valid email address, we should check if we have a user with that email and add that too maybe.
-            try:
-                user = User.objects.get(email=email)[0]
-                print user
-            except:
-                print "no user found"
-                user = None
-            if 'max_plusones' in form.cleaned_data:
-                max_plusones = form.cleaned_data['max_plusones']
+            max_plusones = 1
+            if no_contact:
+                email = saved_email
             else:
-                max_plusones = 1
+                email = form.cleaned_data['email']
+                if 'max_plusones' in form.cleaned_data:
+                    max_plusones = form.cleaned_data['max_plusones']
+
+            # invitee will attach user for us, yay!
             invitee = Invitee.objects.get_or_create(email=email)[0]
-            invitee.user = user
+            # except:
+            #     print "no user found"
+            #     user = None
             invite = Invite.objects.get_or_create(max_plusones=max_plusones, meal=meal, invitee=invitee)[0]
             print invite
             #data = _invite_data(request, invite)

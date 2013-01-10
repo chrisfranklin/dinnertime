@@ -31,7 +31,7 @@ urlpatterns = patterns('',
     #==========================================================
     #url(r'^/?$', TemplateView.as_view(template_name='index.html'), name='home'),
 
-    url(r'^/?$', home_view, name='increase_max_guest'),
+    url(r'^/?$', home_view, name='home_view'),
     url(r'^notifications/', include('notification.urls')),
     url(r'^friends/', include('friends.urls')),
     url(r'^friends/suggestions/', include('friends.contrib.suggestions.urls')),
@@ -67,6 +67,19 @@ urlpatterns = patterns('',
     url(r"^likes/", include("phileo.urls")),
     (r'^avatar/', include('avatar.urls')),
 )
+
+from django.conf.urls import patterns, url, include
+from rest_framework.urlpatterns import format_suffix_patterns
+from meals.api import MealList, MealDetail
+
+urlpatterns += patterns('meals.api',
+    url(r'^api/$', 'api_root'),
+    url(r'^api/meals/$', MealList.as_view(), name='meal-list'),
+    url(r'^api/meals/(?P<pk>\d+)/$', MealDetail.as_view(), name='meal-detail'),
+)
+
+# Format suffixes
+#urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json', 'api'])
 
 from django_statsd.urls import urlpatterns as statsd_patterns
 

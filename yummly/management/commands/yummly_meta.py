@@ -17,7 +17,7 @@ class Command(BaseCommand):
         client = requests.session()
         #response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=quiche' % (ck, cs))
 
-        if args != "ingredient":
+        if args == "ingredient":
             response = client.get('http://api.yummly.com/v1/api/metadata/ingredient?_app_id=%s&_app_key=%s' % (ck, cs))
             pprint(response.content)
             try:

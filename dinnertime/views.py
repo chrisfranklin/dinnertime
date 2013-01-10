@@ -68,4 +68,4 @@ def home_view(request):
     #     form = InviteForm()
     meal_form = MealForm()
     bum = "bumbum"
-    return render_to_response("index.html", {'meal_form': meal_form}, context_instance=RequestContext(request))
+    return render_to_response("dawn.html", {'meal_form': meal_form}, context_instance=RequestContext(request))

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Backbone Cellar</title>
+</head>
+
+<body>
+
+<div class="leftArea">
+    <ul id="mealList"></ul>
+</div>
+
+<div id="mainArea">
+</div>
+
+<script type="text/template" id="meal-list-item">
+    <li><a href='#meals/<%= id %>'><%= name %></a></li>
+</script>
+
+<script type="text/template" id="meal-details">
+
+<div class="form-left-col">
+
+<label>Name:</label>
+<input type="text" id="name" name="name" value="<%= name %>" required/>
+
+
+</div>
+
+<div class="form-right-col">
+<textarea id="description" name="description"><%= description %></textarea>
+</div>
+
+</script>
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>   
+<script src="{{STATIC_URL}}js/dawn.js"></script>   
+
+</body>
+</html>
