@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'easy_maps',
 
     'rest_framework',
+    'api',
 
     'autocomplete_light',
 

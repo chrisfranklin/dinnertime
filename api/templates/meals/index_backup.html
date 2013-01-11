@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Backbone Cellar</title>
+<link rel="stylesheet" href="/static/api/css/styles.css" />
+</head>
+
+<body>
+
+<div id="header"><span class="title">Backbone Cellar</span></div>
+
+<div id="sidebar"></div>
+
+<div id="content">
+<h2>Welcome to Backbone Cellar</h2>
+<p>
+This is a sample application part of of three-part tutorial showing how to build a CRUD application with Backbone.js.
+</p>
+</div>
+
+<!-- Templates -->
+<script type="text/template" id="tpl-meal-list-item">
+    <a href='#meals/<%= id %>'><%= name %>123</a>
+</script>
+
+<script type="text/template" id="tpl-meal-details">
+    <div class="form-left-col">
+        <label>Id:</label>
+        <input type="text" id="mealId" name="id" value="<%= id %>" disabled />
+        <label>Name:</label>
+        <input type="text" id="name" name="name" value="<%= name %>" required/>
+        <label>Max Guests:</label>
+        <input type="text" id="max_guests" name="max_guests" value="<%= max_guests %>" required/>
+    </div>
+    <div class="form-right-col">
+        <label>Notes:</label>
+        <textarea id="description" name="description"><%= description %></textarea>
+    </div>
+</script>
+
+<!-- JavaScript -->
+<script src="/static/api/lib/jquery-1.7.1.min.js"></script>
+<script src="/static/api/lib/underscore-min.js"></script>
+<script src="/static/api/lib/backbone-min.js"></script>
+<script src="/static/api/js/main.js"></script>   
+
+</body>
+</html>

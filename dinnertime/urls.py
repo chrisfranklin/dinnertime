@@ -66,17 +66,20 @@ urlpatterns = patterns('',
     (r'^activity/', include('actstream.urls')),
     url(r"^likes/", include("phileo.urls")),
     (r'^avatar/', include('avatar.urls')),
+    (r'^api/', include('api.urls')),
 )
 
 from django.conf.urls import patterns, url, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from meals.api import MealList, MealDetail
 
-urlpatterns += patterns('meals.api',
-    url(r'^api/$', 'api_root'),
-    url(r'^api/meals/$', MealList.as_view(), name='meal-list'),
-    url(r'^api/meals/(?P<pk>\d+)/$', MealDetail.as_view(), name='meal-detail'),
-)
+
+
+# urlpatterns += patterns('meals.api',
+#     url(r'^api/$', 'api_root'),
+#     url(r'^api/meals/$', MealList.as_view(), name='meal-list'),
+#     url(r'^api/meals/(?P<pk>\d+)/$', MealDetail.as_view(), name='meal-detail'),
+# )
 
 # Format suffixes
 #urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json', 'api'])
