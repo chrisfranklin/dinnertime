@@ -1,5 +1,5 @@
-from meals.models import Meal
-from api.serializers import MealSerializer
+from meals.models import Guest, Invite, Meal, MealPart, Part
+from api.serializers import GuestSerializer, InviteSerializer, MealSerializer, MealPartSerializer, PartSerializer
 #from django.http import Http404
 from rest_framework import generics
 #from rest_framework.views import APIView
@@ -26,7 +26,14 @@ def api_root(request, format=None):
     """
     return Response({
         'Meals': reverse('meal-list', request=request),
+        'MealParts': reverse('mealpart-list', request=request),
+        'Parts': reverse('part-list', request=request),
+        'Guests': reverse('guest-list', request=request),
+        'Invites': reverse('invite-list', request=request),
     })
+
+
+## == MEALS ==
 
 
 class MealList(generics.ListCreateAPIView):
@@ -43,3 +50,79 @@ class MealDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     model = Meal
     serializer_class = MealSerializer
+
+
+## == MEALPARTS ==
+
+
+class MealPartList(generics.ListCreateAPIView):
+    """
+    API endpoint that represents a list of MealParts.
+    """
+    model = MealPart
+    serializer_class = MealPartSerializer
+
+
+class MealPartDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    API endpoint that represents a single MealPart.
+    """
+    model = MealPart
+    serializer_class = MealPartSerializer
+
+
+## == MEALPARTS ==
+
+
+class PartList(generics.ListCreateAPIView):
+    """
+    API endpoint that represents a list of Parts.
+    """
+    model = Part
+    serializer_class = PartSerializer
+
+
+class PartDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    API endpoint that represents a single Part.
+    """
+    model = Part
+    serializer_class = PartSerializer
+
+
+## == GUESTS ==
+
+
+class GuestList(generics.ListCreateAPIView):
+    """
+    API endpoint that represents a list of Parts.
+    """
+    model = Guest
+    serializer_class = GuestSerializer
+
+
+class GuestDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    API endpoint that represents a single Part.
+    """
+    model = Guest
+    serializer_class = GuestSerializer
+
+
+## == INVITES ==
+
+
+class InviteList(generics.ListCreateAPIView):
+    """
+    API endpoint that represents a list of Parts.
+    """
+    model = Invite
+    serializer_class = InviteSerializer
+
+
+class InviteDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    API endpoint that represents a single Part.
+    """
+    model = Invite
+    serializer_class = InviteSerializer
