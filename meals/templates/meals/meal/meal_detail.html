@@ -65,21 +65,21 @@
                   <li><h4>{{ingredient|capfirst }}</h4></li>
                 </div>
                 <div class="span2">
-                  <form class="form-inline nospace" method="post" action="/meal/{{object.id}}/part/add/HAVE/" data-append="#invites">
+                  <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/HAVE/" data-append="#invites">
                       {% csrf_token %}
                       <input type="hidden" value="{{ingredient}}" name="name" id="id_name"></input>
                       <button class='btn btn-success' type='submit'><i class="icon-check"> Have</i></button>
                   </form>
                 </div>
                 <div class="span2">
-                  <form class="form-inline nospace" method="post" action="/meal/{{object.id}}/part/add/NEED/" data-append="#invites">
+                  <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/NEED/" data-append="#invites">
                       {% csrf_token %}
                       <input type="hidden" value="{{ingredient}}" name="name" id="id_name"></input>
                       <button class='btn btn-danger' type='submit'><i class="icon-plus-sign-alt"> Need</i></button>
                   </form>
                 </div>
                 <div class="span2">
-                  <form class="form-inline nospace" method="post" action="/meal/{{object.id}}/part/add/WANT/" data-append="#invites">
+                  <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/WANT/" data-append="#invites">
                       {% csrf_token %}
                       <input type="hidden" value="{{ingredient}}" name="name" id="id_name"></input>
                       <button class='btn btn-warning' type='submit'><i class="icon-asterisk"> Want</i></button>
@@ -88,10 +88,10 @@
               </div>
             {% endfor %}
           </div>
-          <div class="span4">
-            <h3> Cooking Time: </h3>
+          <div class="span4 center">
+            <h3> Prep Time</h3>
             <h4>{{object.recipe.total_time_in_seconds}} minutes.</h4>
-            <h3> Rating: </h3>
+            <h3> Rating</h3>
             <h4>{{object.recipe.rating}} out of 5</h4>
           </div>
         </div>
@@ -306,7 +306,9 @@
           {{ form.timestamp }}
           {{ form.security_hash }}
           <input type="hidden" name="next" value="{{object.get_absolute_url}}" />
-          <input type="submit" class="btn btn-primary" value="Post" id="id_submit" />
+          <button class='btn btn-primary' type='submit' id='id_submit'>
+            <i class="icon-plus"> Add</i>
+          </button>
           </form>
         </div>
       {% else %}

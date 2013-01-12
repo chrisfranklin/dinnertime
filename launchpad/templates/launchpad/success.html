@@ -1,13 +1,27 @@
-<!DOCTYPE html>
 
-<html lang="en">
-<head>
-    <title>You have been subscribed. Thanks!</title>
-    <meta charset="UTF-8"/>
-    
-</head>
-<body>
-    <h1>Right on, bro!</h1>
-    <p>You have been subscribed.</p>
-</body>
-</html>
+
+{% extends 'sitebase.html' %}
+
+{% load url from future %}
+
+
+{% load i18n %}
+
+
+{% block header-link %}
+  <a href='{% url 'meals_meal_list' %}'>
+    <i class="icon-thumbs-up"> 
+      {% trans "Thanks a lot!" %}
+    </i>
+  </a>
+{% endblock %}
+
+{% block header-description %}
+  {% trans "We will be in touch soon." %} 
+{% endblock %}
+
+{% block content %}
+  <p>
+    We appreciate you sharing our excitement for TableSurf.in, in order to provide the best possible service we will be launching gradually over the coming weeks. We know you want to get going right away so we are working as hard as we possibly can. Thanks for your patience and we very much look forward to seeing you soon...
+  </p>
+{% endblock %}
