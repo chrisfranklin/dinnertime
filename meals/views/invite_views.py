@@ -123,6 +123,9 @@ def add_invite(request, meal_id):
 def ack_invite(request, meal_id, secret, action=None):
     #meal = Meal.objects.get(pk=meal_id)
     invite = Invite.objects.get(secret=secret, meal=meal_id)  # Add error checking to shrug off invalid invites
+    if not request.user:
+        # We have no user logged in, redirect to the login page then back to the invite
+        return HttpResponseRedirect("/accounts/login/?next=/meal%d/invite/%s" % meal_id, secret)
     if invite.secret == secret:
         # The secret mathes continue
         if action == "y":

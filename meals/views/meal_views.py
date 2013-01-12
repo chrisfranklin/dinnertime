@@ -157,6 +157,7 @@ class MealCreateView(MealView, AjaxableResponseMixin, CreateView):
     form_class = MealForm
     #success_url = 'success'
     from django.utils.decorators import method_decorator
+    from django.contrib.auth.decorators import login_required
     #from lazysignup.decorators import allow_lazy_user
 
     def form_valid(self, form):
@@ -167,7 +168,7 @@ class MealCreateView(MealView, AjaxableResponseMixin, CreateView):
         from django.http import HttpResponseRedirect
         return HttpResponseRedirect('/meal/%s/' % obj.id)
 
-    #@method_decorator(allow_lazy_user)
+    @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(MealCreateView, self).dispatch(*args, **kwargs)
 

@@ -40,19 +40,25 @@
 {% endblock %}
 
 {% block content %}
-  <form action='{% if object %}{% url 'accounts_usercontact_update' pk=object.pk %}{% else %}{% url 'accounts_usercontact_create' %}{% endif %}' method='post' encoding='utf-8'>
-    <fieldset>
-      {% csrf_token %}
-      {{ form }}
-      <div class='form-actions'>
-        <button class='btn btn-large btn-success' type='submit'>
-          {% if object %}
-            {% trans "Update" %}
-          {% else %}
-            {% trans "Create" %}
-          {% endif %}
-        </button>
-      </div>
-    </fieldset>
-  </form>
+  {% if request.user.is_staff %}
+    <form action='{% if object %}{% url 'accounts_usercontact_update' pk=object.pk %}{% else %}{% url 'accounts_usercontact_create' %}{% endif %}' method='post' encoding='utf-8'>
+      <fieldset>
+        {% csrf_token %}
+        {{ form }}
+        <div class='form-actions'>
+          <button class='btn btn-large btn-success' type='submit'>
+            {% if object %}
+              {% trans "Update" %}
+            {% else %}
+              {% trans "Create" %}
+            {% endif %}
+          </button>
+        </div>
+      </fieldset>
+    </form>
+
+  {% else %}
+    <b> User contacts is disabled for the alpha </b>
+  {% endif %}
+  
 {% endblock %}

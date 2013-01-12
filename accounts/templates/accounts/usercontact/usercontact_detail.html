@@ -28,18 +28,24 @@
 {% endblock %}
 
 {% block content %}
+  {% if request.user.is_staff %}
+    <form action='{% url 'accounts_usercontact_delete' pk=object.pk %}' charset='utf-8' method='post'>
+      <fieldset>
+        {% csrf_token %}
+        <div class='form-actions'>
+          <a class='btn btn-success' href='{% url 'accounts_usercontact_update' pk=object.pk %}'>
+            {% trans "Update" %}
+          </a>
+          <button class='btn btn-danger' type='submit'>
+            {% trans "Delete" %}
+          </button>
+        </div>
+      </fieldset>
+    </form>
+
+  {% else %}
+    <b> User contacts is disabled for the alpha </b>
+  {% endif %}
   {% include 'accounts/usercontact/object_table_detail.html' %}
-  <form action='{% url 'accounts_usercontact_delete' pk=object.pk %}' charset='utf-8' method='post'>
-    <fieldset>
-      {% csrf_token %}
-      <div class='form-actions'>
-        <a class='btn btn-success' href='{% url 'accounts_usercontact_update' pk=object.pk %}'>
-          {% trans "Update" %}
-        </a>
-        <button class='btn btn-danger' type='submit'>
-          {% trans "Delete" %}
-        </button>
-      </div>
-    </fieldset>
-  </form>
+  
 {% endblock %}
