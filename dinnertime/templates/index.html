@@ -22,7 +22,7 @@
       </div>
     </div> -->
     {% if not request.user.is_authenticated %}
-      <div class="well">
+      <div class="well" style="color:black;">
         <h3> We are currently cooking things up, please register your interest below </h3>
       
         <form method="post" action="/interest/">{% csrf_token %}

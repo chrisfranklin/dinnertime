@@ -55,7 +55,7 @@ INSTALLED_APPS = (
     'easy_maps',
 
     'rest_framework',
-    'api',
+    #'api',
 
     'autocomplete_light',
 
@@ -133,6 +133,7 @@ INSTALLED_APPS = (
     'app_metrics',
     'raven.contrib.django',
     'cities_light',
+    'gunicorn',
 
     #'south',
     #'cities_light',  # Just here to help tests pass at the moment, will eventually be replaced with cities and geodjango
