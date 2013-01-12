@@ -351,7 +351,7 @@ class Invite(models.Model):
             # Nice and easy we have an email on the contact, also check for allauth and for one on the user
             to_email = self.invitee.email
             from django.core.mail import send_mail
-            send_mail('You have been invited to a meal', 'Test http://localhost:8000/meal/%s/invite/%s/y/' % (self.meal.id, self.secret), from_email, [to_email], fail_silently=False)
+            send_mail('You have been invited to a meal', 'You have been invited to our first meal, to RSVP please goto http://tablesurf.in:8000/meal/%s/invite/%s/y/' % (self.meal.id, self.secret), from_email, [to_email], fail_silently=False)
         else:
             print "No email has been found!"
 
@@ -366,7 +366,7 @@ class Invite(models.Model):
             if self.invited_by:
                 from_email = self.invited_by.email
             else:
-                from_email = "chris@piemonster.me"
+                from_email = "chrisfranklinuk@gmail.com"
             self.send_email(from_email)
             action.send(self.invitee, verb='was invited to', action_object=self.meal)
         super(Invite, self).save(*args, **kwargs)  # Call the "real" save() method.

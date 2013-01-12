@@ -39,6 +39,12 @@ urlpatterns = patterns('',
         view=UserProfileDetailView.as_view(),
         name='accounts_userprofile_detail'
     ),
+    # dupe hack below
+    url(
+        regex=r'^userprofile/(?P<pk>\d+)/$',
+        view=UserProfileDetailView.as_view(),
+        name='profile_detail'
+    ),
     url(
         regex=r'^userprofile/$',
         view=UserProfileListView.as_view(),
