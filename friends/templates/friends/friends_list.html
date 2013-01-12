@@ -28,6 +28,29 @@
 </ul>
 <h3> Suggested Friends </h3>
 <h3> Import Contacts </h3>
+{% for account in request.user.socialaccount_set.all %}
+  {% if account.provider == "facebook" %}
+    <i class="icon-facebook"><a href="{% url 'friends_suggestions_import_facebook_contacts' %}"> Facebook</a></i>
+  {% elif account.provider == "twitter" %}
+    <i class="icon-twitter"><a href="{% url 'friends_suggestions_import_twitter_contacts' %}"> Twitter</a></i>
+  {% elif account.provider == "google" %}
+    <i class="icon-google-plus-sign"><a href="{% url 'friends_suggestions_import_google_contacts' %}"> Google</a> </i> 
+  {% elif account.provider == "yahoo" %}
+    <i class="icon-twitter"><a href="{% url 'friends_suggestions_import_twitter_contacts' %}"> Twitter</a></i>
+  {% elif account.provider == "linkedin" %}
+    <i class="icon-linkedin"><a href="{% url 'friends_suggestions_import_linkedin_contacts' %}"> LinkedIn</a></i>
+  {% else %}
+    Unknown provider with name of {{account.provider}}
+  {% endif %}
+  <div class="span4">
+    <h2 style="text-transform:capitalize;">{{ account.provider }}</h2>
+    <p><img width="50" height="50" src="{{ account.get_avatar_url }}" /></p>
+    <p>Username: {{ account.extra_data.username }}</p>
+    <p>First Name: {{ account.extra_data.first_name }}</p>
+    <p>Last Name: {{ account.extra_data.last_name }}</p>
+    <p>Profile Link: <a href="{{ account.extra_data.link }}">{{ account.extra_data.link }}</a></p>
+  </div>
+{% endfor %}
 <p>{% trans "Select service from which you want to import your contacts:" %}</p>
 <i class="icon-facebook"><a href="{% url 'friends_suggestions_import_facebook_contacts' %}"> Facebook</a></i> | 
 <i class="icon-google-plus-sign"><a href="{% url 'friends_suggestions_import_google_contacts' %}"> Google</a> </i> | 

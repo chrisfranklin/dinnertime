@@ -44,7 +44,7 @@
           <div class="offset2 span4">
             <div class="well">
               <h2><i class="icon-bullhorn"></i> I'm cooking </h2>
-              <form class="login" method="POST" action="/accounts/login/">
+              <form class="login" method="POST" action="/meal/create/">
                   {% csrf_token %}
                   {{meal_form}}<hr>
                   <button class="btn btn-primary" type="submit">Host a meal!</button>
@@ -85,7 +85,7 @@
   {% block extra_js %}
 
     <script>
-        $('form').submit(function (event) {
+        $('form111').submit(function (event) {
             if ($('#use-js:checked').length === 0) {
                 //return false
             }

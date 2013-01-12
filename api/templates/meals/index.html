@@ -24,6 +24,7 @@
             </style>
             <link rel="stylesheet" href="{{ STATIC_URL}}bootstrap/css/bootstrap-responsive.css">
             <link rel="stylesheet" href="{{ STATIC_URL}}css/main.css">
+            <link rel="stylesheet" href="{{ STATIC_URL}}api/css/styles.css">
         {% endcompress %}
 
         {% compress css %}
@@ -102,7 +103,7 @@
 
                     <!-- Templates -->
                     <script type="text/template" id="tpl-meal-list-item">
-                        <a href='#meals/<%= id %>'><%= name %>123</a>
+                        <a href='#meals/<%= id %>'><%= description %>123</a>
                     </script>
 
                     <script type="text/template" id="tpl-meal-details">
@@ -114,10 +115,14 @@
                                 <input type="text" id="name" name="name" value="<%= name %>" required/>
                                 <label>Host:</label>
                                 <input type="text" id="host" name="host" value="<%= host %>" required/>
+                                <label>Guests:</label>
+                                <input type="text" id="current_guests" name="current_guests" value="<%= guests %>" required/>
                                 <label>Current Guests #:</label>
                                 <input type="text" id="current_guests" name="current_guests" value="<%= current_guests %>" required/>
                                 <label>Max Guests #:</label>
                                 <input type="text" id="max_guests" name="max_guests" value="<%= max_guests %>" required/>
+                                <label>Recipe:</label>
+                                <input type="text" id="recipe" name="recipe" value="<%=recipe %>" required/>
                             </div>
                             <div class="span6">
                                 <label>Description:</label>

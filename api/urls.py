@@ -22,6 +22,9 @@ urlpatterns = patterns('api.views',
                        url(r'^invites/$', views.InviteList.as_view(), name='invite-list'),
                        url(r'^invites/(?P<pk>\d+)/$', views.InviteDetail.as_view(), name='invite-detail'),
 
+                       url(r'^profiles/$', views.UserProfileList.as_view(), name='profile-list'),
+                       url(r'^profiles/(?P<pk>\d+)/$', views.UserProfileDetail.as_view(), name='profile-detail'),
+
                        )
 
 urlpatterns = format_suffix_patterns(urlpatterns)

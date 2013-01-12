@@ -1,5 +1,11 @@
 from meals.models import Guest, Invite, Meal, MealPart, Part
+from accounts.models import UserProfile
 from rest_framework import serializers
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        field = ('id', 'user', 'first_name', 'last_name', 'diet', 'allergies', 'likes', 'dislikes')
 
 
 class GuestSerializer(serializers.ModelSerializer):

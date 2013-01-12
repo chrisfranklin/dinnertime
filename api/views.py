@@ -1,5 +1,6 @@
 from meals.models import Guest, Invite, Meal, MealPart, Part
-from api.serializers import GuestSerializer, InviteSerializer, MealSerializer, MealPartSerializer, PartSerializer
+from accounts.models import UserProfile
+from api.serializers import GuestSerializer, InviteSerializer, MealSerializer, MealPartSerializer, PartSerializer, UserProfileSerializer
 #from django.http import Http404
 from rest_framework import generics
 #from rest_framework.views import APIView
@@ -30,6 +31,7 @@ def api_root(request, format=None):
         'Parts': reverse('part-list', request=request),
         'Guests': reverse('guest-list', request=request),
         'Invites': reverse('invite-list', request=request),
+        'UserProfile': reverse('profile-list', request=request),
     })
 
 
@@ -126,3 +128,22 @@ class InviteDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     model = Invite
     serializer_class = InviteSerializer
+
+
+## == USERPROFILES aka PROFILES} ==
+
+
+class UserProfileList(generics.ListCreateAPIView):
+    """
+    API endpoint that represents a list of Parts.
+    """
+    model = UserProfile
+    serializer_class = UserProfileSerializer
+
+
+class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    API endpoint that represents a single Part.
+    """
+    model = UserProfile
+    serializer_class = UserProfileSerializer
