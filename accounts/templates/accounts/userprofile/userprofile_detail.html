@@ -35,7 +35,7 @@
     This is your profile
     
   {% else %}
-    This is not your profile
+    <a href="/friends/invite/{{object.user.username}}"> Add as friend </a>
   {% endif %}
 {% endblock %}
 

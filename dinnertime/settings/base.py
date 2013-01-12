@@ -206,8 +206,8 @@ if not os.path.exists(VAR_ROOT):
 ROOT_URLCONF = 'dinnertime.urls'
 
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/accounts/signin/'
-LOGOUT_URL = '/accounts/signout/'
+LOGIN_URL = '/accounts/login/'
+LOGOUT_URL = '/accounts/logout/'
 ANONYMOUS_USER_ID = -1
 
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'  # THIS SHOULD BE SET TO PROFILE MODEL
