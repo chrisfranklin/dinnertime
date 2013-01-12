@@ -107,17 +107,17 @@ class UserContact(models.Model):
     # We need to create a user contact every time a friend request is sent or a friend accept is done.
 
 
-def create_user_contact(self, instance, **kwargs):
-    """
-    Creates the contacts for either one side or both sides of a friendship.
-    """
-    print instance.from_user
-    print instance.from_user
-    print instance
-    #print request
+# def create_user_contact(self, instance, **kwargs):
+#     """
+#     Creates the contacts for either one side or both sides of a friendship.
+#     """
+#     print instance.from_user
+#     print instance.from_user
+#     print instance
+#     #print request
 
-from friends.signals import inviting_friend, accepting_friend
-inviting_friend.connect(create_user_contact)
-accepting_friend.connect(create_user_contact)
+# from friends.signals import inviting_friend, accepting_friend
+# inviting_friend.connect(create_user_contact)
+# accepting_friend.connect(create_user_contact)
 
 #accepting_friend.send(FriendshipInvitation, request=request, invite=invitation)

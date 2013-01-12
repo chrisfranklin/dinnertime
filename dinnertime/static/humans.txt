@@ -5,13 +5,14 @@
 
     Chris Franklin - Piemonster
     Adrian Gibas - Piemonster
+    Karim Tabet - Piemonster
 
 # THANKS
 
-    <name>
+    Lynne, David, Nick and Rafferty Franklin for always being there for me. 
 
 # TECHNOLOGY COLOPHON
 
     HTML5, CSS3
-    jQuery, Modernizr
+    jQuery, jQueryUI, Modernizr, Backbone, Underscore, Bootstrap
     Django, Python

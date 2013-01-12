@@ -57,29 +57,40 @@
       {% if object.recipe %}
         <img src="{{object.recipe.large_image}}">
         <div class="row-fluid">
-          <div class="span7">
+          <div class="span8">
             <h3> Ingredients: </h3>
-            <ul>
-              {% for ingredient in object.recipe.ingredients.all %}
-                <li>
-                  {{ingredient}}
-                  <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/HAVE/" data-append="#invites">
+            {% for ingredient in object.recipe.ingredients.all %}
+              <div class="row-fluid">
+                <div class="span6">
+                  <li><h4>{{ingredient|capfirst }}</h4></li>
+                </div>
+                <div class="span2">
+                  <form class="form-inline nospace" method="post" action="/meal/{{object.id}}/part/add/HAVE/" data-append="#invites">
                       {% csrf_token %}
                       <input type="hidden" value="{{ingredient}}" name="name" id="id_name"></input>
-                      <button class='btn btn-primary' type='submit'><i class="icon-plus"> Have</i></button>
+                      <button class='btn btn-success' type='submit'><i class="icon-check"> Have</i></button>
                   </form>
-                  <form class="form-inline" method="post" action="/meal/{{object.id}}/part/add/NEED/" data-append="#invites">
+                </div>
+                <div class="span2">
+                  <form class="form-inline nospace" method="post" action="/meal/{{object.id}}/part/add/NEED/" data-append="#invites">
                       {% csrf_token %}
                       <input type="hidden" value="{{ingredient}}" name="name" id="id_name"></input>
-                      <button class='btn btn-primary' type='submit'><i class="icon-plus"> Need</i></button>
+                      <button class='btn btn-danger' type='submit'><i class="icon-plus-sign-alt"> Need</i></button>
                   </form>
-                </li>
-              {% endfor %}
-            </ul>
+                </div>
+                <div class="span2">
+                  <form class="form-inline nospace" method="post" action="/meal/{{object.id}}/part/add/WANT/" data-append="#invites">
+                      {% csrf_token %}
+                      <input type="hidden" value="{{ingredient}}" name="name" id="id_name"></input>
+                      <button class='btn btn-warning' type='submit'><i class="icon-asterisk"> Want</i></button>
+                  </form>
+                </div>
+              </div>
+            {% endfor %}
           </div>
-          <div class="span5">
+          <div class="span4">
             <h3> Cooking Time: </h3>
-            <h4>{{object.recipe.total_time_in_seconds}} seconds.</h4>
+            <h4>{{object.recipe.total_time_in_seconds}} minutes.</h4>
             <h3> Rating: </h3>
             <h4>{{object.recipe.rating}} out of 5</h4>
           </div>
@@ -174,9 +185,9 @@
           {{object.current_guests}} out of a maximum of {{object.max_guests}}
           <span class="pull-right">
             {% if object.current_guests < object.max_guests and  object.max_guests > 1 %}
-              <a href= "/meal/{{object.id}}/max_guests/0/" class="btn btn-danger"><i class="icon-minus"></i></a>
+              <a href= "/meal/{{object.id}}/max_guests/0/" class="btn btn-danger"><i class="icon-minus"> Less</i></a>
             {% endif %}
-            <a href= "/meal/{{object.id}}/max_guests/1/" class="btn btn-success"><i class="icon-plus"></i></a>
+            <a href= "/meal/{{object.id}}/max_guests/1/" class="btn btn-success"><i class="icon-plus"> More</i></a>
           </span>
         </h3>
         {% for guest in meal.guest_set.all %}
@@ -266,7 +277,22 @@
   
       {% get_comment_count for object as comment_count %}
       <h2><i class="icon-comment-alt"> {{comment_count}} Comment(s) </i></h2>
-      {% render_comment_list for object %}
+      {% get_comment_list for object as comment_list %}
+      {% for comment in comment_list %}
+        <div class="row-fluid">
+          <div class="span2">
+            {% if "facebook.com" in comment.user.email %}
+              <img src="http://graph.facebook.com/{{comment.user.email|cut:"@facebook.com" }}/picture" />
+            {% else %}
+              <img src="{% gravatar_url comment.user.email 68 %}">
+            {% endif %}
+          </div>
+          <div class="span10">
+            <p><b>{{comment.user_name}}</b> - {{comment.submit_date}}</p>
+            <p>{{comment.comment}}</p>
+          </div>
+        </div></br>
+      {% endfor %}
       {% if user.is_authenticated %}
         <button type="button" class="btn" data-toggle="collapse" data-target="#comdetail{{entry.id}}">Add Comment <b class="caret"></b></button>
         <div id="comdetail{{entry.id}}" class="collapse ">
@@ -280,7 +306,7 @@
           {{ form.timestamp }}
           {{ form.security_hash }}
           <input type="hidden" name="next" value="{{object.get_absolute_url}}" />
-          <input type="submit" value="Add comment" id="id_submit" />
+          <input type="submit" class="btn btn-primary" value="Post" id="id_submit" />
           </form>
         </div>
       {% else %}

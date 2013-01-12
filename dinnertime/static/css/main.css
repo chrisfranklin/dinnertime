@@ -15,6 +15,10 @@
   display: none;
 }
 
+.nospace{
+  margin:0;
+}
+
 .bgit{
   /*background: url(/static/img/bg.png) repeat center center; */
   background: url(/static/img/bg2.jpg) no-repeat center center;

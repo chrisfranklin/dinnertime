@@ -37,8 +37,6 @@ DEFAULT_FROM_EMAIL = 'TableSurfin <info@tablesurf.in>'
 SECRET_KEY = 's^tsuf-^w*w&amp;&amp;)#-_9xh2l8r$qs4itiq8h1a2aft&amp;rjj^7#9aj'
 
 INSTALLED_APPS = (
-    # 'dinnertime.apps.',
-
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -49,59 +47,27 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.comments',
-
-    #'south',
+    'accounts',
     'meals',
     'util',
-
     'easy_maps',
-
     'rest_framework',
-    #'api',
-
     'autocomplete_light',
-
-    #'lazysignup',
-    #'django_facebook',  DEPRECATED, remove soon
     'django_gravatar',
     'crispy_forms',
-
     'friends',
     'oauth_access',
     'friends.contrib.suggestions',
     'notification',
     'launchpad',
-
-    #==========================================================================
-    # 3rd party Applications
-    #==========================================================================
-    #'django_jenkins',
-    #--------------------------------------------------------------------------
-    # User Profiles
-    #--------------------------------------------------------------------------
-    'accounts',
-
-    #--------------------------------------------------------------------------
-    # Theme
-    #--------------------------------------------------------------------------
-    #'bootstrap',
-
-    #--------------------------------------------------------------------------
-    # Email
-    #--------------------------------------------------------------------------
-    'djrill',
-
     #--------------------------------------------------------------------------
     # Util
     #--------------------------------------------------------------------------
+    'djrill',
     'mptt',
     'compressor',
-
-    #--------------------------------------------------------------------------
-    # Reversion history for models
-    #--------------------------------------------------------------------------
+    'djcelery',
     #'reversion',
-
     #--------------------------------------------------------------------------
     # Allauth Accounts Management
     #--------------------------------------------------------------------------
@@ -118,15 +84,6 @@ INSTALLED_APPS = (
     # 'allauth.socialaccount.providers.soundcloud',
     'allauth.socialaccount.providers.twitter',
 
-    #--------------------------------------------------------------------------
-    # Facebook Support
-    #--------------------------------------------------------------------------
-
-    #--------------------------------------------------------------------------
-    # Background Task Support
-    #--------------------------------------------------------------------------
-    'djcelery',
-
     'inplaceeditform',
     'actstream',
     'phileo',
@@ -138,7 +95,6 @@ INSTALLED_APPS = (
     'gunicorn',
 
     #'south',
-    #'cities_light',  # Just here to help tests pass at the moment, will eventually be replaced with cities and geodjango
 
 )
 

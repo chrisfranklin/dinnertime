@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block friends_content %}
-<h3> Friends </h3>
+<h3><i class="icon-group"> Friends </i></h3>
 <ul>
 {% for friend in friends %}
 	<li>
@@ -26,37 +26,35 @@
     </li>
 {% endfor %}
 </ul>
-<h3> Suggested Friends </h3>
-<h3> Import Contacts </h3>
-{% for account in request.user.socialaccount_set.all %}
-  {% if account.provider == "facebook" %}
-    <i class="icon-facebook"><a href="{% url 'friends_suggestions_import_facebook_contacts' %}"> Facebook</a></i>
-  {% elif account.provider == "twitter" %}
-    <i class="icon-twitter"><a href="{% url 'friends_suggestions_import_twitter_contacts' %}"> Twitter</a></i>
-  {% elif account.provider == "google" %}
-    <i class="icon-google-plus-sign"><a href="{% url 'friends_suggestions_import_google_contacts' %}"> Google</a> </i> 
-  {% elif account.provider == "yahoo" %}
-    <i class="icon-twitter"><a href="{% url 'friends_suggestions_import_twitter_contacts' %}"> Twitter</a></i>
-  {% elif account.provider == "linkedin" %}
-    <i class="icon-linkedin"><a href="{% url 'friends_suggestions_import_linkedin_contacts' %}"> LinkedIn</a></i>
-  {% else %}
-    Unknown provider with name of {{account.provider}}
-  {% endif %}
-  <div class="span4">
-    <h2 style="text-transform:capitalize;">{{ account.provider }}</h2>
-    <p><img width="50" height="50" src="{{ account.get_avatar_url }}" /></p>
-    <p>Username: {{ account.extra_data.username }}</p>
-    <p>First Name: {{ account.extra_data.first_name }}</p>
-    <p>Last Name: {{ account.extra_data.last_name }}</p>
-    <p>Profile Link: <a href="{{ account.extra_data.link }}">{{ account.extra_data.link }}</a></p>
-  </div>
-{% endfor %}
-<p>{% trans "Select service from which you want to import your contacts:" %}</p>
-<i class="icon-facebook"><a href="{% url 'friends_suggestions_import_facebook_contacts' %}"> Facebook</a></i> | 
-<i class="icon-google-plus-sign"><a href="{% url 'friends_suggestions_import_google_contacts' %}"> Google</a> </i> | 
-<i class="icon-linkedin"><a href="{% url 'friends_suggestions_import_linkedin_contacts' %}"> LinkedIn</a></i> | 
-<i class="icon-twitter"><a href="{% url 'friends_suggestions_import_twitter_contacts' %}"> Twitter</a></i> | 
-<i class="icon-sign-blank"><a href="{% url 'friends_suggestions_import_yahoo_contacts' %}"> Yahoo</a></i>
+<h3><i class="icon-lightbulb"> Suggested Friends </i> </h3>
+<p> This feature is currently under development, please check back. </p>
+<h3><i class="icon-user"> Import Contacts </i></h3>
+<div class="row-fluid center">
+  {% for account in request.user.socialaccount_set.all %}
+    
+    <div class="span4">
+      <h4 style="text-transform:capitalize;"><i class="icon-asterisk"> {{ account.provider }}</i></h4>
+      <p><img width="50" height="50" src="{{ account.get_avatar_url }}" /></p>
+      <p>Username: {{ account.extra_data.username }}</p>
+      <p>Name: {{ account.extra_data.first_name }} {{ account.extra_data.last_name }}</p>
+      {% if account.provider == "facebook" %}
+        <i class="icon-facebook"><a href="{% url 'friends_suggestions_import_facebook_contacts' %}"> Import Facebook Contacts</a></i>
+      {% elif account.provider == "twitter" %}
+        <i class="icon-twitter"><a href="{% url 'friends_suggestions_import_twitter_contacts' %}"> Import Twitter Contacts</a></i>
+      {% elif account.provider == "google" %}
+        <i class="icon-google-plus-sign"><a href="{% url 'friends_suggestions_import_google_contacts' %}"> Import Google Contacts</a> </i> 
+      {% elif account.provider == "yahoo" %}
+        <i class="icon-twitter"><a href="{% url 'friends_suggestions_import_twitter_contacts' %}"> Import Yahoo Contacts</a></i>
+      {% elif account.provider == "linkedin" %}
+        <i class="icon-linkedin"><a href="{% url 'friends_suggestions_import_linkedin_contacts' %}"> Import LinkedIn Contacts</a></i>
+      {% else %}
+        Unknown provider with name of {{account.provider}}
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
 <hr>
-<a href="/accounts/usercontact/" class="btn btn-primary"> View Contacts </a>
+<h4 class="center"> {% trans "To import your contacts you must associate your account with a social network." %}</h4></br>
+<!--<p class="center"><a href="/accounts/usercontact/" class="btn btn-primary"> View Contacts </a></p>-->
+<p class="center"><a href="/accounts/social/connections" class="btn btn-primary"> Connect Accounts </a></p>
 {% endblock %}

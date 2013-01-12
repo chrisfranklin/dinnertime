@@ -17,7 +17,7 @@ class Command(BaseCommand):
         client = requests.session()
         #response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=quiche' % (ck, cs))
 
-        if args == "ingredient":
+        if args != "ingredient":
             response = client.get('http://api.yummly.com/v1/api/metadata/ingredient?_app_id=%s&_app_key=%s' % (ck, cs))
             pprint(response.content)
             try:
@@ -130,7 +130,7 @@ class Command(BaseCommand):
                         image_list.append(image[:-5] + "xl.png")
                     recipe_object.large_image_urls = image_list
                 if "totalTimeInSeconds" in recipe:
-                    recipe_object.total_time_in_seconds = recipe['totalTimeInSeconds']
+                    recipe_object.total_time_in_seconds = int(recipe['totalTimeInSeconds']) / 60
                 if "sourceDisplayName" in recipe:
                     recipe_object.source_display_name = recipe['sourceDisplayName']
                 if "ingredients" in recipe:

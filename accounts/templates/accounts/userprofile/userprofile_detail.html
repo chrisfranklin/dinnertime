@@ -57,50 +57,86 @@
   {% else %}
     This is not your profile
   {% endif %}
-  <h2> Info </h2>
-  <b> Diet: </b>{% inplace_edit "object.diet" %}<br>
-  <b> Allergies: </b>{{object.allergies }}
-  <hr>
 
-  <h2> Activity </h2>
-  {% for entry in actstream %}
-    <p>{{entry}}</p>
-  {% endfor %}
+  <div class="row-fluid">
+    <div class="span4">
+      <h2><i class="icon-info-sign"> Basic Info </i></h2>
+      <b> Diet: </b>{% inplace_edit "object.diet" %}<br>
+      <b> Allergies: </b>
+      {% for allergy in object.allergies %}
+        {{ allergy }}&nbsp;
+      {% endfor %}
+    </div>
+    <div class="span4">
+      <h2><i class="icon-thumbs-down"> Dislikes </i></h2>
+      {{object.dislikes.objects.all}}
+    </div>
+    <div class="span4">
+      <h2><i class="icon-thumbs-up"> Likes </i></h2>
+      {{object.objects.all}}
+    </div>
+  </div>
   <hr>
+  <div class="row-fluid">
+    <div class="span6">
+      {% load comments gravatar %}
+      {% get_comment_count for object as comment_count %}
+      <h2><i class="icon-comments-alt"> {{comment_count}} Comment(s) </i></h2>
+      {% get_comment_list for object as comment_list %}
+      {% for comment in comment_list %}
+        <div class="row-fluid">
+          <div class="span2">
+            {% if "facebook.com" in comment.user.email %}
+              <img src="http://graph.facebook.com/{{comment.user.email|cut:"@facebook.com" }}/picture" />
+            {% else %}
+              <img src="{% gravatar_url comment.user.email 68 %}">
+            {% endif %}
+          </div>
+          <div class="span10">
+            <p><b>{{comment.user_name}}</b> - {{comment.submit_date}}</p>
+            <p>{{comment.comment}}</p>
+          </div>
+        </div></br>
+      {% endfor %}
 
-  {% load comments %}
-  {% get_comment_count for object as comment_count %}
-  <h2> {{comment_count}} Comment(s) </h2>
-  {% render_comment_list for object %}
-  {% if user.is_authenticated %}
-      {% get_comment_form for object as form %}
-      <form action="{% comment_form_target %}" method="POST">
-      {% csrf_token %}
-      {{ form.comment }}
-      <div class="hidden2">{{ form.honeypot }}</div>
-      {{ form.content_type }}
-      {{ form.object_pk }}
-      {{ form.timestamp }}
-      {{ form.security_hash }}
-      <input type="hidden" name="next" value="{{object.get_absolute_url}}" />
-      <input type="submit" value="Add comment" id="id_submit" />
-      </form>
-  {% else %}
-      <p>Please <a href="{% url 'auth_login' %}">log in</a> to leave a comment.</p>
-  {% endif %}
-  <hr>
-  
-  <form action='{% url 'accounts_userprofile_delete' pk=object.pk %}' charset='utf-8' method='post'>
-    <fieldset>
-      {% csrf_token %}
-      <div class='form-actions'>
-        <a class='btn btn-success' href='{% url 'accounts_userprofile_update' pk=object.pk %}'>
-          {% trans "Update" %}
-        </a>
-        <button class='btn btn-danger' type='submit'>
-          {% trans "Delete" %}
-        </button>
-      </div>
-    </fieldset>
-  </form>
+
+      {% if user.is_authenticated %}
+        <button type="button" class="btn" data-toggle="collapse" data-target="#comdetail{{entry.id}}">Add Comment <b class="caret"></b></button>
+        <div id="comdetail{{entry.id}}" class="collapse ">
+          {% get_comment_form for object as form %}
+          <form action="{% comment_form_target %}" method="POST">
+          {% csrf_token %}
+          {{ form.comment }}
+          <div class="hidden2">{{ form.honeypot }}</div>
+          {{ form.content_type }}
+          {{ form.object_pk }}
+          {{ form.timestamp }}
+          {{ form.security_hash }}
+          <input type="hidden" name="next" value="{{object.get_absolute_url}}" />
+          <input type="submit" class="btn btn-primary" value="Post" id="id_submit" />
+          </form>
+        </div>
+      {% else %}
+          <p>Please <a href="{% url 'auth_login' %}">log in</a> to leave a comment.</p>
+      {% endif %}
+    </div>
+    <div class="span6">
+      <h2><i class="icon-exchange"> Activity </i></h2>
+      {% for entry in actstream %}
+        <p>
+          {% if entry.actor.email %}
+            {% if "facebook.com" in entry.actor.email %}
+              <img src="http://graph.facebook.com/{{entry.actor.email|cut:"@facebook.com" }}/picture" />
+            {% else %}
+              <img src="{% gravatar_url entry.actor.email 68 %}">
+            {% endif %}
+          {% else %}
+            <img src="{% gravatar_url 'nincampoooop2222@g009egl.com' 68 %}">
+          {% endif %}
+          {{entry}}
+        </p>
+      {% endfor %}
+    </div>
+  </div>
+
 {% endblock %}
