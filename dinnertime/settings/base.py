@@ -31,6 +31,8 @@ ADMINS = (
     ('chris', 'chris@piemonster.me'),
 )
 
+DEFAULT_FROM_EMAIL = 'TableSurfin <info@tablesurf.in>'
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 's^tsuf-^w*w&amp;&amp;)#-_9xh2l8r$qs4itiq8h1a2aft&amp;rjj^7#9aj'
 
