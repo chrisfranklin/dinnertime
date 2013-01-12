@@ -2,16 +2,15 @@
 
   <div class="span4">
     <h2><i class="icon-star"> Login </i></h2>
-    {% if object.meal %} <!-- we are dealing with an invite -->
     <form class="login" method="POST" action="/accounts/login/">
-    {% else %}
-    <form class="login" method="POST" action="/accounts/login/">
-    {% endif %}
         {% csrf_token %}
         <p><label for="id_login">Username:</label> <input id="id_login" type="text" placeholder="Username" name="login" maxlength="30" /></p>
         <p><label for="id_password">Password:</label> <input type="password" placeholder="Password" name="password" id="id_password" /></p>
         <p><label for="id_remember">Remember Me:</label> <input type="checkbox" name="remember" id="id_remember" /></p>
+        {% if object.meal %} <!-- we are dealing with an invite -->
         <input type="hidden" name="next" value="/meal/invite/{{object.secret}}" />
+        {% endif %}
+        
         <a class="button secondaryAction" href="/accounts/password/reset/">
             Forgot Password?
         </a>
@@ -71,7 +70,9 @@
         <p> <input type="password" placeholder="Password" name="password1" id="id_password1" /></p>
         <p> <input type="password" placeholder="Enter password again" name="password2" id="id_password2" /></p>
         <p> <input type="text" placeholder="Email" name="email" id="id_email" /><input type="hidden" name="confirmation_key" id="id_confirmation_key" /></p>
+        {% if object.meal %} <!-- we are dealing with an invite -->
         <input type="hidden" name="next" value="/meal/invite/{{object.secret}}" />
+        {% endif %}
         <button type="submit">Sign Up &raquo;</button>
     </form>
   </div>
