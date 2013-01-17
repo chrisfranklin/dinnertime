@@ -22,8 +22,14 @@ urlpatterns = patterns('api.views',
                        url(r'^invites/$', views.InviteList.as_view(), name='invite-list'),
                        url(r'^invites/(?P<pk>\d+)/$', views.InviteDetail.as_view(), name='invite-detail'),
 
-                       url(r'^profiles/$', views.UserProfileList.as_view(), name='profile-list'),
-                       url(r'^profiles/(?P<pk>\d+)/$', views.UserProfileDetail.as_view(), name='profile-detail'),
+                       url(r'^users/$', views.UserList.as_view(), name='user-list'),
+                       url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view(), name='user-detail'),
+
+                       url(r'^profiles/$', views.UserProfileList.as_view(), name='userprofile-list'),
+                       url(r'^profiles/(?P<pk>\d+)/$', views.UserProfileDetail.as_view(), name='userprofile-detail'),
+
+                       url(r'^contacts/$', views.UserProfileList.as_view(), name='usercontact-list'),
+                       url(r'^contacts/(?P<pk>\d+)/$', views.UserProfileDetail.as_view(), name='usercontact-detail'),
 
                        )
 

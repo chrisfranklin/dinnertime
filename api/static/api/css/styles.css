@@ -41,11 +41,6 @@ li a:hover {
     color: white;
 }
 
-input, textarea {
-    border: 1px solid #ccc;
-    min-height: 30px;
-    outline: none;
-}
 
 .form-left-col input {
     margin-bottom: 15px;

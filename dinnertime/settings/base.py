@@ -67,10 +67,12 @@ INSTALLED_APPS = (
     'mptt',
     'compressor',
     'djcelery',
+    'django_statsd',
+    'app_metrics',
+    'raven.contrib.django',
     #'reversion',
-    #--------------------------------------------------------------------------
-    # Allauth Accounts Management
-    #--------------------------------------------------------------------------
+    #'south',
+
     'avatar',
     'allauth',
     'allauth.account',
@@ -88,13 +90,8 @@ INSTALLED_APPS = (
     'actstream',
     'phileo',
     'yummly',
-    'django_statsd',
-    'app_metrics',
-    'raven.contrib.django',
     'cities_light',
     'gunicorn',
-
-    #'south',
 
 )
 

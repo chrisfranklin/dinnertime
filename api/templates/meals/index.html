@@ -110,19 +110,82 @@
                         <div class="row-fluid">
                             <div class="span6">
                                 <label>Id:</label>
-                                <input type="text" id="mealId" name="id" value="<%= id %>" disabled />
+                                <div class="input-prepend">
+                                    <span class="add-on">
+                                        <i class="icon-key"></i>
+                                    </span>
+                                    <input type="text" id="mealId" name="id" value="<%= id %>" disabled />
+                                </div>
                                 <label>Name:</label>
-                                <input type="text" id="name" name="name" value="<%= name %>" required/>
+                                
+                                <div class="input-prepend">
+                                    <span class="add-on">
+                                        <i class="icon-star"></i>
+                                    </span>
+                                    <input type="text" id="name" name="name" value="<%= name %>" required/>
+                                </div>
                                 <label>Host:</label>
-                                <input type="text" id="host" name="host" value="<%= host %>" required/>
+                                <div class="input-prepend">
+                                    <span class="add-on">
+                                        <i class="icon-user"></i>
+                                    </span>
+                                    <input type="text" id="host" name="host" value="<%= host %>" required/>
+                                </div>
+                                
                                 <label>Guests:</label>
-                                <input type="text" id="current_guests" name="current_guests" value="<%= guests %>" required/>
+                                <div class="input-prepend">
+                                    <span class="add-on">
+                                        <i class="icon-group"></i>
+                                    </span>
+                                    <input type="text" id="current_guests" name="current_guests" value="<%= guests %>" required/>
+                                </div>
                                 <label>Current Guests #:</label>
-                                <input type="text" id="current_guests" name="current_guests" value="<%= current_guests %>" required/>
+                                <div class="input-prepend">
+                                    <span class="add-on">
+                                        <i class="icon-circle-blank"></i>
+                                    </span>
+                                    <input type="text" id="current_guests" name="current_guests" value="<%= current_guests %>" required/>
+                                </div>
+                                
                                 <label>Max Guests #:</label>
-                                <input type="text" id="max_guests" name="max_guests" value="<%= max_guests %>" required/>
+                                
+                                <div class="input-prepend">
+                                    <span class="add-on">
+                                        <i class="icon-circle"></i>
+                                    </span>
+                                    <input type="text" id="max_guests" name="max_guests" value="<%= max_guests %>" required/>
+                                </div>
                                 <label>Recipe:</label>
-                                <input type="text" id="recipe" name="recipe" value="<%=recipe %>" required/>
+                                <div class="input-prepend">
+                                    <span class="add-on">
+                                        <i class="icon-food"></i>
+                                    </span>
+                                    <input type="text" id="recipe" name="recipe" value="<%=recipe %>" required/>
+                                </div>
+                                
+                            </div>
+                            <div class="span6">
+                                <label>Description:</label>
+                                <textarea id="description" name="description"><%= description %></textarea>
+                            </div>
+                        </div>
+                    </script>
+
+                    <script type="text/template" id="tpl-invite-list-item">
+                        <a href='#invites/<%= id %>'><%= description %>123</a>
+                    </script>
+
+                    <script type="text/template" id="tpl-invite-details">
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <label>Id:</label>
+                                <div class="input-prepend">
+                                    <span class="add-on">
+                                        <i class="icon-key"></i>
+                                    </span>
+                                    <input type="text" id="inviteId" name="id" value="<%= id %>" disabled />
+                                </div>
+                                
                             </div>
                             <div class="span6">
                                 <label>Description:</label>
