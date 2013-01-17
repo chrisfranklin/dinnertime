@@ -35,7 +35,7 @@ INSTALLED_APPS += (
     'api',
 )
 
-FIXTURE_DIRS += ('%s/fixtures/local' % PROJECT_DIR)
+FIXTURE_DIRS += ('%s/fixtures/local' % PROJECT_DIR,)
 
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.version.VersionDebugPanel',
