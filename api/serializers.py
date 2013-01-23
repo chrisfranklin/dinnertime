@@ -30,48 +30,30 @@ class GuestSerializer(serializers.ModelSerializer):
         fields = ('id', 'meal', 'invite')
 
 
-class User(object):
-    """
-    A color represented in the RGB colorspace.
-    """
-    def __init__(self, uid, name, email=None):
-        self.uid, self.name, self.email = uid, name, email
-
-
-class UserField(serializers.WritableField):
-    """
-    Color objects are serialized into "rgb(#, #, #)" notation.
-    """
-    def to_native(self, obj):
-        return "%d, %d, %d" % (obj.uid, obj.name, obj.email)
-
-    def from_native(self, data):
-        data = data.strip('rgb(').rstrip(')')
-        uid, name, email = [int(col) for col in data.split(',')]
-        return User(uid, name, email)
-
-
-class MealSerializer(serializers.ModelSerializer):
-    #invites = serializers.HyperlinkedRelatedField()
-    #guests = serializers.ManyPrimaryKeyRelatedField('guests')
-    host_username = serializers.Field(source='host.username')
-
+class PartSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Meal
-        #fields = ('id', 'name', 'venue', 'suitable_for', 'description', 'when', 'host', 'host_username', 'guests', 'current_guests', 'max_guests', 'privacy', 'parts', 'recipe')
+        model = Part
+        fields = ('id', 'part_type', 'name', 'description', 'unit')
 
 
 class MealPartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MealPart
-        fields = ('id', 'part', 'meal', 'status', 'quantity', 'added_by', 'fulfilled_by')
+        #fields = ('id', 'part', 'meal', 'status', 'quantity', 'added_by', 'fulfilled_by')
 
 
-class PartSerializer(serializers.ModelSerializer):
+class MealSerializer(serializers.ModelSerializer):
+    #invites = serializers.HyperlinkedRelatedField()
+    #guests = serializers.ManyPrimaryKeyRelatedField('guests')
+    host_username = serializers.Field(source='host.username')
+    host_email = serializers.Field(source='host.email')
+    name = serializers.Field(source='get_name')
+
     class Meta:
-        model = Part
-        fields = ('id', 'part_type', 'name', 'description', 'unit')
+        model = Meal
+        include = [('parts', MealPart)]
+        #fields = ('id', 'name', 'venue', 'suitable_for', 'description', 'when', 'host', 'host_username', 'guests', 'current_guests', 'max_guests', 'privacy', 'parts', 'recipe')
 
 
 class InviteSerializer(serializers.ModelSerializer):

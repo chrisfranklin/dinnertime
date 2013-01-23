@@ -73,6 +73,7 @@ INSTALLED_APPS = (
     #'reversion',
     #'south',
 
+    'django_gravatar',  # added but not tested, warning may fuck with the line below
     'avatar',
     'allauth',
     'allauth.account',

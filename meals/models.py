@@ -156,14 +156,18 @@ class Meal(models.Model):
             # The meal is full, remove some guests before decreasing the size.
             return False
 
-    def past(self):
-        return self.when < Date.now()
-
-    def __unicode__(self):
+    def get_name(self):
         if self.name:
             return self.name
         else:
-            return "%s meal" % (self.host)
+            return "%s's meal" % (self.host)
+
+    def past(self):
+        from datetime import datetime
+        return self.when < datetime.now()
+
+    def __unicode__(self):
+        return self.get_name()
 
     @models.permalink
     def get_absolute_url(self):
