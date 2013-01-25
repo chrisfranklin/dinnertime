@@ -3,11 +3,11 @@ import json
 from django.forms import ModelForm
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView, \
-                                 DeleteView, UpdateView, \
-                                 ArchiveIndexView, DateDetailView, \
-                                 DayArchiveView, MonthArchiveView, \
-                                 TodayArchiveView, WeekArchiveView, \
-                                 YearArchiveView
+    DeleteView, UpdateView, \
+    ArchiveIndexView, DateDetailView, \
+    DayArchiveView, MonthArchiveView, \
+    TodayArchiveView, WeekArchiveView, \
+    YearArchiveView
 #from django.views.generic.edit import FormView
 #from django.views.generic.detail import SingleObjectTemplateResponseMixin
 #from util.widgets import BootstrapSplitDateTimeWidget
@@ -128,7 +128,7 @@ class MealBaseListView(MealView):
 
 
 class MealArchiveIndexView(
-    MealDateView, MealBaseListView, ArchiveIndexView):
+        MealDateView, MealBaseListView, ArchiveIndexView):
     pass
 
 from django import forms
@@ -184,7 +184,7 @@ class MealDateDetailView(MealDateView, DateDetailView):
 
 
 class MealDayArchiveView(
-    MealDateView, MealBaseListView, DayArchiveView):
+        MealDateView, MealBaseListView, DayArchiveView):
     pass
 
 
@@ -264,7 +264,7 @@ class MealDetailView(MealView, DetailView, FormMixin):
         formpart = PartForm()
         print actionstream
         context = {
-            'form':  form,
+            'form': form,
             'formh': formpart,
             'formn': formpart,
             'formw': formpart,
@@ -277,14 +277,29 @@ class MealDetailView(MealView, DetailView, FormMixin):
 class MealListView(MealBaseListView, ListView):
     pass
 
+    def get_context_data(self, **kwargs):
+        all_meals = Meal.objects.all()
+        public_meals = all_meals.filter(privacy="PUBLIC")
+        attending_meals = all_meals.filter(guests=self.request.user)
+        from meals.models import Invite
+        invites = Invite.objects.filter(invitee__user=self.request.user)
+        print self.request.user
+        context = {
+            'public_meals': public_meals,
+            'attending_meals': attending_meals,
+            'invites': invites,
+        }
+        context.update(kwargs)
+        return super(MealListView, self).get_context_data(**context)
+
 
 class MealMonthArchiveView(
-    MealDateView, MealBaseListView, MonthArchiveView):
+        MealDateView, MealBaseListView, MonthArchiveView):
     pass
 
 
 class MealTodayArchiveView(
-    MealDateView, MealBaseListView, TodayArchiveView):
+        MealDateView, MealBaseListView, TodayArchiveView):
     pass
 
 
@@ -296,10 +311,10 @@ class MealUpdateView(MealView, UpdateView):
 
 
 class MealWeekArchiveView(
-    MealDateView, MealBaseListView, WeekArchiveView):
+        MealDateView, MealBaseListView, WeekArchiveView):
     pass
 
 
 class MealYearArchiveView(
-    MealDateView, MealBaseListView, YearArchiveView):
+        MealDateView, MealBaseListView, YearArchiveView):
     make_object_list = True

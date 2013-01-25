@@ -73,6 +73,11 @@ post_save.connect(create_user_profile, sender=User)
 post_save.connect(find_friends_suggestions, sender=User)
 
 
+class UserContactManager(models.Manager):
+    def get_query_set(self):
+        print "HELLO!"
+        return super(UserContactManager, self).get_query_set().filter(privacy="PRIVATE")
+
 class UserContact(models.Model):
     """
     Stores an individual contact for the users friend list

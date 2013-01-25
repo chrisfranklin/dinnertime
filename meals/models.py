@@ -45,11 +45,21 @@ class Part(models.Model):
 
 from yummly.models import Recipe
 
+class PublicMealManager(models.Manager):
+    def get_query_set(self):
+        print "HELLO!"
+        return super(PrivateMealManager, self).get_query_set().filter(privacy="PUBLIC")
+
+class PrivateMealManager(models.Manager):
+    def get_query_set(self):
+        print "HELLO!"
+        return super(PrivateMealManager, self).get_query_set().filter(privacy="PRIVATE")
 
 class Meal(models.Model):
     """
     Stores an instance of a meal, very important model.
     """
+    #objects = PrivateMealManager()
     name = models.CharField(max_length=120, blank=True, null=True)
     host = models.ForeignKey(User, related_name="hosted")
     when = models.DateTimeField()
@@ -73,6 +83,7 @@ class Meal(models.Model):
     parts = models.ManyToManyField(Part, blank=True, null=True, through='MealPart')
     #cut off for rsvp needs adding
     recipe = models.ForeignKey(Recipe, blank=True, null=True)
+
 
     def save(self, *args, **kwargs):
         """
@@ -156,6 +167,24 @@ class Meal(models.Model):
             # The meal is full, remove some guests before decreasing the size.
             return False
 
+    def get_image(self):
+        if self.icon:
+            return self.icon.url
+        else:
+            from django_gravatar.helpers import get_gravatar_url  # , has_gravatar
+            url = get_gravatar_url(self.host.email, size=150)
+            #gravatar_exists = has_gravatar('bob@example.com')
+            return url
+
+    def get_image_small(self):
+        if self.icon:
+            return self.icon.url
+        else:
+            from django_gravatar.helpers import get_gravatar_url  # , has_gravatar
+            url = get_gravatar_url(self.host.email, size=50)
+            #gravatar_exists = has_gravatar('bob@example.com')
+            return url
+
     def get_name(self):
         if self.name:
             return self.name
@@ -163,8 +192,11 @@ class Meal(models.Model):
             return "%s's meal" % (self.host)
 
     def past(self):
-        from datetime import datetime
-        return self.when < datetime.now()
+        import datetime
+        from django.utils.timezone import utc
+
+        now = datetime.datetime.utcnow().replace(tzinfo=utc)
+        return self.when < now
 
     def __unicode__(self):
         return self.get_name()

@@ -115,7 +115,8 @@
                 
                 <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="icon-caret-down"></span></a>
                 <ul class="dropdown-menu">
-                  {% if request.user.is_authenticated %}  
+                  {% if request.user.is_authenticated %} 
+                    <li><a tabindex="-1" href="/friends/"><i class="icon-group"></i> Friends</a></li> 
                     <li><a tabindex="-1" href="/accounts/social/connections"><i class="icon-star"></i> Social Accounts</a></li>
                     <li><a tabindex="-1" href="/accounts/usercontact/"><i class="icon-pencil"></i> Contacts</a></li>
                     <li class="divider"></li>

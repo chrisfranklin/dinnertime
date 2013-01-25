@@ -49,6 +49,9 @@ class MealSerializer(serializers.ModelSerializer):
     host_username = serializers.Field(source='host.username')
     host_email = serializers.Field(source='host.email')
     name = serializers.Field(source='get_name')
+    past = serializers.Field(source='past')
+    image = serializers.Field(source='get_image')
+    small_image = serializers.Field(source='get_image_small')
 
     class Meta:
         model = Meal

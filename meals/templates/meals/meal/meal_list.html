@@ -31,9 +31,9 @@
   </h2>
   <table class='table table-bordered table-striped'>
     {% load avatar_tags %}
-    {% for object in object_list %}
-      <tr>
-
+    {% for object in attending_meals %}
+      {% if not object.past %}
+        <tr>
           <td>
             <a href="{{object.host.get_profile.get_absolute_url}}">
               {% avatar object.host %}
@@ -58,10 +58,9 @@
           <td>{{ object.description }}</td>
         
         
-          <td>{{ object.privacy }}</td>
-        
-        
-      </tr>
+          <td>{{ object.privacy }}</td>  
+        </tr>
+      {% endif %}
     {% endfor %}
   </table>
   <hr>
@@ -70,14 +69,85 @@
       {% trans "Meal Invites" %}
     </i>
   </h2>
-  <p> No invites yet </p>{{request.user.invite_set}}
+  <table class='table table-bordered table-striped'>
+    {% load avatar_tags %}
+    {% for object in invites %}
+      {% if not object.meal.past %}
+        {% if object.status == "INVITED" %}
+          <tr>
+            <td>
+              <a href="{{object.meal.host.get_profile.get_absolute_url}}">
+                {% avatar object.meal.host %}
+              </a>
+              <p class="center">{{ object.meal.host }}</p>
+            </td>
+
+            <td>
+              <h3>
+                <a href='{{ object.meal.get_absolute_url }}'>
+                  {% if object.meal.name %}
+                    {{ object.meal.name }}
+                  {% else %}
+                    {{ object.meal }}
+                  {% endif %}
+                </a>
+              </h3>
+            </td>
+          
+            <td>{{ object.meal.when }}</br>{{ object.meal.venue.address }}</td>
+          
+            <td>{{ object.meal.description }}</td>
+          
+          
+            <td>{{ object.meal.privacy }}</td> 
+
+            <td><a href="{{ object.meal.get_absolute_url }}invite/{{object.secret}}/y/">Accept</a></td>
+            <td><a href="{{ object.meal.get_absolute_url }}invite/{{object.secret}}/n/">Decline</a></td> 
+          </tr>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </table>
   <hr>
   <h2>
-    <i class="icon-star-alt">
+    <i class="icon-reply">
       
       {% trans "Past Meals" %}
     </i>
   </h2>
-  <p> You have not been to any meals</p>
+  <table class='table table-bordered table-striped'>
+    {% load avatar_tags %}
+    {% for object in attending_meals %}
+      {% if object.past %}
+        <tr>
+          <td>
+            <a href="{{object.host.get_profile.get_absolute_url}}">
+              {% avatar object.host %}
+            </a>
+            <p class="center">{{ object.host }}</p>
+          </td>
+
+          <td>
+            <h3>
+              <a href='{{ object.get_absolute_url }}'>
+                {% if object.name %}
+                  {{ object.name }}
+                {% else %}
+                  {{ object }}
+                {% endif %}
+              </a>
+            </h3>
+          </td>
+        
+          <td>{{ object.when }}</br>{{ object.venue.address }}</td>
+        
+          <td>{{ object.description }}</td>
+        
+        
+          <td>{{ object.privacy }}</td>  
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </table>
 
 {% endblock %}
