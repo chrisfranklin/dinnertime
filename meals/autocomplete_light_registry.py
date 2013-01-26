@@ -10,7 +10,7 @@ from meals.models import Venue
 class InviteAutocomplete(autocomplete_light.AutocompleteGenericBase):
     choices = (
         User.objects.all(),
-        UserContact.objects.all(),
+        UserContact.objects.filter(),
     )
     search_fields = (
         ('username', 'email', 'first_name', 'last_name'),

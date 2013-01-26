@@ -7,6 +7,8 @@ from django.views.generic import ListView, DetailView, CreateView, \
 
 
 from accounts.models import UserProfile
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
 class UserProfileView(object):
@@ -19,6 +21,10 @@ class UserProfileView(object):
         mdl = 'userprofile'
         self.template_name = tpl.replace(app, '{0}/{1}'.format(app, mdl))
         return [self.template_name]
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(UserProfileView, self).dispatch(*args, **kwargs)
 
 
 class UserProfileDateView(UserProfileView):

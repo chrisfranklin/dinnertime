@@ -17,6 +17,9 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 
 def set_max_guests(request, meal_id, direction):
     if meal_id:
@@ -110,6 +113,10 @@ class MealView(object):
         mdl = 'meal'
         self.template_name = tpl.replace(app, '{0}/{1}'.format(app, mdl))
         return [self.template_name]
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(MealView, self).dispatch(*args, **kwargs)
 
 
 class MealDateView(MealView):

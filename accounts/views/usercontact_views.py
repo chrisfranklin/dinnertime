@@ -3,6 +3,9 @@ from django.views.generic import ListView, DetailView, CreateView, \
 
 
 from accounts.models import UserContact
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 
 
 class UserContactView(object):
@@ -15,6 +18,10 @@ class UserContactView(object):
         mdl = 'usercontact'
         self.template_name = tpl.replace(app, '{0}/{1}'.format(app, mdl))
         return [self.template_name]
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(UserContactView, self).dispatch(*args, **kwargs)
 
 
 class UserContactBaseListView(UserContactView):
@@ -39,16 +46,19 @@ class UserContactDetailView(UserContactView, DetailView):
     pass
 
 
-class UserContactListView(UserContactBaseListView, ListView):
+class UserContactListView(UserContactView, ListView):
     pass
 
-
+    def get_context_data(self, **kwargs):
+        contacts = UserContact.objects.filter(owner=self.request.user)
+        context = {
+            'contact_list': contacts,
+        }
+        context.update(kwargs)
+        return super(UserContactListView, self).get_context_data(**context)
 
 
 class UserContactUpdateView(UserContactView, UpdateView):
     pass
-
-
-
 
 

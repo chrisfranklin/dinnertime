@@ -21,7 +21,7 @@
         <h2 class="btn btn-primary btn-large"> I'm cooking </h2>
       </div>
     </div> -->
-    {% if not request.user.is_authenticated %}
+    {% if not request.user %}
       <div class="well" style="color:black;">
         <h3> We are currently cooking things up, please register your interest below </h3>
       
@@ -74,9 +74,7 @@
           </li>
         </ul> -->
       {% else %}
-        <div class="well">
           {% include 'login_bar.html' %}
-        </div>
       {% endif %}
     </div>
   </div>

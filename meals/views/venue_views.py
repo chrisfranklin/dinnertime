@@ -1,8 +1,10 @@
 from django.views.generic import ListView, DetailView, CreateView, \
-                                 DeleteView, UpdateView
+    DeleteView, UpdateView
 
 
 from meals.models import Venue
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
 class VenueView(object):
@@ -16,16 +18,17 @@ class VenueView(object):
         self.template_name = tpl.replace(app, '{0}/{1}'.format(app, mdl))
         return [self.template_name]
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(VenueView, self).dispatch(*args, **kwargs)
+
 
 class VenueBaseListView(VenueView):
     paginate_by = 10
 
 
-
 class VenueCreateView(VenueView, CreateView):
     pass
-
-
 
 
 class VenueDeleteView(VenueView, DeleteView):
@@ -43,12 +46,5 @@ class VenueListView(VenueBaseListView, ListView):
     pass
 
 
-
-
 class VenueUpdateView(VenueView, UpdateView):
     pass
-
-
-
-
-
