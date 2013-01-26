@@ -107,27 +107,26 @@ urlpatterns += patterns('',
         view=ack_invite,
         name='meals_meal_invite_ack'
     ),
-    
     url(
         regex=r'^meal/create/$',
         view=MealCreateView.as_view(),
         name='meals_meal_create'
     ),
-    url(
-        regex=r'^meal/(?P<year>\d{4})/'
-               r'(?P<month>\d{1,2})/'
-               r'(?P<day>\d{1,2})/'
-               r'(?P<pk>\d+?)/$',
-        view=MealDateDetailView.as_view(),
-        name='meals_meal_date_detail'
-    ),
-    url(
-        regex=r'^meal/archive/(?P<year>\d{4})/'
-               r'(?P<month>\d{1,2})/'
-               r'(?P<day>\d{1,2})/$',
-        view=MealDayArchiveView.as_view(),
-        name='meals_meal_day_archive'
-    ),
+    # url(
+    #     regex=r'^meal/(?P<year>\d{4})/'
+    #            r'(?P<month>\d{1,2})/'
+    #            r'(?P<day>\d{1,2})/'
+    #            r'(?P<pk>\d+?)/$',
+    #     view=MealDateDetailView.as_view(),
+    #     name='meals_meal_date_detail'
+    # ),
+    # url(
+    #     regex=r'^meal/archive/(?P<year>\d{4})/'
+    #            r'(?P<month>\d{1,2})/'
+    #            r'(?P<day>\d{1,2})/$',
+    #     view=MealDayArchiveView.as_view(),
+    #     name='meals_meal_day_archive'
+    # ),
     url(
         regex=r'^meal/(?P<pk>\d+?)/delete/$',
         view=MealDeleteView.as_view(),
@@ -143,32 +142,32 @@ urlpatterns += patterns('',
         view=MealListView.as_view(),
         name='meals_meal_list'
     ),
-    url(
-        regex=r'^meal/archive/(?P<year>\d{4})/'
-               r'(?P<month>\d{1,2})/$',
-        view=MealMonthArchiveView.as_view(),
-        name='meals_meal_month_archive'
-    ),
-    url(
-        regex=r'^meal/today/$',
-        view=MealTodayArchiveView.as_view(),
-        name='meals_meal_today_archive'
-    ),
+    # url(
+    #     regex=r'^meal/archive/(?P<year>\d{4})/'
+    #            r'(?P<month>\d{1,2})/$',
+    #     view=MealMonthArchiveView.as_view(),
+    #     name='meals_meal_month_archive'
+    # ),
+    # url(
+    #     regex=r'^meal/today/$',
+    #     view=MealTodayArchiveView.as_view(),
+    #     name='meals_meal_today_archive'
+    # ),
     url(
         regex=r'^meal/(?P<pk>\d+?)/update/$',
         view=MealUpdateView.as_view(),
         name='meals_meal_update'
     ),
-    url(
-        regex=r'^meal/archive/(?P<year>\d{4})/'
-               '(?P<month>\d{1,2})/'
-               'week/(?P<week>\d{1,2})/$',
-        view=MealWeekArchiveView.as_view(),
-        name='meals_meal_week_archive'
-    ),
-    url(
-        regex=r'^meal/archive/(?P<year>\d{4})/$',
-        view=MealYearArchiveView.as_view(),
-        name='meals_meal_year_archive'
-    ),
+    # url(
+    #     regex=r'^meal/archive/(?P<year>\d{4})/'
+    #            '(?P<month>\d{1,2})/'
+    #            'week/(?P<week>\d{1,2})/$',
+    #     view=MealWeekArchiveView.as_view(),
+    #     name='meals_meal_week_archive'
+    # ),
+    # url(
+    #     regex=r'^meal/archive/(?P<year>\d{4})/$',
+    #     view=MealYearArchiveView.as_view(),
+    #     name='meals_meal_year_archive'
+    # ),
 )

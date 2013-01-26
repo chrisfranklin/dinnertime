@@ -87,6 +87,7 @@ INSTALLED_APPS = (
     # 'allauth.socialaccount.providers.soundcloud',
     'allauth.socialaccount.providers.twitter',
 
+    #'django_basic_feedback',
     'inplaceeditform',
     'actstream',
     'phileo',

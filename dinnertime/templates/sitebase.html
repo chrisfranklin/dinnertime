@@ -23,6 +23,7 @@
             </style>
             <link rel="stylesheet" href="{{ STATIC_URL}}bootstrap/css/bootstrap-responsive.css">
             <link rel="stylesheet" href="{{ STATIC_URL}}css/main.css">
+            <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}feedback.css" />
         {% endcompress %}
 
         {% compress css %}
@@ -39,7 +40,10 @@
                 beacon_url: '/services/timing/record'
               }).addVar('client', 'boomerang');
             </script>
+            <script type="text/javascript" src="{{ STATIC_URL }}feedback.js"></script>
         {% endcompress %}
+
+
     </head>
     <body class="bgit">
         {% load i18n %}
@@ -98,6 +102,7 @@
             {% endfor %}
           {% endif %}
         </div>
+        
         {% block body %}
             <!--[if lt IE 7]>
                 <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to get the most out of the modern internet.</p>
@@ -159,6 +164,7 @@
                     <footer>
                         {% block footer %} {% endblock %}
                         <p>&copy; 2012 Piemonster Technology Ltd </p>
+                        
                     </footer>
                   </div>
                 </div>
@@ -206,5 +212,7 @@
             g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));
         </script>
+
+        
     </body>
 </html>

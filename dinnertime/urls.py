@@ -45,7 +45,6 @@ urlpatterns = patterns('',
     #==========================================================
     (r'^accounts/', include('allauth.urls')),
     (r'^accounts/', include('accounts.urls')),
-    (r'^convert/', include('lazysignup.urls')),
     #==========================================================
     # End Userena
     #==========================================================
@@ -66,12 +65,16 @@ urlpatterns = patterns('',
     (r'^activity/', include('actstream.urls')),
     url(r"^likes/", include("phileo.urls")),
     (r'^avatar/', include('avatar.urls')),
-    (r'^api/', include('api.urls')),
+    #(r'^feedback/', include('django_basic_feedback.urls')),
 )
+
+if 'api' in settings.INSTALLED_APPS:
+    urlpatterns += patterns('',
+            (r'^api/', include('api.urls')),
+        )
 
 from django.conf.urls import patterns, url, include
 from rest_framework.urlpatterns import format_suffix_patterns
-from meals.api import MealList, MealDetail
 
 
 
