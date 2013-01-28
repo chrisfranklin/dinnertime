@@ -10,7 +10,7 @@ from meals.models import Venue
 class InviteAutocomplete(autocomplete_light.AutocompleteGenericBase):
     choices = (
         User.objects.all(),
-        UserContact.objects.filter(),
+        UserContact.objects.all(),
     )
     search_fields = (
         ('username', 'email', 'first_name', 'last_name'),
@@ -29,11 +29,19 @@ class InviteAutocomplete(autocomplete_light.AutocompleteGenericBase):
         'placeholder': 'enter name or email',
     }
 
-    # def choices_for_request(self):
-    #     """ Return choices for a particular request """
-    #     print self
-    #     return super(InviteAutocomplete, self).choices_for_request(
-    #         ).exclude(extra=self.request.GET['extra'])
+    def choices_for_request(self):
+        """ Return choices for a particular request """
+        #user_contacts = self.choices[1]
+        user = self.request.user
+        print user
+        contacts = self.choices[1].all()
+        users = self.choices[0].all()
+        contacts = contacts.filter(owner=user)
+        new_choices = (users, contacts)
+        self.choices = new_choices
+        # for choice in user_contacts:
+        #     print choice.owner
+        return super(InviteAutocomplete, self).choices_for_request()
 
 autocomplete_light.register(UserContact)
 autocomplete_light.register(Invite, InviteAutocomplete)
