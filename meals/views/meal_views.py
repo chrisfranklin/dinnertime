@@ -289,6 +289,7 @@ class MealListView(MealBaseListView, ListView):
         public_meals = all_meals.filter(privacy="PUBLIC")
         print "PUBLIC MEALS: %s" % public_meals
         attending_meals = all_meals.filter(guests=self.request.user)
+        hosted_meals = all_meals.filter(host=self.request.user)
         print "ATTENDING MEALS: %s" % attending_meals
         from meals.models import Invite
         invites = Invite.objects.filter(invitee__user=self.request.user)
@@ -296,6 +297,7 @@ class MealListView(MealBaseListView, ListView):
         context = {
             'public_meals': public_meals,
             'attending_meals': attending_meals,
+            'hosting_meals': hosted_meals,
             'invites': invites,
         }
         context.update(kwargs)

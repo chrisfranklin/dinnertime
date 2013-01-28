@@ -25,6 +25,47 @@
 
 {% block content %}
   <h2>
+    <i class="icon-share"> 
+      {% trans "Your Meals" %}
+    </i>
+  </h2>
+  <table class='table table-bordered table-striped'>
+    {% load avatar_tags %}
+    {% for object in hosting_meals %}
+      {% if not object.past %}
+        <tr>
+          <td>
+            <a href="{{object.host.get_profile.get_absolute_url}}">
+              {% avatar object.host %}
+            </a>
+            <p class="center">{{ object.host }}</p>
+          </td>
+
+          <td>
+            <h3>
+              <a href='{{ object.get_absolute_url }}'>
+                {% if object.name %}
+                  {{ object.name }}
+                {% else %}
+                  {{ object }}
+                {% endif %}
+              </a>
+            </h3>
+          </td>
+        
+          <td>{{ object.when }}</br>{{ object.venue.address }}</td>
+        
+          <td>{{ object.description }}</td>
+        
+        
+          <td>{{ object.privacy }}</td>  
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </table>
+  <hr>
+
+  <h2>
     <i class="icon-star"> 
       {% trans "Upcoming Meals" %}
     </i>
