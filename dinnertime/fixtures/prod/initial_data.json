@@ -29,9 +29,9 @@
       "sites": [
         1
       ],
-      "secret": "KJ3NH6GbGUINqWG8YHUYnpwy",
-      "name": "localgoogle",
-      "key": "294684269512",
+      "secret": "EmApBCQ6_2Gnbh898sYIw7k7",
+      "name": "prodgoogle",
+      "key": "574273878717",
       "provider": "google"
     }
   },
@@ -56,7 +56,7 @@
         1
       ],
       "secret": "pR9xPEsFXgfxsUTQ",
-      "name": "localin",
+      "name": "prodin",
       "key": "vsenv1do6j4y",
       "provider": "linkedin"
     }
