@@ -287,7 +287,9 @@ class MealListView(MealBaseListView, ListView):
     def get_context_data(self, **kwargs):
         all_meals = Meal.objects.all()
         public_meals = all_meals.filter(privacy="PUBLIC")
+        print "PUBLIC MEALS: %s" % public_meals
         attending_meals = all_meals.filter(guests=self.request.user)
+        print "ATTENDING MEALS: %s" % attending_meals
         from meals.models import Invite
         invites = Invite.objects.filter(invitee__user=self.request.user)
         print self.request.user
