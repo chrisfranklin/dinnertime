@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from accounts.models import UserContact
 from meals.models import Venue
 
+
 class InviteAutocomplete(autocomplete_light.AutocompleteGenericBase):
     choices = (
         User.objects.all(),
@@ -20,7 +21,8 @@ class InviteAutocomplete(autocomplete_light.AutocompleteGenericBase):
     widget_js_attributes = {
         'max_values': 3,
         'data-bootstrap': 'yourinit',
-        }
+    }
+
     def choice_value(self, choice):
         return choice.email
     # Note that defining *_js_attributes in a Widget also works. Widget has
@@ -48,12 +50,12 @@ autocomplete_light.register(Invite, InviteAutocomplete)
 
 
 class VenueAutocomplete(autocomplete_light.AutocompleteModelBase):
-    choices = Venue
+    choices = Venue.objects.all()
     search_fields = ('address', 'name')
     # optionnal: override a widget.js option
     widget_js_attributes = {
         'max_values': 3,
-        }
+    }
 
     def choice_value(self, choice):
         return choice.address
@@ -70,3 +72,30 @@ class VenueAutocomplete(autocomplete_light.AutocompleteModelBase):
     #         ).exclude(extra=self.request.GET['extra'])
 
 autocomplete_light.register(Venue, VenueAutocomplete)
+
+from yummly.models import Recipe
+
+
+class RecipeAutocomplete(autocomplete_light.AutocompleteModelBase):
+    search_fields = ('name',)
+
+
+class RestAutocompleteBase(autocomplete_light. AutocompleteRestModel):
+    def model_for_source_url(self, url):
+        """
+        Return the appropriate model for the urls defined by
+        cities_light.contrib.restframework.urlpatterns.
+
+        Used by RestChannel.
+        """
+        return Recipe
+
+
+class RecipeRestAutocomplete(RestAutocompleteBase, RecipeAutocomplete):
+    pass
+
+ck = "9687047d"
+cs = "48703203011932335cfaf5fb57ef4f1a"
+
+autocomplete_light.register(Recipe, RecipeRestAutocomplete,
+                            source_url='http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s' % (ck, cs))

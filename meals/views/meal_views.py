@@ -230,7 +230,7 @@ class PartForm(forms.Form):
     class Meta:
         pass
         widgets = {
-            'tags': autocomplete_light.TextWidget('PartAutocomplete'),
+            'name': autocomplete_light.TextWidget('PartAutocomplete'),
         }
         #name = autocomplete_light.get_widgets_dict(Part)
 
@@ -255,9 +255,31 @@ def add_part(request, meal_id, status):  # change this to part
             return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
     return HttpResponse("No post data or an error has occured")
 
+
+
 # from meals.models import Invitee
 # from accounts.models import UserContact
 
+
+class VenueForm(forms.Form):
+    address = forms.CharField(widget=autocomplete_light.ChoiceWidget('VenueAutocomplete'))
+
+def add_venue(request, meal_id):  # change this to part
+
+    if request.method == 'POST':  # If the form has been submitted...
+        form = VenueForm(request.POST)  # A form bound to the POST data
+        if form.is_valid():  # All validation rules pass
+            # Process the data in form.cleaned_data
+            # ...
+            address = form.cleaned_data['address']
+            meal_object = Meal.objects.get(pk=meal_id)
+            meal_object.add_venue(address, request.user)
+
+            return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
+    return HttpResponse("No post data or an error has occured")
+
+class RecipeForm(forms.Form):
+    recipe = forms.CharField(widget=autocomplete_light.ChoiceWidget('RecipeRestAutocomplete'))
 
 class MealDetailView(MealView, DetailView, FormMixin):
     from meals.views.invite_views import InviteForm
@@ -269,13 +291,17 @@ class MealDetailView(MealView, DetailView, FormMixin):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         formpart = PartForm()
+        formvenue = VenueForm()
+        formrecipe = RecipeForm()
         print actionstream
         context = {
             'form': form,
             'formh': formpart,
             'formn': formpart,
             'formw': formpart,
-            'actstream': actionstream
+            'formv': formvenue,
+            'actstream': actionstream,
+            'formr': formrecipe
         }
         context.update(kwargs)
         return super(MealDetailView, self).get_context_data(**context)

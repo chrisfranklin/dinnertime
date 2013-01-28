@@ -52,6 +52,16 @@
     <div class="span6">
       <h2>
         <i class="icon-food"> Recipe</i>
+        {% if request.user == meal.host %}
+          <span>
+              <form class="form-inline" method="post" action="/meal/{{object.id}}/venue/add/" data-append="#invites">
+                {% csrf_token %}
+                {{formr.recipe}}
+                {# <div class="hidden2">{{form.max_plusones}}</div> #}
+                <button class='btn btn-primary' type='submit'><i class="icon-plus"> Set</i></button>
+              </form>
+          </span>
+        {% endif %}
       </h2>
       <h3>{% inplace_edit "object.recipe" auto_height=1, auto_width=1, edit_empty_value="Set a Recipe!"  %}</h3>
       {% if object.recipe %}
@@ -102,14 +112,21 @@
     <div class="span6">
       <h2>
         <i class="icon-building"> Venue </i>
-        <span>
-          {% if object.venue %}
-            <a href="/venue/{{object.id}}">{% inplace_edit "object.venue.address" auto_height=1, auto_width=1 %}</a>
-          {% else %}
-            <a href="/venue/create/"> Please set a location. </a> 
-          {% endif %}
-        </span>
-      </h2> 
+        {% if request.user == meal.host %}
+          <span>
+              <form class="form-inline" method="post" action="/meal/{{object.id}}/venue/add/" data-append="#invites">
+                {% csrf_token %}
+                {{formv.address}}
+                {# <div class="hidden2">{{form.max_plusones}}</div> #}
+                <button class='btn btn-primary' type='submit'><i class="icon-plus"> Set</i></button>
+              </form>
+          </span>
+        {% endif %}
+      </h2>
+      <h3>
+        {% if meal.venue %}
+          {{meal.venue}}
+        {% endif %} 
       {% load easy_maps_tags %}
       {% if object.venue %}
         <!-- Default map with 300x400 dimensions -->
@@ -128,7 +145,7 @@
               {% csrf_token %}
               {{formh.name}}
               {# <div class="hidden2">{{form.max_plusones}}</div> #}
-              <button class='btn btn-primary' type='submit'><i class="icon-plus"> Add</i></button>
+              <button class='btn btn-success' type='submit'><i class="icon-plus"> Add</i></button>
           </form>
       {% endif %}
       {% for part in meal.mealpart_set.all %}
@@ -148,7 +165,7 @@
               {% csrf_token %}
               {{formh.name}}
               {# <div class="hidden2">{{form.max_plusones}}</div> #}
-              <button class='btn btn-primary' type='submit'><i class="icon-plus"> Add</i></button>
+              <button class='btn btn-danger' type='submit'><i class="icon-plus"> Add</i></button>
           </form>
       {% endif %}
       {% for part in meal.mealpart_set.all %}
@@ -169,7 +186,7 @@
               {% csrf_token %}
               {{formh.name}}
               {# <div class="hidden2">{{form.max_plusones}}</div> #}
-              <button class='btn btn-primary' type='submit'><i class="icon-plus"> Add</i></button>
+              <button class='btn btn-warning' type='submit'><i class="icon-plus"> Add</i></button>
           </form>
       {% endif %}
       {% for part in meal.mealpart_set.all %}

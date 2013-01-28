@@ -80,6 +80,7 @@ urlpatterns += patterns('',
     url(r'^meal/(?P<meal_id>\d+)/max_guests/(?P<direction>\d+)$', set_max_guests, name='increase_max_guest'),
     url(r'^meal/(?P<meal_id>\d+)/max_guests/(?P<direction>\d+)/$', set_max_guests, name='decrease_max_guest'),
     url(r'^meal/(?P<meal_id>\d+)/part/add/(?P<status>\w+)/$', add_part, name='meals_meal_part_create'),
+    url(r'^meal/(?P<meal_id>\d+)/venue/add/$', add_venue, name='meals_meal_venue_create'),
 )
 urlpatterns += patterns('',
     url(

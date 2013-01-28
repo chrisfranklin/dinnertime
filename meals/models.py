@@ -8,12 +8,12 @@ class Venue(models.Model):
     """
     Stores the location of a meal, can be used multiple times, tied to user model.
     """
-    name = models.CharField(max_length=50)
-    address = models.TextField(blank=True, null=True)
-    user = models.ForeignKey(User)
+    name = models.CharField(max_length=50, blank=True, null=True)
+    address = models.TextField()
+    user = models.ForeignKey(User, blank=True, null=True)
 
     def __unicode__(self):
-        return self.name
+        return self.address
 
     @models.permalink
     def get_absolute_url(self):
@@ -89,6 +89,10 @@ class Meal(models.Model):
         """
         Overrides save to provide notification on meal changes
         """
+        print self.venue
+        if not self.venue:
+            #self.venue = Venue.objects.get_or_create(name="Change Me", address="Timbuktu")
+            print self.venue
         super(Meal, self).save(*args, **kwargs)  # Call the "real" save() method.
 
     def add_guest(self, guest, invite, plusone=0):
@@ -140,6 +144,10 @@ class Meal(models.Model):
             meal_part.added_by = user
             meal_part.save()
         return meal_part
+
+    def add_venue(self, address, user):
+        self.venue, created = Venue.objects.get_or_create(address=address, user=user)
+        self.save()
 
     def remove_guest(self, guest):
         pass

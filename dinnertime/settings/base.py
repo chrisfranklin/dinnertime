@@ -71,7 +71,7 @@ INSTALLED_APPS = (
     'app_metrics',
     'raven.contrib.django',
     #'reversion',
-    #'south',
+    'south',
 
     'django_gravatar',  # added but not tested, warning may fuck with the line below
     'avatar',
