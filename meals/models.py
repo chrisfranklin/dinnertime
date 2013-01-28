@@ -192,10 +192,9 @@ class Meal(models.Model):
             return "%s's meal" % (self.host)
 
     def past(self):
-        import datetime
-        from django.utils.timezone import utc
+        from django.utils import timezone
 
-        now = datetime.datetime.utcnow().replace(tzinfo=utc)
+        now = timezone.now()
         return self.when < now
 
     def __unicode__(self):
