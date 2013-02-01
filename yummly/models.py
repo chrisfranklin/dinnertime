@@ -6,11 +6,11 @@ class Ingredient(models.Model):
     """
     Stores an ingredient from the yummly metadata api
     """
-    remote_id = models.CharField(max_length=50, blank=True, null=True)
-    ingredient_id = models.CharField(max_length=50, blank=True, null=True)
-    search_value = models.CharField(max_length=50, blank=True, null=True)
-    term = models.CharField(max_length=50, blank=True, null=True)
-    use_count = models.CharField(max_length=50, blank=True, null=True)
+    remote_id = models.CharField(max_length=200, blank=True, null=True)
+    ingredient_id = models.CharField(max_length=200, blank=True, null=True)
+    search_value = models.CharField(max_length=200, blank=True, null=True)
+    term = models.CharField(max_length=200, blank=True, null=True)
+    use_count = models.CharField(max_length=200, blank=True, null=True)
 
     def __unicode__(self):
         return unicode(self.term)
@@ -20,9 +20,9 @@ class Allergy(models.Model):
     """
     Stores allergy type from the yummly metadata api
     """
-    remote_id = models.CharField(max_length=50, blank=True, null=True)
-    description = models.CharField(max_length=50, blank=True, null=True)
-    search_value = models.CharField(max_length=50, blank=True, null=True)
+    remote_id = models.CharField(max_length=200, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
+    search_value = models.CharField(max_length=200, blank=True, null=True)
 
     def __unicode__(self):
         return self.description
@@ -32,9 +32,9 @@ class Diet(models.Model):
     """
     Stores a diet type from the yummly metadata api
     """
-    remote_id = models.CharField(max_length=50, blank=True, null=True)
-    description = models.CharField(max_length=50, blank=True, null=True)
-    search_value = models.CharField(max_length=50, blank=True, null=True)
+    remote_id = models.CharField(max_length=200, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
+    search_value = models.CharField(max_length=200, blank=True, null=True)
 
     def __unicode__(self):
         return self.description
@@ -44,9 +44,9 @@ class Course(models.Model):
     """
     Stores a course type from the yummly metadata api
     """
-    remote_id = models.CharField(max_length=50, blank=True, null=True)
-    description = models.CharField(max_length=50, blank=True, null=True)
-    search_value = models.CharField(max_length=50, blank=True, null=True)
+    remote_id = models.CharField(max_length=200, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
+    search_value = models.CharField(max_length=200, blank=True, null=True)
 
     def __unicode__(self):
         return self.description
@@ -56,26 +56,33 @@ class Cuisine(models.Model):
     """
     Stores a cuisine type from the yummly metadata api
     """
-    remote_id = models.CharField(max_length=50, blank=True, null=True)
-    description = models.CharField(max_length=50, blank=True, null=True)
-    search_value = models.CharField(max_length=50, blank=True, null=True)
+    remote_id = models.CharField(max_length=200, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
+    search_value = models.CharField(max_length=200, blank=True, null=True)
 
     def __unicode__(self):
         return self.description
 
+class Flavor(models.Model):
+    bitter = models.DecimalField(max_digits=28, decimal_places=25)
+    meaty = models.DecimalField(max_digits=28, decimal_places=25)
+    piquant = models.DecimalField(max_digits=28, decimal_places=25)
+    salty = models.DecimalField(max_digits=28, decimal_places=25)
+    sour = models.DecimalField(max_digits=28, decimal_places=25)
+    sweet = models.DecimalField(max_digits=28, decimal_places=25)
 
 class Recipe(models.Model):
     """
     Stores a recipe from the yummly recipe api
     """
-    flavors = models.CharField(max_length=50, blank=True, null=True)
-    remote_id = models.CharField(max_length=50, blank=True, null=True)
+    flavor = models.ForeignKey(Flavor, blank=True, null=True)
+    remote_id = models.CharField(max_length=200, blank=True, null=True)
     ingredients = models.ManyToManyField(Ingredient, blank=True, null=True)
-    rating = models.CharField(max_length=50, blank=True, null=True)
-    name = models.CharField(max_length=50, blank=True, null=True)
+    rating = models.CharField(max_length=200, blank=True, null=True)
+    name = models.CharField(max_length=200, blank=True, null=True)
     small_image_urls = JSONField(blank=True, null=True)
     large_image_urls = JSONField(blank=True, null=True)
-    source_display_name = models.CharField(max_length=50, blank=True, null=True)
+    source_display_name = models.CharField(max_length=200, blank=True, null=True)
     total_time_in_seconds = models.IntegerField(blank=True, null=True)
     course = models.ManyToManyField(Course, blank=True, null=True)  # get from attributes
 

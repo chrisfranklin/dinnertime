@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand  # CommandError
-from yummly.models import Ingredient, Course, Cuisine, Allergy, Diet, Recipe
+from yummly.models import Ingredient, Course, Cuisine, Allergy, Diet, Recipe, Flavor
 #from oauth_hook import OAuthHook
 import requests
 import json
@@ -24,7 +24,6 @@ class Command(BaseCommand):
                 results = json.loads(response.content[26:-2])  # This is for ingredients
             except:
                 self.stdout.write("Could not load ingredients json, out of options, goodbye.")
-            pprint(results)
             for ingredient in results:
                 ingredient_object = Ingredient.objects.get_or_create(remote_id=ingredient['id'])[0]
                 if "ingredientId" in ingredient:
@@ -35,7 +34,8 @@ class Command(BaseCommand):
                     ingredient_object.term = ingredient['term']
                 if "useCount" in ingredient:
                     ingredient_object.use_count = ingredient['useCount']
-                print ingredient_object.save()
+                print ingredient['term']
+                ingredient_object.save()
 
         if args == "course":
             response = client.get('http://api.yummly.com/v1/api/metadata/course?_app_id=%s&_app_key=%s' % (ck, cs))
@@ -97,12 +97,13 @@ class Command(BaseCommand):
                 diet_object = Diet.objects.get_or_create(remote_id=diet['id'])[0]
                 if "searchValue" in diet:
                     diet_object.search_value = diet['searchValue']
+                    print diet['searchValue']
                 if "longDescription" in diet:
                     diet_object.description = diet['longDescription']
                 diet_object.save()
 
         if args != "recipe":
-            response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=quiche&maxResult=5' % (ck, cs))
+            response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&maxResult=10' % (ck, cs))
             #pprint(response.content)
             try:
                 results = json.loads(response.content)  # This is for ingredients
@@ -137,6 +138,17 @@ class Command(BaseCommand):
                     recipe_object.ingredients.clear()
                     for ingredient in recipe['ingredients']:
                         recipe_object.ingredients.add(Ingredient.objects.get_or_create(term=ingredient)[0])
+                if "flavors" in recipe:
+                    if not recipe_object.flavor:
+                        fla = recipe['flavors']
+                        flavor_object, created = Flavor.objects.get_or_create(bitter=fla['bitter'], meaty=fla['meaty'], piquant=fla['piquant'], salty=fla['salty'], sour=fla['sour'], sweet=fla['sweet'])
+                        recipe_object.flavor = flavor_object
+                if "course" in recipe['attributes']:
+                    attributes = recipe['attributes']
+                    print attributes
+                    course = attributes['course']
+                    print course
+                    
                 recipe_object.save()
 
         # flavors = models.CharField(max_length=50, blank=True, null=True)

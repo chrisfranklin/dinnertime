@@ -24,7 +24,7 @@ from django.utils.decorators import method_decorator
 def set_max_guests(request, meal_id, direction):
     if meal_id:
         meal_object = get_object_or_404(Meal, pk=meal_id)
-        if request.user == meal_object.host or request.user.is_staff():
+        if request.user == meal_object.host or request.user.is_staff:
             if int(direction) == 1:
                 meal_object.increase_max_guests()
                 return HttpResponseRedirect("/meal/" + meal_id + "/")

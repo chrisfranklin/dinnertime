@@ -33,7 +33,9 @@
         </form>
       </div>
     {% endif %}
-
+    <h4>
+      <a href="/about/" class="btn btn-primary">About Us</a>
+    </h4>
   {% endblock %}
 
   {% block extra_body %}
@@ -77,8 +79,7 @@
           {% include 'login_bar.html' %}
       {% endif %}
     </div>
-  </div>
-{% endblock %}
+  {% endblock %}
 
   {% block extra_js %}
 
