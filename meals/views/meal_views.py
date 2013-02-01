@@ -268,10 +268,19 @@ def add_venue(request, meal_id):  # change this to part
 
     if request.method == 'POST':  # If the form has been submitted...
         form = VenueForm(request.POST)  # A form bound to the POST data
-        if form.is_valid():  # All validation rules pass
+        print form.data
+        no_venue = False
+        if 'email' not in form.data:
+            saved_venue = form.data['address-autocomplete']
+            no_venue = True
+            print "no email setting %s" % saved_venue
+        if form.is_valid() or no_venue:  # All validation rules pass
             # Process the data in form.cleaned_data
             # ...
-            address = form.cleaned_data['address']
+            if no_venue:
+                address = saved_venue
+            else:
+                address = form.cleaned_data['address']
             meal_object = Meal.objects.get(pk=meal_id)
             meal_object.add_venue(address, request.user)
 

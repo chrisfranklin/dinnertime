@@ -124,6 +124,7 @@ def add_invite(request, meal_id):
     return render_to_response("meals/meal/invite/invite_form.html", {'form': form}, context_instance=RequestContext(request))
 
 
+
 def ack_invite(request, meal_id, secret, action=None):
     #meal = Meal.objects.get(pk=meal_id)
     invite = Invite.objects.get(secret=secret, meal=meal_id)  # Add error checking to shrug off invalid invites
