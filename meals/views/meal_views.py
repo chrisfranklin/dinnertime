@@ -257,7 +257,7 @@ def add_part(request, meal_id, status):  # change this to part
 
 
 
-# from meals.models import Invitee
+from meals.models import Venue
 # from accounts.models import UserContact
 
 
@@ -270,10 +270,10 @@ def add_venue(request, meal_id):  # change this to part
         form = VenueForm(request.POST)  # A form bound to the POST data
         print form.data
         no_venue = False
-        if 'email' not in form.data:
+        if 'address' not in form.data:
             saved_venue = form.data['address-autocomplete']
             no_venue = True
-            print "no email setting %s" % saved_venue
+            print "no venue setting %s" % saved_venue
         if form.is_valid() or no_venue:  # All validation rules pass
             # Process the data in form.cleaned_data
             # ...
@@ -282,7 +282,9 @@ def add_venue(request, meal_id):  # change this to part
             else:
                 address = form.cleaned_data['address']
             meal_object = Meal.objects.get(pk=meal_id)
-            meal_object.add_venue(address, request.user)
+            meal_object.venue, created = Venue.objects.get_or_create(address=address, user=request.user)
+            meal_object.save()
+            #meal_object.add_venue(address, request.user)
 
             return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
     return HttpResponse("No post data or an error has occured")
