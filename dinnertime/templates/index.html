@@ -106,7 +106,16 @@
             });
         });
     </script>
+    <script type="text/javascript" src="{{ STATIC_URL}}js/jquery-ui-timepicker-addon.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL}}js/jquery-ui-sliderAccess.js"></script>
+    <script>
+      $('#id_when').datetimepicker();
+    </script>
 
   {% endblock %}
           
 
+{% block extra_css %}
+  <link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.10.0/themes/smoothness/jquery-ui.css" />
+  <link rel="stylesheet" media="all" type="text/css" href="{{ STATIC_URL}}css/jquery-ui-timepicker-addon.css" />
+{% endblock %}
