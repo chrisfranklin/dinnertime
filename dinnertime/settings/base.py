@@ -73,8 +73,8 @@ INSTALLED_APPS = (
     #'reversion',
     'south',
 
-    'django_gravatar',  # added but not tested, warning may fuck with the line below
-    'avatar',
+    'django_gravatar',  # added but not tested, warning may mess with the line below
+    'avatar', # we do not need two avatar packages TODO: which avatar package should we use.
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

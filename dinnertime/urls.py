@@ -73,19 +73,6 @@ if 'api' in settings.INSTALLED_APPS:
             (r'^api/', include('api.urls')),
         )
 
-from django.conf.urls import patterns, url, include
-from rest_framework.urlpatterns import format_suffix_patterns
-
-
-
-# urlpatterns += patterns('meals.api',
-#     url(r'^api/$', 'api_root'),
-#     url(r'^api/meals/$', MealList.as_view(), name='meal-list'),
-#     url(r'^api/meals/(?P<pk>\d+)/$', MealDetail.as_view(), name='meal-detail'),
-# )
-
-# Format suffixes
-#urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json', 'api'])
 
 from django_statsd.urls import urlpatterns as statsd_patterns
 
