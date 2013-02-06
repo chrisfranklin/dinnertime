@@ -5,18 +5,27 @@ from django.contrib.auth.models import User
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    """
+    Serializes UserProfile objects for the API
+    """
     class Meta:
         model = UserProfile
         field = ('id', 'user', 'first_name', 'last_name', 'diet', 'allergies', 'likes', 'dislikes')
 
 
 class UserContactSerializer(serializers.ModelSerializer):
+    """
+    Serializes UserContact objects for the API
+    """
     class Meta:
         model = UserContact
         fields = ('owner', 'name', 'user', 'email')
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """
+    Serializes User objects for the API
+    """
     #snippets = serializers.ManyHyperlinkedRelatedField(view_name='snippet-detail')
 
     class Meta:
@@ -25,18 +34,27 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class GuestSerializer(serializers.ModelSerializer):
+    """
+    Serializes Guest objects for the API
+    """
     class Meta:
         model = Guest
         fields = ('id', 'meal', 'invite')
 
 
 class PartSerializer(serializers.ModelSerializer):
+    """
+    Serializes Part objects for the API
+    """
     class Meta:
         model = Part
         fields = ('id', 'part_type', 'name', 'description', 'unit')
 
 
 class MealPartSerializer(serializers.ModelSerializer):
+    """
+    Serializes MealPart objects for the API
+    """
 
     class Meta:
         model = MealPart
@@ -44,6 +62,9 @@ class MealPartSerializer(serializers.ModelSerializer):
 
 
 class MealSerializer(serializers.ModelSerializer):
+    """
+    Serializes Meal objects for the API
+    """
     #invites = serializers.HyperlinkedRelatedField()
     #guests = serializers.ManyPrimaryKeyRelatedField('guests')
     host_username = serializers.Field(source='host.username')
@@ -60,6 +81,9 @@ class MealSerializer(serializers.ModelSerializer):
 
 
 class InviteSerializer(serializers.ModelSerializer):
+    """
+    Serializes Invite objects for the API
+    """
     class Meta:
         model = Invite
         fields = ('id', 'meal', 'secret', 'invitee', 'status', 'plusones', 'max_plusones', 'single_use', 'invited_by')

@@ -17,13 +17,16 @@ from django.template import RequestContext
 
 
 def index(request):
-    return render_to_response("meals/index.html", {'bum': "bum"}, context_instance=RequestContext(request))
+    """
+    Serves embedded javascript MVC test page
+    """
+    return render_to_response("meals/index.html", {'test': "test"}, context_instance=RequestContext(request))
 
 
 @api_view(['GET'])
 def api_root(request, format=None):
     """
-    The entry endpoint of our API.
+    Lists all available models in API and provides an entry point.
     """
     return Response({
         'Meals': reverse('meal-list', request=request),
@@ -39,7 +42,7 @@ def api_root(request, format=None):
 ## == MEALS ==
 class MealList(generics.ListCreateAPIView):
     """
-    API endpoint that represents a list of Meals.
+    Provides an API endpoint that represents a list of Meals.
     """
     model = Meal
     serializer_class = MealSerializer
@@ -47,7 +50,7 @@ class MealList(generics.ListCreateAPIView):
 
 class MealDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    API endpoint that represents a single Meal.
+    Provides an API endpoint that represents a single Meal.
     """
     model = Meal
     serializer_class = MealSerializer
@@ -58,7 +61,7 @@ class MealDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class MealPartList(generics.ListCreateAPIView):
     """
-    API endpoint that represents a list of MealParts.
+    Provides an API endpoint that represents a list of MealParts.
     """
     model = MealPart
     serializer_class = MealPartSerializer
@@ -66,7 +69,7 @@ class MealPartList(generics.ListCreateAPIView):
 
 class MealPartDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    API endpoint that represents a single MealPart.
+    Provides an API endpoint that represents a single MealPart.
     """
     model = MealPart
     serializer_class = MealPartSerializer
@@ -77,7 +80,7 @@ class MealPartDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class PartList(generics.ListCreateAPIView):
     """
-    API endpoint that represents a list of Parts.
+    Provides an API endpoint that represents a list of Parts.
     """
     model = Part
     serializer_class = PartSerializer
@@ -85,7 +88,7 @@ class PartList(generics.ListCreateAPIView):
 
 class PartDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    API endpoint that represents a single Part.
+    Provides an API endpoint that represents a single Part.
     """
     model = Part
     serializer_class = PartSerializer
@@ -96,7 +99,7 @@ class PartDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class GuestList(generics.ListCreateAPIView):
     """
-    API endpoint that represents a list of Parts.
+    Provides an API endpoint that represents a list of Parts.
     """
     model = Guest
     serializer_class = GuestSerializer
@@ -104,7 +107,7 @@ class GuestList(generics.ListCreateAPIView):
 
 class GuestDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    API endpoint that represents a single Part.
+    Provides an API endpoint that represents a single Part.
     """
     model = Guest
     serializer_class = GuestSerializer
@@ -115,7 +118,7 @@ class GuestDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class InviteList(generics.ListCreateAPIView):
     """
-    API endpoint that represents a list of Parts.
+    Provides an API endpoint that represents a list of Parts.
     """
     model = Invite
     serializer_class = InviteSerializer
@@ -123,7 +126,7 @@ class InviteList(generics.ListCreateAPIView):
 
 class InviteDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    API endpoint that represents a single Part.
+    Provides an API endpoint that represents a single Part.
     """
     model = Invite
     serializer_class = InviteSerializer
@@ -134,7 +137,7 @@ from django.contrib.auth.models import User
 
 class UserList(generics.ListCreateAPIView):
     """
-    API endpoint that represents a list of Users.
+    Provides an API endpoint that represents a list of Users.
 
     """
     model = User
