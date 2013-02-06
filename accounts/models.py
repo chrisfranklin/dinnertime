@@ -39,19 +39,31 @@ class UserProfile(models.Model):
     dislikes = models.ManyToManyField(Part, related_name="disliked_by", blank=True, null=True)
 
     def get_emails(self):
+        """
+        Returns email for a specific user, can check multiple sources for the address
+        """
         # Should check allauth.account.models.EmailAddress
         # Should also check social account extra data but would be better to just import that ourselves
         return self.email
 
     def save(self, *args, **kwargs):
+        """
+        Overrides save to try and find an email address if none currently exists.
+        """
         # Do stuff
         super(UserProfile, self).save(*args, **kwargs)  # Call the "real" save() method.
 
     def __unicode__(self):
+        """
+        Returns string representation of the model.
+        """
         return "Profile for " % (self.user)
 
     @models.permalink
     def get_absolute_url(self):
+        """
+        Returns a URL for the specific object
+        """
         return ('accounts_userprofile_detail', (), {'pk': self.pk})
 
 
@@ -64,6 +76,9 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 
 def find_friends_suggestions(sender, instance, **kwargs):
+    """
+    Checks imported contacts for a specific user to see if we can create any friend suggestions
+    """
     from friends.contrib.suggestions.models import FriendshipSuggestion
     FriendshipSuggestion.objects.create_suggestions_for_user_using_imported_contacts(instance)
 
@@ -92,13 +107,22 @@ class UserContact(models.Model):
         ('F', 'female'), ('M', 'male')), blank=True, null=True, max_length=1)
 
     def __unicode__(self):
+        """
+        Returns string representation of the model.
+        """
         return self.name
 
     @models.permalink
     def get_absolute_url(self):
+        """
+        Returns a URL for the specific object
+        """
         return ('accounts_usercontact_detail', (), {'pk': self.pk})
 
     def save(self, *args, **kwargs):
+        """
+        Overrides save to try and find an email address if none currently exists.
+        """
         # Do stuff
         if not self.email:
             # We don't have an email, lets check emails and allauth
@@ -111,6 +135,8 @@ class UserContact(models.Model):
 
     # We need to create a user contact every time a friend request is sent or a friend accept is done.
 
+# ================================================================================================================================
+# The following code will be useful if we decide to make the contacts search only return friends rather than all users of the site
 
 # def create_user_contact(self, instance, **kwargs):
 #     """

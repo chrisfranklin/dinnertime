@@ -41,7 +41,7 @@ def live():
     """
     Use the live deployment environment.
     """
-    server = 'dt2:12584'
+    server = 'dinnertime@dt2:12584'
     env.roledefs = {
         'web': [server],
         'db': [server],

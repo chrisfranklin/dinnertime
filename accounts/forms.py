@@ -10,6 +10,9 @@ from models import UserContact
 
 
 class UserContactForm(forms.ModelForm):
+    """
+    Provides form for user contact model with autocomplete widget.
+    """
     class Meta:
         widgets = autocomplete_light.get_UserContacts_dict(UserContact)
         model = UserContact
