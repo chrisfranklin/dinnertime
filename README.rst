@@ -6,7 +6,7 @@ Dinner Time - Alpha
 What is dinner time?
 --------------------
 
-We connect people who want to eat together and help them share food. 
+We connect people who want to eat together and help them share food. If you would like to see a running version of this code then please head along to http://tablesurf.in
 
 Copyright
 ---------
@@ -24,7 +24,7 @@ To bootstrap the project::
     pip install -e .
     cp dinnertime/settings/local.py.example dinnertime/settings/local.py
     manage.py syncdb --migrate
-    manage.py yummlymeta
+    manage.py yummly_meta
 
 
 Documentation

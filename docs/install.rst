@@ -23,6 +23,11 @@ First, create a clean base environment using virtualenv::
     cd dinnertime
     source bin/activate
 
+If you are using virtualenvwrapper (recommended) then::
+    
+    mkvirtualenv dinnertime
+    workon dinnertime
+
 
 Installing the Project
 ======================
@@ -37,7 +42,7 @@ Install the requirements and the project source::
 
 Customize the Project
 =====================
-You should change the UserProfile model in the Accounts application.
+Take a look at the settings file in dinnertime/settings/base.py
 
 
 Configuring a Local Environment
@@ -48,6 +53,15 @@ configuration files to get started quickly::
 
     cp dinnertime/settings/local.py.example dinnertime/settings/local.py
     manage.py syncdb --migrate
+
+Populate the Recipe Database
+===============================
+
+To download recipes from the yummly API add the correct key to yummly/management/commands/yummly_meta.py and run the following command::
+
+    python manage.py yummly_meta <model> 
+
+Make sure you set <model> to one of "Ingredient, Recipe, Course, Allergy or Diet"
 
 
 Building Documentation
