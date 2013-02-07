@@ -21,7 +21,6 @@ django-jsonfield
 geopy
 django-easy-maps
 
-git+https://github.com/danfairs/django-lazysignup.git
 mock
 django-facebook
 

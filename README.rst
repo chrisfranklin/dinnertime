@@ -40,10 +40,33 @@ To bootstrap the project::
     manage.py yummly_meta
 
 
+News and Updates
+----------------
+
+Please head along to http://facebook.com/tablesurfin/ or check out http://tablesurf.in/blog/
+
+Issues
+------
+
+Please report any problems you find in the issues section above, if you have code to contribute then even better!
+
+Roadmap
+-------
+
+We use Trello to keep track of tasks and progress, please go to https://trello.com/board/tablesurfin/50bc0679c8c6df481400495b to see what we are currently working on.
+
+Testing
+-------
+
+You can run the tests with the following command::
+	python manage.py test
+
+We also use a Jenkins test server, please go to 
+
 Documentation
 -------------
 
-Developer documentation is available in Sphinx format in the docs directory.
+Developer documentation is available in Sphinx format in the docs directory. It is also available online at https://tablesurfin.readthedocs.org/en/latest/
 
 Initial installation instructions (including how to build the documentation as
 HTML) can be found in docs/install.rst.
