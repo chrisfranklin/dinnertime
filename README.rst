@@ -53,12 +53,13 @@ Please report any problems you find in the issues section above, if you have cod
 Roadmap
 -------
 
-We use Trello to keep track of tasks and progress, please go to https://trello.com/board/tablesurfin/50bc0679c8c6df481400495b to see what we are currently working on.
+We use Trello to keep track of tasks and progress, please go to https://trello.com/b/Wg1aqEvN to see what we are currently working on.
 
 Testing
 -------
 
 You can run the tests with the following command::
+
 	python manage.py test
 
 We also use a Jenkins test server, please go to 
