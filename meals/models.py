@@ -216,7 +216,7 @@ class Meal(models.Model):
 
     def past(self):
         """
-        Boolean value of if the meal is in the past. 
+        Returns Boolean value equal to if the meal is in the past. 
         """
         from django.utils import timezone
 
