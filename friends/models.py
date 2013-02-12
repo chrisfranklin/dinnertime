@@ -78,6 +78,9 @@ class FriendListManager(models.Manager):
 
 
 class FriendList(models.Model):
+    """
+    Provides an interface to friends lists for users.
+    """
     title = models.CharField(_("title"), max_length=100)
     created = models.DateTimeField(_("created"), auto_now_add=True)
     owner = models.ForeignKey(User, related_name='lists')
@@ -135,16 +138,25 @@ else:
     notification = None
 
 def send_invitation_sent_notification(sender, instance, created, **kwargs):
+    """
+    Sends invitation notification.
+    """
     if notification and created:
         notification.send([instance.to_user], "friends_invite", {"invitation": instance})
         notification.send([instance.from_user], "friends_invite_sent", {"invitation": instance})
 
 def send_acceptance_sent_notification(sender, instance, created, **kwargs):
+    """
+    Sends friend acceptance notification.
+    """
     if notification and created:
         notification.send([instance.to_user], "friends_accept_sent", {"from_user": instance.from_user})
         notification.send([instance.from_user], "friends_accept", {"to_user": instance.to_user})
 
 def send_otherconnect_notification(sender, instance, created, **kwargs):
+    """
+    Sends new friend of friend notification.
+    """
     if notification and created:
         for user in Friendship.objects.friends_for_user(instance.to_user):
             if user != instance.from_user:
@@ -154,6 +166,9 @@ def send_otherconnect_notification(sender, instance, created, **kwargs):
                 notification.send([user], "friends_otherconnect", {"your_friend": instance.from_user, "new_friend": instance.to_user})
 
 def send_friend_removed_notification(sender, instance, **kwargs):
+    """
+    Sends friend removed notification
+    """
     if notification:
         notification.send([instance.to_user], "friends_friend_removed", {"removed_friend": instance.from_user})
         notification.send([instance.from_user], "friends_friend_removed", {"removed_friend": instance.to_user})
