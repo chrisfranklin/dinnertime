@@ -9,6 +9,9 @@ if friends_settings.FRIENDS_USE_NOTIFICATION_APP and "notification" in settings.
     from notification import models as notification
 
     def create_notice_types(app, created_models, verbosity, **kwargs):
+        """
+        Creates the notifications for various different friend related actions.
+        """
         notification.create_notice_type("friends_invite", _("Invitation received"), _("You have received an invitation."), default=1)
         notification.create_notice_type("friends_invite_sent", _("Invitation sent"), _("You have sent an invitation."), default=1)
         notification.create_notice_type("friends_accept", _("Acceptance received"), _("An invitation you sent has been accepted."), default=1)
@@ -17,7 +20,6 @@ if friends_settings.FRIENDS_USE_NOTIFICATION_APP and "notification" in settings.
             notification.create_notice_type("friends_otherconnect", _("Other connection"), _("One of your friends has a new friend."), default=1)
         if friends_settings.NOTIFY_ABOUT_FRIENDS_REMOVAL:
             notification.create_notice_type("friends_friend_removed", _("Friend removed"), _("One person was removed from your friends."), default=1)
-
-    signals.post_syncdb.connect(create_notice_types, sender=notification)
-else:
-    print "Skipping creation of NoticeTypes as notification app not found"
+            signals.post_syncdb.connect(create_notice_types, sender=notification)
+        else:
+            print "Skipping creation of NoticeTypes as notification app not found"

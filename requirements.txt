@@ -4,11 +4,9 @@
 #
 #     pip install -r requirements.pip
 
-django==1.4.3
-south==0.7.6
-#django-fiber==0.9.8.9
+django>=1.4.3
+south
 git+https://github.com/Piemonster/django-generate-scaffold.git
-#git+https://github.com/Piemonster/django-staticfiles-bootstrap.git
 django-debug-toolbar
 django-allauth==0.8.2
 djrill

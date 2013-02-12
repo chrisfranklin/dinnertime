@@ -6,6 +6,9 @@ from friends.models import Friendship, FriendshipInvitation, Blocking, FriendLis
 
 
 class UserForm(forms.Form):
+    """
+    Provides base class for forms that require a user instance.
+    """
 
     def __init__(self, user=None, *args, **kwargs):
         self.user = user
@@ -13,6 +16,9 @@ class UserForm(forms.Form):
 
 
 class InviteFriendForm(UserForm):
+    """
+    Provides form for a specific user to add another specific user as a friend.
+    """
 
     to_user = forms.CharField(widget=forms.HiddenInput)
     message = forms.CharField(
@@ -22,6 +28,9 @@ class InviteFriendForm(UserForm):
     )
 
     def clean_to_user(self):
+        """
+        Cleans to_user using custom clean method rather than django forms validation.
+        """
         to_username = self.cleaned_data["to_user"]
         try:
             User.objects.get(username=to_username)
@@ -30,6 +39,9 @@ class InviteFriendForm(UserForm):
         return self.cleaned_data["to_user"]
 
     def clean(self):
+        """
+        Provides custom cleaning logic rather than relying on django forms validation.
+        """
         to_user = User.objects.get(username=self.cleaned_data["to_user"])
         if to_user == self.user:
             raise forms.ValidationError(
@@ -63,6 +75,9 @@ class InviteFriendForm(UserForm):
         return self.cleaned_data
 
     def save(self):
+        """
+        Overrides save so that we can use our custom clean method.
+        """
         to_user = User.objects.get(username=self.cleaned_data["to_user"])
         message = self.cleaned_data["message"]
         invitation = FriendshipInvitation(
@@ -75,10 +90,16 @@ class InviteFriendForm(UserForm):
 
 
 class RemoveFriendForm(UserForm):
+    """
+    Provides form for a specific user to remove another specific user from their friend list.
+    """
 
     to_user = forms.CharField(widget=forms.HiddenInput)
 
     def clean_to_user(self):
+        """
+        Cleans to_user using custom clean method rather than django forms validation.
+        """
         to_username = self.cleaned_data["to_user"]
         try:
             User.objects.get(username=to_username)
@@ -87,6 +108,9 @@ class RemoveFriendForm(UserForm):
         return self.cleaned_data["to_user"]
 
     def clean(self):
+        """
+        Provides custom cleaning logic rather than relying on django forms validation.
+        """
         to_user = User.objects.get(username=self.cleaned_data["to_user"])
         if not Friendship.objects.are_friends(self.user, to_user):
             raise forms.ValidationError(
@@ -95,15 +119,24 @@ class RemoveFriendForm(UserForm):
         return self.cleaned_data
 
     def save(self):
+        """
+        Overrides save so that we can use our custom clean method.
+        """
         to_user = User.objects.get(username=self.cleaned_data["to_user"])
         Friendship.objects.remove(self.user, to_user)
 
 
 class BlockUserForm(UserForm):
+    """
+    Provides form for a specific user to block another specific user from contacting them.
+    """
 
     to_user = forms.CharField(widget=forms.HiddenInput)
 
     def clean_to_user(self):
+        """
+        Cleans to_user using custom clean method rather than django forms validation.
+        """
         to_username = self.cleaned_data["to_user"]
         try:
             User.objects.get(username=to_username)
@@ -112,6 +145,9 @@ class BlockUserForm(UserForm):
         return self.cleaned_data["to_user"]
 
     def clean(self):
+        """
+        Provides custom cleaning logic rather than relying on django forms validation.
+        """
         to_user = User.objects.get(username=self.cleaned_data["to_user"])
         if Friendship.objects.are_friends(self.user, to_user):
             raise forms.ValidationError(
@@ -120,6 +156,9 @@ class BlockUserForm(UserForm):
         return self.cleaned_data
 
     def save(self):
+        """
+        Overrides save so that we can use our custom clean method.
+        """
         to_user = User.objects.get(username=self.cleaned_data["to_user"])
         blocking = Blocking(
             from_user=self.user,
@@ -130,6 +169,9 @@ class BlockUserForm(UserForm):
 
 
 class FriendListForm(forms.ModelForm):
+    """
+    Provides form for editing a specific users friend list.
+    """
     class Meta:
         model = FriendList
 
