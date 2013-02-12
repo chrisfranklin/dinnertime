@@ -146,10 +146,16 @@ class Meal(models.Model):
         return meal_part
 
     def add_venue(self, address, user):
+        """
+        Sets venue to specified address
+        """
         self.venue, created = Venue.objects.get_or_create(address=address, user=user)
         self.save()
 
     def remove_guest(self, guest):
+        """
+        Removes a guest from the meal.
+        """
         pass
 
     def increase_max_guests(self):
@@ -176,6 +182,9 @@ class Meal(models.Model):
             return False
 
     def get_image(self):
+        """
+        Returns image for meal
+        """
         if self.icon:
             return self.icon.url
         else:
@@ -185,6 +194,9 @@ class Meal(models.Model):
             return url
 
     def get_image_small(self):
+        """
+        Returns small image for meal
+        """
         if self.icon:
             return self.icon.url
         else:
@@ -194,18 +206,27 @@ class Meal(models.Model):
             return url
 
     def get_name(self):
+        """
+        Returns name for meal, if no name is set then returns username's meal
+        """
         if self.name:
             return self.name
         else:
             return "%s's meal" % (self.host)
 
     def past(self):
+        """
+        Boolean value of if the meal is in the past. 
+        """
         from django.utils import timezone
 
         now = timezone.now()
         return self.when < now
 
     def __unicode__(self):
+        """
+        Returns string representation of object
+        """
         return self.get_name()
 
     @models.permalink
