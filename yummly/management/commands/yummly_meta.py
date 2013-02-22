@@ -103,7 +103,7 @@ class Command(BaseCommand):
                 diet_object.save()
 
         if args != "recipe":
-            response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&maxResult=10000' % (ck, cs))
+            response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&maxResult=20000' % (ck, cs))
             #pprint(response.content)
             try:
                 results = json.loads(response.content)  # This is for ingredients
@@ -131,7 +131,7 @@ class Command(BaseCommand):
                         image_list.append(image[:-5] + "xl.png")
                     recipe_object.large_image_urls = image_list
                 if "totalTimeInSeconds" in recipe:
-                    recipe_object.total_time_in_seconds = int(recipe['totalTimeInSeconds']) / 60
+                    recipe_object.total_time_in_seconds = recipe['totalTimeInSeconds']
                 if "sourceDisplayName" in recipe:
                     recipe_object.source_display_name = recipe['sourceDisplayName']
                 if "ingredients" in recipe:

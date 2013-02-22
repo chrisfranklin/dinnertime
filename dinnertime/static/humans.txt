@@ -4,14 +4,13 @@
 # TEAM
 
     Chris Franklin - Piemonster
-    Karim Tabet - Piemonster
-    Adrian Gibas - Piemonster
 
 # THANKS
 
-    Lynne, David, Nick and Rafferty Franklin for always being there for me. 
+    Lynne, David, Nick and Rafferty Franklin for always being there. 
     Chrisby Barter for his endless enthusiasm and encouragement.
     Rowena Grant for her constant patience and nourishing food!
+    To everyone else that has made this project possible, thank you.
 
 # TECHNOLOGY COLOPHON
 

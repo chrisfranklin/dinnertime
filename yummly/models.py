@@ -94,6 +94,12 @@ class Recipe(models.Model):
         if self.large_image_urls:
             return self.large_image_urls[0]
 
+    def total_time_in_minutes(self):
+        return self.total_time_in_seconds / 60
+
+    def total_time_in_hours(self):
+        return self.total_time_in_minutes / 60
+
     # DIET_CHOICES = (
     #     ("MEAT", 'Meat Eater'),
     #     ("VEGETARIAN", 'Vegetarian'),
