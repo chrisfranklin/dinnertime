@@ -17,7 +17,7 @@ class Command(BaseCommand):
         client = requests.session()
         #response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&q=quiche' % (ck, cs))
 
-        if args == "ingredient":
+        if args != "ingredient":
             response = client.get('http://api.yummly.com/v1/api/metadata/ingredient?_app_id=%s&_app_key=%s' % (ck, cs))
             pprint(response.content)
             try:
@@ -37,7 +37,7 @@ class Command(BaseCommand):
                 print ingredient
                 ingredient_object.save()
 
-        if args == "course":
+        if args != "course":
             response = client.get('http://api.yummly.com/v1/api/metadata/course?_app_id=%s&_app_key=%s' % (ck, cs))
             pprint(response.content)
             try:
@@ -53,7 +53,7 @@ class Command(BaseCommand):
                     course_object.description = course['description']
                 course_object.save()
 
-        if args == "cuisine":
+        if args != "cuisine":
             response = client.get('http://api.yummly.com/v1/api/metadata/cuisine?_app_id=%s&_app_key=%s' % (ck, cs))
             pprint(response.content)
             try:
@@ -69,7 +69,7 @@ class Command(BaseCommand):
                     cuisine_object.description = cuisine['description']
                 cuisine_object.save()
 
-        if args == "allergy":
+        if args != "allergy":
             response = client.get('http://api.yummly.com/v1/api/metadata/allergy?_app_id=%s&_app_key=%s' % (ck, cs))
             pprint(response.content)
             try:
@@ -85,7 +85,7 @@ class Command(BaseCommand):
                     allergy_object.description = allergy['longDescription']
                 allergy_object.save()
 
-        if args == "diet":
+        if args != "diet":
             response = client.get('http://api.yummly.com/v1/api/metadata/diet?_app_id=%s&_app_key=%s' % (ck, cs))
             pprint(response.content)
             try:
