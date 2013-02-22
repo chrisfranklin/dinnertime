@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'util',
     'easy_maps',
     'rest_framework',
+    'rest_framework.authtoken',
     'autocomplete_light',
     'django_gravatar',
     'crispy_forms',

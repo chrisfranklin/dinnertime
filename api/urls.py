@@ -7,6 +7,8 @@ urlpatterns = patterns('api.views',
                        url(r'^home/$', views.index, name='index'),
                        url(r'^$', 'api_root'),
 
+                       
+
                        url(r'^meals/$', views.MealList.as_view(), name='meal-list'),
                        url(r'^meals/(?P<pk>\d+)/$', views.MealDetail.as_view(), name='meal-detail'),
 
@@ -32,5 +34,6 @@ urlpatterns = patterns('api.views',
                        url(r'^contacts/(?P<pk>\d+)/$', views.UserProfileDetail.as_view(), name='usercontact-detail'),
 
                        )
+urlpatterns += url(r'^api-token-auth/', 'rest_framework.authtoken.views.obtain_auth_token', name='api-token-auth'),
 
 urlpatterns = format_suffix_patterns(urlpatterns)

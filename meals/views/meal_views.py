@@ -290,7 +290,36 @@ def add_venue(request, meal_id):  # change this to part
     return HttpResponse("No post data or an error has occured")
 
 class RecipeForm(forms.Form):
-    recipe = forms.CharField(widget=autocomplete_light.ChoiceWidget('RecipeRestAutocomplete'))
+    recipe = forms.CharField(widget=autocomplete_light.ChoiceWidget('RecipeAutocomplete'))
+
+def add_recipe(request, meal_id):  # change this to part
+
+    if request.method == 'POST':  # If the form has been submitted...
+        form = RecipeForm(request.POST)  # A form bound to the POST data
+        print form.data
+        no_recipe = False
+        if 'recipe' not in form.data:
+            saved_recipe = form.data['recipe-autocomplete']
+            no_recipe = True
+            print "no venue setting %s" % saved_recipe
+        if form.is_valid() or no_recipe:  # All validation rules pass
+            # Process the data in form.cleaned_data
+            # ...
+            if no_recipe:
+                recipe = saved_recipe
+            else:
+                recipe = form.cleaned_data['recipe']
+            meal_object = Meal.objects.get(pk=meal_id)
+            from yummly.models import Recipe
+            meal_object.recipe, created = Recipe.objects.get_or_create(id=recipe)
+            meal_object.save()
+            #meal_object.add_venue(address, request.user)
+
+            return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
+    return HttpResponse("No post data or an error has occured")
+
+class RecipeForm(forms.Form):
+    recipe = forms.CharField(widget=autocomplete_light.ChoiceWidget('RecipeAutocomplete'))
 
 class MealDetailView(MealView, DetailView, FormMixin):
     from meals.views.invite_views import InviteForm

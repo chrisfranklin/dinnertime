@@ -97,5 +97,4 @@ class RecipeRestAutocomplete(RestAutocompleteBase, RecipeAutocomplete):
 ck = "9687047d"
 cs = "48703203011932335cfaf5fb57ef4f1a"
 
-autocomplete_light.register(Recipe, RecipeRestAutocomplete,
-                            source_url='http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s' % (ck, cs))
+autocomplete_light.register(Recipe, RecipeAutocomplete)

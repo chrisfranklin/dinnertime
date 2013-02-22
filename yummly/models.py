@@ -109,7 +109,10 @@ class Recipe(models.Model):
     #     super(UserProfile, self).save(*args, **kwargs)  # Call the "real" save() method.
 
     def __unicode__(self):
-        return unicode(self.name)
+        if self.name:
+            return unicode(self.name)
+        else:
+            return "recipe"
 
     # @models.permalink
     # def get_absolute_url(self):

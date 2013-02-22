@@ -205,6 +205,15 @@ class Meal(models.Model):
             #gravatar_exists = has_gravatar('bob@example.com')
             return url
 
+    def get_location(self):
+        """
+        Returns location for meal, if no name is set then returns None
+        """
+        if self.venue:
+            if self.venue.address:
+                return self.venue.address
+        return None
+
     def get_name(self):
         """
         Returns name for meal, if no name is set then returns username's meal

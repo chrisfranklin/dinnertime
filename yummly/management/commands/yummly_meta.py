@@ -34,7 +34,7 @@ class Command(BaseCommand):
                     ingredient_object.term = ingredient['term']
                 if "useCount" in ingredient:
                     ingredient_object.use_count = ingredient['useCount']
-                print ingredient['term']
+                print ingredient
                 ingredient_object.save()
 
         if args == "course":
@@ -103,7 +103,7 @@ class Command(BaseCommand):
                 diet_object.save()
 
         if args != "recipe":
-            response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&maxResult=10' % (ck, cs))
+            response = client.get('http://api.yummly.com/v1/api/recipes?_app_id=%s&_app_key=%s&maxResult=10000' % (ck, cs))
             #pprint(response.content)
             try:
                 results = json.loads(response.content)  # This is for ingredients
@@ -111,7 +111,7 @@ class Command(BaseCommand):
                 self.stdout.write("Could not load recipe json, out of options, goodbye.")
             pprint(results)
             for recipe in results["matches"]:
-                print recipe.keys()
+                print recipe
                 recipe_object = Recipe.objects.get_or_create(remote_id=recipe['id'])[0]
                 if "attributes" in recipe:
                     for attribute in recipe["attributes"]:
@@ -138,16 +138,19 @@ class Command(BaseCommand):
                     recipe_object.ingredients.clear()
                     for ingredient in recipe['ingredients']:
                         recipe_object.ingredients.add(Ingredient.objects.get_or_create(term=ingredient)[0])
-                if "flavors" in recipe:
+                attributes = recipe['attributes']
+                print attributes
+                if "flavors" in attributes:
                     if not recipe_object.flavor:
-                        fla = recipe['flavors']
+                        fla = attributes['flavors']
+                        #print fla
                         flavor_object, created = Flavor.objects.get_or_create(bitter=fla['bitter'], meaty=fla['meaty'], piquant=fla['piquant'], salty=fla['salty'], sour=fla['sour'], sweet=fla['sweet'])
                         recipe_object.flavor = flavor_object
                 if "course" in recipe['attributes']:
                     attributes = recipe['attributes']
-                    print attributes
+                    #print attributes
                     course = attributes['course']
-                    print course
+                    #print course
                     
                 recipe_object.save()
 

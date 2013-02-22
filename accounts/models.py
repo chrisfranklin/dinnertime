@@ -87,11 +87,21 @@ from django.db.models.signals import post_save
 post_save.connect(create_user_profile, sender=User)
 post_save.connect(find_friends_suggestions, sender=User)
 
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+@receiver(post_save, sender=User)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        pass
+        #Token.objects.create(user=instance)
+
 
 class UserContactManager(models.Manager):
     def get_query_set(self):
         print "HELLO!"
         return super(UserContactManager, self).get_query_set().filter(privacy="PRIVATE")
+
 
 class UserContact(models.Model):
     """
@@ -136,7 +146,8 @@ class UserContact(models.Model):
     # We need to create a user contact every time a friend request is sent or a friend accept is done.
 
 # ================================================================================================================================
-# The following code will be useful if we decide to make the contacts search only return friends rather than all users of the site
+# The following code will be useful if we decide to make the contacts
+# search only return friends rather than all users of the site
 
 # def create_user_contact(self, instance, **kwargs):
 #     """
@@ -151,4 +162,4 @@ class UserContact(models.Model):
 # inviting_friend.connect(create_user_contact)
 # accepting_friend.connect(create_user_contact)
 
-#accepting_friend.send(FriendshipInvitation, request=request, invite=invitation)
+# accepting_friend.send(FriendshipInvitation, request=request, invite=invitation)

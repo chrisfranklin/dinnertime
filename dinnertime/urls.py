@@ -16,69 +16,69 @@ js_info_dict = {
 }
 
 urlpatterns = patterns('',
-   # (r'', include('dinnertime.apps.')),
-    #==========================================================
-    # Admin Section
-    #==========================================================
-    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    (r'^admin/', include(admin.site.urls)),
-    #==========================================================
-    # End Admin Section
-    #==========================================================
+                       # (r'', include('dinnertime.apps.')),
+                       #==========================================================
+                       # Admin Section
+                       #==========================================================
+                      (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+                      (r'^admin/', include(admin.site.urls)),
+                       #==========================================================
+                       # End Admin Section
+                       #==========================================================
 
-    #==========================================================
-    # About Page - Not managed by cms but provided by index.html
-    #==========================================================
-    url(r'^about/', TemplateView.as_view(template_name='about.html'), name='about'),
+                       #==========================================================
+                       # About Page - Not managed by cms but provided by index.html
+                       #==========================================================
+                       url(r'^about/', TemplateView.as_view(template_name='about.html'), name='about'),
 
-    url(r'^/?$', home_view, name='home_view'),
-    url(r'^notifications/', include('notification.urls')),
-    url(r'^friends/', include('friends.urls')),
-    url(r'^friends/suggestions/', include('friends.contrib.suggestions.urls')),
-    #==========================================================
-    # End Home Page
-    #==========================================================
-    (r'^', include('meals.urls')),
-    (r'^interest/', include('launchpad.urls')),
-    #==========================================================
-    # Allauth
-    #==========================================================
-    (r'^accounts/', include('allauth.urls')),
-    (r'^accounts/', include('accounts.urls')),
-    #==========================================================
-    # End Userena
-    #==========================================================
+                       url(r'^/?$', home_view, name='home_view'),
+                       url(r'^notifications/', include('notification.urls')),
+                       url(r'^friends/', include('friends.urls')),
+                       url(r'^friends/suggestions/', include('friends.contrib.suggestions.urls')),
+                       #==========================================================
+                       # End Home Page
+                       #==========================================================
+                      (r'^', include('meals.urls')),
+                      (r'^interest/', include('launchpad.urls')),
+                       #==========================================================
+                       # Allauth
+                       #==========================================================
+                      (r'^accounts/', include('allauth.urls')),
+                      (r'^accounts/', include('accounts.urls')),
+                       #==========================================================
+                       # End Userena
+                       #==========================================================
 
-    #==========================================================
-    # Facebook
-    #==========================================================
-    #(r'^facebook/', include('django_facebook.urls')),
-    #==========================================================
-    # End Facebook
-    #==========================================================
-    url(r'autocomplete/', include('autocomplete_light.urls')),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+                       #==========================================================
+                       # Facebook
+                       #==========================================================
+                       #(r'^facebook/', include('django_facebook.urls')),
+                       #==========================================================
+                       # End Facebook
+                       #==========================================================
+                       url(r'autocomplete/', include('autocomplete_light.urls')),
+                       url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    (r'^comments/', include('django.contrib.comments.urls')),
-    (r'^inplaceeditform/', include('inplaceeditform.urls')),
-    (r'^jsi18n$', 'django.views.i18n.javascript_catalog', js_info_dict),
-    (r'^activity/', include('actstream.urls')),
-    url(r"^likes/", include("phileo.urls")),
-    (r'^avatar/', include('avatar.urls')),
-    #(r'^feedback/', include('django_basic_feedback.urls')),
-)
+                      (r'^comments/', include('django.contrib.comments.urls')),
+                      (r'^inplaceeditform/', include('inplaceeditform.urls')),
+                      (r'^jsi18n$', 'django.views.i18n.javascript_catalog', js_info_dict),
+                      (r'^activity/', include('actstream.urls')),
+                       url(r"^likes/", include("phileo.urls")),
+                      (r'^avatar/', include('avatar.urls')),
+                       #(r'^feedback/', include('django_basic_feedback.urls')),
+                       )
 
 if 'api' in settings.INSTALLED_APPS:
     urlpatterns += patterns('',
-            (r'^api/', include('api.urls')),
-        )
+                           (r'^api/', include('api.urls')),
+                            )
 
 
 from django_statsd.urls import urlpatterns as statsd_patterns
 
 urlpatterns += patterns('',
-        ('^services/timing/', include(statsd_patterns)),
-)
+                       ('^services/timing/', include(statsd_patterns)),
+                        )
 
 
 OAUTH_ACCESS_SETTINGS = {
@@ -110,4 +110,4 @@ OAUTH_ACCESS_SETTINGS = {
 
 if settings.DEBUG and settings.MEDIA_ROOT:
     urlpatterns += static(settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT)
+                          document_root=settings.MEDIA_ROOT)

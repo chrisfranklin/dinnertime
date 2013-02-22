@@ -1,14 +1,14 @@
 from meals.models import Guest, Invite, Meal, MealPart, Part
 from accounts.models import UserProfile, UserContact
 from api.serializers import GuestSerializer, InviteSerializer, MealSerializer, MealPartSerializer, PartSerializer, UserProfileSerializer, UserContactSerializer, UserSerializer
-#from django.http import Http404
+# from django.http import Http404
 from rest_framework import generics
-#from rest_framework.views import APIView
+# from rest_framework.views import APIView
 from rest_framework.decorators import api_view
-#from rest_framework.decorators import api_view
+# from rest_framework.decorators import api_view
 
 from rest_framework.response import Response
-#from rest_framework import status
+# from rest_framework import status
 from rest_framework.reverse import reverse
 
 from django.shortcuts import render_to_response
@@ -36,6 +36,7 @@ def api_root(request, format=None):
         'Invites': reverse('invite-list', request=request),
         'UserProfiles': reverse('userprofile-list', request=request),
         'UserContacts': reverse('usercontact-list', request=request),
+        'Users': reverse('user-list', request=request),
     })
 
 
@@ -135,6 +136,7 @@ class InviteDetail(generics.RetrieveUpdateDestroyAPIView):
 ## == USERS ==
 from django.contrib.auth.models import User
 
+
 class UserList(generics.ListCreateAPIView):
     """
     Provides an API endpoint that represents a list of Users.
@@ -152,10 +154,7 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
 
-
 ## == USERPROFILES aka PROFILES} ==
-
-
 class UserProfileList(generics.ListCreateAPIView):
     """
     API endpoint that represents a list of Parts.

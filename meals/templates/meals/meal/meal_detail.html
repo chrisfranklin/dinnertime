@@ -54,7 +54,7 @@
         <i class="icon-food"> Recipe</i>
         {% if request.user == meal.host %}
           <span>
-              <form class="form-inline" method="post" action="/meal/{{object.id}}/venue/add/" data-append="#invites">
+              <form class="form-inline" method="post" action="/meal/{{object.id}}/recipe/add/" data-append="#recipes">
                 {% csrf_token %}
                 {{formr.recipe}}
                 {# <div class="hidden2">{{form.max_plusones}}</div> #}
