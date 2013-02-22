@@ -3,7 +3,9 @@
 
 # TEAM
 
-    Chris Franklin - Piemonster
+    Chris Franklin - Piemonster - Project Lead
+    Karim Tabet - Piemonster
+    Adrian Gibas - Piemonster
 
 # THANKS
 
