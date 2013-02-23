@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.comments',
+    'django.contrib.flatpages',
     'accounts',
     'meals',
     'util',
@@ -218,6 +219,7 @@ MIDDLEWARE_CLASSES += (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django_statsd.middleware.GraphiteRequestTimingMiddleware',
     'django_statsd.middleware.GraphiteMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
 #==============================================================================
