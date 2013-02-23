@@ -62,3 +62,6 @@ raven
 
 django-cities-light
 gunicorn
+
+django-blog-zinnia
+Zinnia-theme-bootstrap

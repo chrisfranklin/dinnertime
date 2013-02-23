@@ -154,7 +154,9 @@
           {% if user.is_authenticated %}
             {% load phileo_tags %}
             {% phileo_widget request.user part.part %}
-          {% endif %}</br>
+          {% endif %}
+          <a href="/meal/{{meal.id}}/part/remove/{{part.id}}" > Remove </a>
+          </br>
         {% endif %}
       {% endfor %}
     </div>
@@ -175,7 +177,9 @@
             {% load phileo_tags %}
             {% phileo_widget request.user part.part %}
             
-          {% endif %}</br>
+          {% endif %}
+          <a href="/meal/{{meal.id}}/part/remove/{{part.id}}" > Remove </a>
+          </br>
         {% endif %}
       {% endfor %}
     </div>
@@ -195,7 +199,9 @@
           {% if user.is_authenticated %}
             {% load phileo_tags %}
             {% phileo_widget request.user part.part %}
-          {% endif %}</br>
+          {% endif %}
+          <a href="/meal/{{meal.id}}/part/remove/{{part.id}}" > Remove </a>
+          </br>
         {% endif %}
       {% endfor %}
     </div>

@@ -256,6 +256,35 @@ def add_part(request, meal_id, status):  # change this to part
     return HttpResponse("No post data or an error has occured")
 
 
+def remove_part(request, meal_id, part_id):  # change this to part
+    from meals.models import MealPart
+    meal_object = Meal.objects.get(pk=meal_id)
+    try:
+        mealpart_object = MealPart.objects.get(pk=part_id)
+        mealpart_object.delete()
+    except:
+        return HttpResponse("Could not delete meal part")
+    return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
+
+
+def change_part(request, meal_id, part_id, status):  # change this to part
+    try:
+        mealpart_object = MealPart.objects.get(pk=part_id)
+        mealpart_object.delete()
+    except:
+        return HttpResponse("Could not delete meal part")
+    return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
+
+
+def fulfill_part(request, meal_id, part_id):  # change this to part
+    try:
+        mealpart_object = MealPart.objects.get(pk=part_id)
+        mealpart_object.delete()
+    except:
+        return HttpResponse("Could not delete meal part")
+    return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
+
+
 
 from meals.models import Venue
 # from accounts.models import UserContact

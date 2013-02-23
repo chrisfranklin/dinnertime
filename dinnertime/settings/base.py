@@ -96,6 +96,11 @@ INSTALLED_APPS = (
     'cities_light',
     'gunicorn',
 
+    'zinnia_bootstrap',
+    'tagging',
+    'mptt',
+    'zinnia',
+
 )
 
 # For raven and ultimately sentry
