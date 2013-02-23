@@ -4,7 +4,7 @@
 <html lang="{{ LANGUAGE_CODE }}">
   <head>
     <meta charset="utf-8">
-    <title>Zinnia's Blog - {% block title %}{% endblock %}</title>
+    <title>TableSurf.in's Blog - {% block title %}{% endblock %}</title>
     <meta name="robots" content="follow, all" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="{% block meta-description %}Demonstration of the Zinnia Blog application.{% endblock %}" />
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/static/css/main.css">
     <style type="text/css">
       body {
-        padding-top: 40px;
+        padding-top: 100px;
       }
     </style>
     <!--[if lt IE 9]>
@@ -36,9 +36,9 @@
     <header class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <img src="{{ STATIC_URL }}zinnia_bootstrap/img/zinnia.png" class="pull-left" />
+          <a href="{% url 'zinnia_entry_archive_index' %}"><img src="{{ STATIC_URL }}img/logo.png" width="8%" class="pull-left"></a>
           <a href="{% url 'zinnia_entry_archive_index' %}" title="Zinnia's Blog" class="brand" rel="home">
-            Zinnia's Blog
+            TableSurf.in's Blog
           </a>
           <ul class="nav pull-left">
             {% url 'zinnia_category_list' as category_list_url %}
@@ -65,6 +65,12 @@
             <input type="text" class="search-query" placeholder="{% trans 'Search' %}" name="pattern" value="{{ pattern }}" />
           </form>
           <ul class="nav pull-right">
+            <li>
+              <a href="/" title="{% trans "MainPage" %}" class="sitemap">
+                {% trans "Main Page" %}
+              </a>
+            </li>
+            <li class="divider-vertical"></li>
             {% url 'zinnia_sitemap' as sitemap_url %}
             <li {% if sitemap in request.path %}class="active"{% endif %}>
             <li>
@@ -82,6 +88,7 @@
         </div>
       </div>
     </header>
+    </br>
     <div class="container">
       {% block breadcrumbs %}{% endblock %}
     </div>
