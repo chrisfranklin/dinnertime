@@ -38,30 +38,32 @@
 
   {% block extra_body %}
     <div class="container center">
-      <div class = "row">
-        <div class="span6">
-          <div class="well">
-            <h2><i class="icon-bullhorn"> What is TableSurfing? </i> </h2>
-            <p> Our primary aim is to make it easier for you to share a meal with your friends, friends of friends or total strangers, you can invite whoever you like. </p>
-            <p> Let's face it, nobody likes eating on their own but everbody has to eat. There are hungry people everywhere, join us on our crusade against empty tummies! </p>
-            <p> We let you invite your friends via E-mail, Facebook or Mobile Phone to take the hassle out of hosting, we even tell your friends what you would like them to bring.</p>
+      {% if not request.user.is_authenticated %}
+        <div class = "row">
+          <div class="span6">
+            <div class="well">
+              <h2><i class="icon-bullhorn"> What is TableSurfing? </i> </h2>
+              <p> Our primary aim is to make it easier for you to share a meal with your friends, friends of friends or total strangers, you can invite whoever you like. </p>
+              <p> Let's face it, nobody likes eating on their own but everbody has to eat. There are hungry people everywhere, join us on our crusade against empty tummies! </p>
+              <p> We let you invite your friends via E-mail, Facebook or Mobile Phone to take the hassle out of hosting, we even tell your friends what you would like them to bring.</p>
+            </div>
+          </div>
+          <div class="span6">
+            <div class="well">
+              <h2><i class="icon-bullhorn"> How does it work? </i>  </h2>
+              <ul>
+                <li><b>Create an account </b> or sign in below to get started </li>
+                <li><b>Find a meal </b> by importing your friends or find a public meals. </li>
+                <li><b>Host a meal </b> if you feel like cooking and have the space.</li>
+                <li><b>Invite your friends </b> or change meal privacy to public. </li>
+                <li><b>Track RSVP's </b> and provide directions in one place.</li>
+                <li><b>Work together</b> by adding a recipe and shopping list.</li>
+                <li><b>Make friends</b> with other diners and meet up again.</li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div class="span6">
-          <div class="well">
-            <h2><i class="icon-bullhorn"> How does it work? </i>  </h2>
-            <ul>
-              <li><b>Create an account </b> or sign in below to get started </li>
-              <li><b>Find a meal </b> by importing your friends or find a public meals. </li>
-              <li><b>Host a meal </b> if you feel like cooking and have the space.</li>
-              <li><b>Invite your friends </b> or change meal privacy to public. </li>
-              <li><b>Track RSVP's </b> and provide directions in one place.</li>
-              <li><b>Work together</b> by adding a recipe and shopping list.</li>
-              <li><b>Make friends</b> with other diners and meet up again.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      {% endif %}
       {% if request.user.is_authenticated %}
         <div class="row">
           <div class="offset2 span4">
@@ -100,21 +102,23 @@
           {% include 'login_bar.html' %}
       {% endif %}
 
-      <div class = "row">
-        <div class="span6">
-          <div class="well">
-            <h2><i class="icon-bullhorn"> Our Philosophy </i> </h2>
-            <p> We are proud members of the open source community, the entire source code of this application is available at http://github.com/chrisfranklin/dinnertime </p>
-            <p> Let's face it, nobody likes eating on their own but everbody has to eat. There are hungry people everywhere, join us on our crusade against empty tummies! </p>
+      {% if not request.user.is_authenticated %}
+        <div class = "row">
+          <div class="span6">
+            <div class="well">
+              <h2><i class="icon-bullhorn"> Our Philosophy </i> </h2>
+              <p> We are proud members of the open source community, the entire source code of this application is available at http://github.com/chrisfranklin/dinnertime </p>
+              <p> Let's face it, nobody likes eating on their own but everbody has to eat. There are hungry people everywhere, join us on our crusade against empty tummies! </p>
+            </div>
+          </div>
+
+          <div class="span6">
+            <div class="well">
+              <h2><i class="icon-bullhorn"> Your Privacy </i>  </h2>
+              <p> Your privacy is extremely important to us, you are not just another statistic but a fantastic individual who deserves our respect. If at any point you feel that we have dipped below your expectations please email abuse@tablesurf.in </p>
           </div>
         </div>
-
-        <div class="span6">
-          <div class="well">
-            <h2><i class="icon-bullhorn"> Your Privacy </i>  </h2>
-            <p> Your privacy is extremely important to us, you are not just another statistic but a fantastic individual who deserves our respect. If at any point you feel that we have dipped below your expectations please email abuse@tablesurf.in </p>
-        </div>
-      </div>
+      {% endif %}
 
 
     </div>
