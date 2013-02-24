@@ -210,6 +210,7 @@ from actstream.models import action_object_stream
 import autocomplete_light
 from django import forms
 from meals.models import Part
+from meals.models import MealPart
 
 
 class PartAutocomplete(autocomplete_light.AutocompleteModelBase):
@@ -257,7 +258,7 @@ def add_part(request, meal_id, status):  # change this to part
 
 
 def remove_part(request, meal_id, part_id):  # change this to part
-    from meals.models import MealPart
+    
     meal_object = Meal.objects.get(pk=meal_id)
     try:
         mealpart_object = MealPart.objects.get(pk=part_id)
@@ -268,20 +269,34 @@ def remove_part(request, meal_id, part_id):  # change this to part
 
 
 def change_part(request, meal_id, part_id, status):  # change this to part
+    meal_object = Meal.objects.get(pk=meal_id)
     try:
         mealpart_object = MealPart.objects.get(pk=part_id)
         mealpart_object.delete()
     except:
-        return HttpResponse("Could not delete meal part")
+        return HttpResponse("Could not change meal part")
     return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
 
 
 def fulfill_part(request, meal_id, part_id):  # change this to part
+    meal_object = Meal.objects.get(pk=meal_id)
     try:
         mealpart_object = MealPart.objects.get(pk=part_id)
-        mealpart_object.delete()
+        mealpart_object.fulfilled_by = request.user
+        mealpart_object.save()
     except:
-        return HttpResponse("Could not delete meal part")
+        return HttpResponse("Could not fulfill meal part")
+    return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
+
+
+def unfulfill_part(request, meal_id, part_id):  # change this to part
+    meal_object = Meal.objects.get(pk=meal_id)
+    try:
+        mealpart_object = MealPart.objects.get(pk=part_id)
+        mealpart_object.fulfilled_by = None
+        mealpart_object.save()
+    except:
+        return HttpResponse("Could not unfulfill meal part")
     return HttpResponseRedirect(meal_object.get_absolute_url())  # Redirect after POST
 
 

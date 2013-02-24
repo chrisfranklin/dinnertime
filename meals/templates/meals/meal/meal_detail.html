@@ -151,11 +151,21 @@
       {% for part in meal.mealpart_set.all %}
         {% if part.status == "HAVE" %}
           <img src="http://placehold.it/68x68"> <b style="font-size: 20px; padding-left:10px;">{{part.part}}</b>
+          {% if part.fulfilled_by %}
+            {{part.fulfilled_by}} is bringing it.
+          {% else %}
+            The host has the item.
+          {% endif %}
           {% if user.is_authenticated %}
             {% load phileo_tags %}
             {% phileo_widget request.user part.part %}
           {% endif %}
-          <a href="/meal/{{meal.id}}/part/remove/{{part.id}}" > Remove </a>
+          <a href="/meal/{{meal.id}}/part/remove/{{part.id}}" > Remove </a> 
+          {% if request.user = part.fulfilled_by %}
+            | <a href="/meal/{{meal.id}}/part/unfulfill/{{part.id}}" > Can't get it. </a>
+          {% else %}
+            | <a href="/meal/{{meal.id}}/part/fulfill/{{part.id}}" > Bring it </a>
+          {% endif %}
           </br>
         {% endif %}
       {% endfor %}
@@ -173,12 +183,15 @@
       {% for part in meal.mealpart_set.all %}
         {% if part.status == "NEED" %}
           <img src="http://placehold.it/68x68"> <b style="font-size: 20px; padding-left:10px;">{{part.part}}</b>
+          {% if part.fulfilled_by %}
+            {{part.fulfilled_by}} is bringing it.
+          {% endif %}
           {% if user.is_authenticated %}
             {% load phileo_tags %}
             {% phileo_widget request.user part.part %}
             
           {% endif %}
-          <a href="/meal/{{meal.id}}/part/remove/{{part.id}}" > Remove </a>
+          <a href="/meal/{{meal.id}}/part/remove/{{part.id}}" > Remove </a> | <a href="/meal/{{meal.id}}/part/fulfill/{{part.id}}" > Bring it </a>
           </br>
         {% endif %}
       {% endfor %}
@@ -196,6 +209,9 @@
       {% for part in meal.mealpart_set.all %}
         {% if part.status == "WANT" %}
           <img src="http://placehold.it/68x68"> <b style="font-size: 20px; padding-left:10px;">{{part.part}}</b>
+          {% if part.fulfilled_by %}
+            {{part.fulfilled_by}} is bringing it.
+          {% endif %}
           {% if user.is_authenticated %}
             {% load phileo_tags %}
             {% phileo_widget request.user part.part %}

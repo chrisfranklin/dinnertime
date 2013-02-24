@@ -37,10 +37,19 @@
 }
 
 .logo{
-  font-family: 'Rum Raisin', sans-serif;
+  /*font-family: 'Rum Raisin', sans-serif;*/
   font-size:64px;
   line-height: 120%;
   color:black;
+  text-shadow:
+    -5px -5px 10 black,
+    5px -5px 10 black,
+    -5px 5px 10 black,
+    5px 5px 10 black;
+}
+
+.white{
+  color:white;
 }
 
 body{
