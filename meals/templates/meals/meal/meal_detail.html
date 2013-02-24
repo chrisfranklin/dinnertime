@@ -191,7 +191,12 @@
             {% phileo_widget request.user part.part %}
             
           {% endif %}
-          <a href="/meal/{{meal.id}}/part/remove/{{part.id}}" > Remove </a> | <a href="/meal/{{meal.id}}/part/fulfill/{{part.id}}" > Bring it </a>
+          <a href="/meal/{{meal.id}}/part/remove/{{part.id}}" > Remove </a>
+          {% if request.user = part.fulfilled_by %}
+            | <a href="/meal/{{meal.id}}/part/unfulfill/{{part.id}}" > Can't get it. </a>
+          {% else %}
+            | <a href="/meal/{{meal.id}}/part/fulfill/{{part.id}}" > Bring it </a>
+          {% endif %}
           </br>
         {% endif %}
       {% endfor %}
@@ -217,6 +222,11 @@
             {% phileo_widget request.user part.part %}
           {% endif %}
           <a href="/meal/{{meal.id}}/part/remove/{{part.id}}" > Remove </a>
+          {% if request.user = part.fulfilled_by %}
+            | <a href="/meal/{{meal.id}}/part/unfulfill/{{part.id}}" > Can't get it. </a>
+          {% else %}
+            | <a href="/meal/{{meal.id}}/part/fulfill/{{part.id}}" > Bring it </a>
+          {% endif %}
           </br>
         {% endif %}
       {% endfor %}
