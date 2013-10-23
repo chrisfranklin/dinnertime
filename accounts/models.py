@@ -85,7 +85,7 @@ def find_friends_suggestions(sender, instance, **kwargs):
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 post_save.connect(create_user_profile, sender=User)
-post_save.connect(find_friends_suggestions, sender=User)
+#post_save.connect(find_friends_suggestions, sender=User)
 
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
